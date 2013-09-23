@@ -1,7 +1,7 @@
 === DuracellTomi's Google Tag Manager for WordPress ===
 Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
-Tags: google tag manager, tag manager
+Tags: google tag manager, tag manager, google
 Requires at least: 3.0.1
 Tested up to: 3.6.1
 Stable tag: 0.1
