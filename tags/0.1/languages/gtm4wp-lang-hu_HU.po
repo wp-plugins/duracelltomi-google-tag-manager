@@ -1,0 +1,384 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Google Tag Manager for WordPress\n"
+"POT-Creation-Date: 2013-09-19 11:27+0100\n"
+"PO-Revision-Date: 2013-09-20 16:20+0100\n"
+"Last-Translator: Thomas Geiger <duracelltomi@gmail.com>\n"
+"Language-Team: JabJab Online Marketing\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/admin.php:18
+msgid "Remarketing variable"
+msgstr "Remarketing változó"
+
+#: ../admin/admin.php:19
+msgid ""
+"Check this option to include a dataLayer variable where all dataLayer values "
+"are stored to be included in your AdWords remarketing tag as a custom "
+"variable field"
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha egy olyan dataLayer változót szeretne "
+"létrehozni, amelyben minden egyéb dataLayer változó szerepel és "
+"felhasználható AdWords remarketing listánál egyéni címkézéshez"
+
+#: ../admin/admin.php:22
+msgid "Logged in status"
+msgstr "Bejelentkezett állapot"
+
+#: ../admin/admin.php:23
+msgid ""
+"Check this option to include whether there is a logged in user on your "
+"website."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni, van-e bejelentkezett "
+"felhasználó az oldalán."
+
+#: ../admin/admin.php:26
+msgid "Logged in user role"
+msgstr "Bejelentkezett felhasználó szerepköre"
+
+#: ../admin/admin.php:27
+msgid "Check this option to include the role of the logged in user."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni a bejelentkezett "
+"felhasználó szerepkörét."
+
+#: ../admin/admin.php:30
+msgid "Posttype of current post/archive"
+msgstr "Aktuális bejegyzés/arhív bejegyzés típusa"
+
+#: ../admin/admin.php:31
+msgid ""
+"Check this option to include the type of the current post or archive page "
+"(post, page or any custom post type)."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés vagy "
+"arhív oldal bejegyzés típusát (bejegyzés, oldal vagy egyébi bejegyzés típus)"
+
+#: ../admin/admin.php:34
+msgid "Category list of current post/archive"
+msgstr "Aktuális bejegyzés/arhív kategória listája"
+
+#: ../admin/admin.php:35
+msgid ""
+"Check this option to include the category names of the current post or "
+"archive page"
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés vagy "
+"arhív oldal kategória listáját."
+
+#: ../admin/admin.php:38
+msgid "Tags of current post"
+msgstr "Aktuális bejegyzés címkéi"
+
+#: ../admin/admin.php:39
+msgid "Check this option to include the tags of the current post."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés "
+"címkéit."
+
+#: ../admin/admin.php:42
+msgid "Post author name"
+msgstr "Bejegyzés szerzője"
+
+#: ../admin/admin.php:43
+msgid ""
+"Check this option to include the author's name of the current post or author "
+"page."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés vagy "
+"szerző oldal szerzőjének a nevét."
+
+#: ../admin/admin.php:46
+msgid "Post date"
+msgstr "Bejegyzés dátuma"
+
+#: ../admin/admin.php:47
+msgid ""
+"Check this option to include the date of the current post. This will include "
+"4 dataLayer variables: full date, post year, post month, post date."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés "
+"dátumát. 4 dataLayer változót tartalmaz: teljes dátum, bejegyzés éve, "
+"bejegyzés hónapja, bejegyzés napja."
+
+#: ../admin/admin.php:50
+msgid "Post title"
+msgstr "Bejegyzés címe"
+
+#: ../admin/admin.php:51
+msgid "Check this option to include the title of the current post."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az aktuális bejegyzés címét."
+
+#: ../admin/admin.php:54
+msgid "Search data"
+msgstr "Keresési adatok"
+
+#: ../admin/admin.php:55
+msgid ""
+"Check this option to include the search term, referring page URL and number "
+"of results on the search page."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni az éppen keresett "
+"kifejezést, a keresés hivatkozó oldalát és a találatok számát."
+
+#: ../admin/admin.php:61
+msgid "Outbound link click events"
+msgstr "Esemény kimenő hivatkozásokra kattintáshoz"
+
+#: ../admin/admin.php:62
+msgid ""
+"Check this option to include a Tag Manager event when a visitor clicks on a "
+"link directing the visitor out of your website."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani, "
+"amikor egy látogató egy olyan linkre kattint oldalán, amely kivezet onnan "
+"egy másik oldalra."
+
+#: ../admin/admin.php:65
+msgid "Download click events"
+msgstr "Esemény letöltés kattintásokhoz"
+
+#: ../admin/admin.php:66
+msgid ""
+"Check this option to include a Tag Manager event when a visitors clicks on a "
+"link that leads to a downloadable file on your website."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani, "
+"amikor egy látogató egy olyan linkre kattint, amely egy letölthető fájlra "
+"visz weboldalán."
+
+#: ../admin/admin.php:69
+msgid "Extensions to track"
+msgstr "Követett kiterjesztések"
+
+#: ../admin/admin.php:70
+msgid ""
+"Enter a comma separated list of extensions to track when 'Include download "
+"click events' option is set."
+msgstr ""
+"Adjon meg egy vesszővel elválasztott felsorolást, hogy mely fájl "
+"kiterjesztéseket kell követni a letöltések kezelése során."
+
+#: ../admin/admin.php:73
+msgid "Email click events"
+msgstr "Esemény email link kattintásokhoz"
+
+#: ../admin/admin.php:74
+msgid ""
+"Check this option to include a Tag Manager event when a visitor clicks on an "
+"email link."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani, "
+"amikor egy látogató egy email linkre kattint."
+
+#: ../admin/admin.php:80
+msgid "Contact Form 7"
+msgstr "Contact Form 7"
+
+#: ../admin/admin.php:81
+msgid ""
+"Check this to include a dataLayer event after a successfull form submission."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani "
+"egy sikeres küldés után."
+
+#: ../admin/admin.php:85
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: ../admin/admin.php:86
+msgid ""
+"Enable this and you will get:<br /> - Add-to-cart events<br /> - E-commerce "
+"transaction data ready to be used with Google Analytics and Universal "
+"Analytics tags<br /> - Google AdWords dynamic remarketing tags"
+msgstr ""
+"Ha engedélyezi, használhat:<br /> - Eseményt a kosárba helyezés során<br /> "
+"- E-kereskedelmi adatokat Google Analytics és Universal Analytics "
+"tranzakciós címkékhez<br /> - Google AdWords dinamikus remarketing címkéket"
+
+#: ../admin/admin.php:101
+msgid ""
+"This plugin is intended to be used by IT guys and marketing staff. Please be "
+"sure you read the <a href=\"https://developers.google.com/tag-manager/\" "
+"target=\"_blank\">Google Tag Manager Help Center</a> before you start using "
+"this plugin.<br /><br /><strong>Important:</strong> This plugin is still "
+"<strong>beta</strong>. It has not been tested on many websites. There might "
+"be issues with some plugins or themes!"
+msgstr ""
+"Ez a bővítmény első sorban ITseknek és marketing csapatnak készült. Mielőtt "
+"elkezdi használni, mindenképpen olvassa el a <a href=\"https://developers."
+"google.com/tag-manager/\" target=\"_blank\">Google Tag Manager súgóját</a>."
+"<br /><br /><strong>Fontos:</strong> Ez a bővítmény még <strong>béta</"
+"strong> állapotban van. Eddig nem lett túl sok oldalon tesztelve. "
+"Előfordulhatnak problémák más bővítményekkel vagy témákkal!"
+
+#: ../admin/admin.php:107
+msgid ""
+"Here you can check what data is needed to be included in the dataLayer to be "
+"able to access them in Google Tag Manager"
+msgstr ""
+"Itt állíthatja be, mely adatokat helyezze el ez a bővítmény a dataLayer "
+"változba, hogy elérhetőek legyenek a Google Tag Manager felületén"
+
+#: ../admin/admin.php:113
+msgid "Fire tags in Google Tag Manager on special events on your website"
+msgstr ""
+"Google Tag Manager események generálása speciális események során weboldalán"
+
+#: ../admin/admin.php:119
+msgid ""
+"Google Tag Manager for WordPress can integrate with several popular plugins. "
+"Please check the plugins you would like to integrate with:"
+msgstr ""
+"Google Tag Manager for WordPress számos népszerű bővítménnyel tud "
+"integrálódni. Kapcsolja be az alábbi listában, mely bővítmények "
+"integrációját engedélyezi."
+
+#: ../admin/admin.php:125
+msgid ""
+"You usually do not need to modify thoose settings. Please be carefull while "
+"hacking here."
+msgstr "Alapvetően itt nincs mit módosítani. Óvatosan, ha itt módosít valamit!"
+
+#: ../admin/admin.php:131
+msgid "Some info about the author of this plugin"
+msgstr "Néhány információ ezen bővítmény szerzőjéről"
+
+#: ../admin/admin.php:171
+msgid ""
+"This plugin is <strong class=\"gtm4wp-plugin-active\">active</strong>, it is "
+"strongly recomment to enable this integration!"
+msgstr ""
+"Ez a bővítmény <strong class=\"gtm4wp-plugin-active\">aktív</strong>, "
+"ajánlott bekapcsolni ezt az integrációt!"
+
+#: ../admin/admin.php:173
+msgid ""
+"This plugin is <strong class=\"gtm4wp-plugin-not-active\">not active</"
+"strong>, enabling this integration could cause issues on frontend!"
+msgstr ""
+"Ez a bővítmény <strong class=\"gtm4wp-plugin-not-active\">nem aktív</"
+"strong>, az integráció bekapcsolása hibát eredményezhet weboldalán!"
+
+#: ../admin/admin.php:214
+msgid "Invalid Google Tag Manager ID. Valid ID format: GTM-XXXXX"
+msgstr "Érvénytelen Google Tag Manager azonosító. Helyes formátum: GTM-XXXXX"
+
+#: ../admin/admin.php:217
+msgid ""
+"Invalid dataLayer variable name. Please start with a character from a-z or A-"
+"Z followed by characters from a-z, A-Z, 0-9 or '_' or '-'!"
+msgstr ""
+"Érvénytelen dataLAyer változó név. Kezdje mindenképpen egy betűvel az angol "
+"a-z vagy A-Z tartományból, ezt követően használhat a-z, A-Z, 0-9 vagy '_' "
+"vagy '-' karaktereket."
+
+#: ../admin/admin.php:237
+msgid "General"
+msgstr "Általános"
+
+#: ../admin/admin.php:244
+msgid "Google Tag Manager ID"
+msgstr "Google Tag Manager azonosító"
+
+#: ../admin/admin.php:250
+msgid "Enter your Google Tag Manager ID here."
+msgstr "Itt adhatja meg a Google Tag Manager konténer azonosítót."
+
+#: ../admin/admin.php:256
+msgid "Basic data"
+msgstr "Alapadatok"
+
+#: ../admin/admin.php:278
+msgid "Events"
+msgstr "Események"
+
+#: ../admin/admin.php:300
+msgid "Integration"
+msgstr "Integráció"
+
+#: ../admin/admin.php:323
+msgid "Advanced"
+msgstr "Haladó"
+
+#: ../admin/admin.php:330
+msgid "dataLayer variable name"
+msgstr "dataLayer változó neve"
+
+#: ../admin/admin.php:336
+msgid ""
+"In some cases you need to rename the dataLayer variable. You can enter your "
+"name here. Leave black for default name: dataLayer"
+msgstr ""
+"Bizonyos esetekben át kell neveznie a dataLayer változót. Itt megadhatja a "
+"nevét. Hagyja üresen az alapértelmezett névhez: dataLayer"
+
+#: ../admin/admin.php:342
+msgid "Credits"
+msgstr "Névjegy"
+
+#: ../admin/admin.php:349
+msgid "Author"
+msgstr "Szerző"
+
+#: ../admin/admin.php:368
+msgid "Google Tag Manager for WordPress options"
+msgstr "Google Tag Manager for WordPress beállítások"
+
+#: ../admin/admin.php:381
+msgid "Google Tag Manager for WordPress settings"
+msgstr "Google Tag Manager for WordPress beállítások"
+
+#: ../admin/admin.php:382
+msgid "Google Tag Manager"
+msgstr "Google Tag Manager"
+
+#: ../admin/admin.php:407
+msgid ""
+"This does not seems to be a valid Google Tag Manager ID! Please check and "
+"try again"
+msgstr ""
+"Ez nem tűnik érvényes Google Tag Manager azonosítónak. Kérem, ellenőrizze!"
+
+#: ../admin/admin.php:419
+msgid ""
+"This does not seems to be a valid JavaScript variable name! Please check and "
+"try again"
+msgstr "Ez nem tűnik érvényes JavaScript változó névnek. Kérem, ellenőrizze!"
+
+#: ../admin/admin.php:432
+#, php-format
+msgid ""
+"To start using Google Tag Manager for WordPress, please <a href=\"%s\">enter "
+"your GTM ID</a>"
+msgstr ""
+"A Google Tag Manager for WordPress használatának megkezdéséhez kérem, <a "
+"href=\"%s\">adja meg azonosítóját</a>"
+
+#: ../admin/admin.php:439
+msgid ""
+"Possible duplacate tag issue: you should disable Google Analytics tracking "
+"<a href=\"admin.php?"
+"page=woocommerce_settings&tab=integration&section=google_analytics\">in "
+"WooCommerce settings</a> by leaving Google Analytics ID field empty to "
+"prevent any duplicate tags being used on the frontend!"
+msgstr ""
+"Lehetséges dupla címke probléma: kapcsolja ki a Google Analytics mérést a <a "
+"href=\"admin.php?"
+"page=woocommerce_settings&tab=integration&section=google_analytics"
+"\">WooCommerce beállításainál</a> úgy, hogy üresen hagyja a Google Analytics "
+"ID sort. Így elkerülheti, hogy duplán mérje a látogatókat weboldalán."
+
+#: ../integration/woocommerce.php:48
+msgid "SKU:"
+msgstr "Cikkszám:"
