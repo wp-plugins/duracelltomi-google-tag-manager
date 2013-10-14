@@ -58,11 +58,11 @@ $GLOBALS["gtm4wp_includefieldtexts"] = array(
 
 $GLOBALS["gtm4wp_eventfieldtexts"] = array(
 	GTM4WP_OPTION_EVENTS_OUTBOUND    => array(
-		"label"       => __( "Outbound link click events", GTM4WP_TEXTDOMAIN ),
+		"label"       => __( "Outbound link click events (gtm4wp.outboundClick)", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include a Tag Manager event when a visitor clicks on a link directing the visitor out of your website.", GTM4WP_TEXTDOMAIN )
 	),
 	GTM4WP_OPTION_EVENTS_DOWNLOADS   => array(
-		"label"       => __( "Download click events", GTM4WP_TEXTDOMAIN ),
+		"label"       => __( "Download click events (gtm4wp.downloadClick)", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include a Tag Manager event when a visitors clicks on a link that leads to a downloadable file on your website.", GTM4WP_TEXTDOMAIN )
 	),
 	GTM4WP_OPTION_EVENTS_DWLEXT      => array(
@@ -70,9 +70,13 @@ $GLOBALS["gtm4wp_eventfieldtexts"] = array(
 		"description" => __( "Enter a comma separated list of extensions to track when 'Include download click events' option is set.", GTM4WP_TEXTDOMAIN )
 	),
 	GTM4WP_OPTION_EVENTS_EMAILCLICKS => array(
-		"label"       => __( "Email click events", GTM4WP_TEXTDOMAIN ),
+		"label"       => __( "Email click events (gtm4wp.emailClick)", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include a Tag Manager event when a visitor clicks on an email link.", GTM4WP_TEXTDOMAIN )
 	),
+	GTM4WP_OPTION_EVENTS_FORMMOVE => array(
+		"label"       => __( "Form fill events (gtm4wp.formElementEnter & gtm4wp.formElementLeave)", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a Tag Manager event when a visitor moves between elements of a form (comment, contact, etc).", GTM4WP_TEXTDOMAIN )
+	)
 );
 
 $GLOBALS["gtm4wp_integratefieldtexts"] = array(
@@ -106,6 +110,9 @@ function gtm4wp_admin_output_section( $args ) {
 		
 		case GTM4WP_ADMIN_GROUP_EVENTS: {
 			_e( "Fire tags in Google Tag Manager on special events on your website", GTM4WP_TEXTDOMAIN );
+			echo '<p style="font-weight: bold;">';
+			_e( 'In October 2013 Google released a new feature called <a href="https://support.google.com/tagmanager/answer/3415369?hl=en" target="_blank">auto event tracking</a>. It is up to you how you use click events either using Google\'s solution or the settings below.', GTM4WP_TEXTDOMAIN );
+			echo '</p>';
 
 			break;        
 		}
@@ -348,7 +355,7 @@ function gtm4wp_admin_init() {
 		array(
 			"label_for" => GTM4WP_ADMIN_GROUP_INFO,
 			"description" => '<strong>Thomas Geiger</strong><br />
-			                  Website: <a href="http://www.duracelltomi.com/utm_source=wpadmin&amp;utm_medium=link&amp;utm_content=credittab&amp;utm_campaign=Wordpress-Admin" target="_blank">duracelltomi.com</a><br />
+			                  Website: <a href="http://www.duracelltomi.com/" target="_blank">duracelltomi.com</a><br />
 			                  <a href="https://www.linkedin.com/in/duracelltomi" target="_blank">Me on LinkedIn</a><br />
 			                  <a href="http://www.linkedin.com/company/jabjab-online-marketing-ltd-" target="_blank">JabJab Online Marketing on LinkedIn</a>'
 		)
@@ -357,9 +364,10 @@ function gtm4wp_admin_init() {
 }
 
 function gtm4wp_show_admin_page() {
+	global $gtp4wp_plugin_url;
 ?>
 <div class="wrap">
-	<div id="icon-options-general" class="icon32"><br /></div>
+	<div id="gtm4wp-icon" class="icon32" style="background-image: url(<?php echo $gtp4wp_plugin_url; ?>admin/images/tag_manager-32.png);"><br /></div>
 	<h2><?php _e( 'Google Tag Manager for WordPress options', GTM4WP_TEXTDOMAIN ); ?></h2>
 	<form action="options.php" method="post">
 <?php settings_fields( GTM4WP_ADMIN_GROUP ); ?>
@@ -438,8 +446,22 @@ function gtm4wp_show_warning() {
 	
 }
 
+function gtm4wp_add_plugin_action_links( $links, $file ) {
+	global $gtp4wp_plugin_basename;
+
+	if ( $file != $gtp4wp_plugin_basename )
+		return $links;
+
+	$settings_link = '<a href="' . menu_page_url( GTM4WP_ADMINSLUG, false ) . '">' . esc_html( __( 'Settings' ) ) . '</a>';
+
+	array_unshift( $links, $settings_link );
+
+	return $links;
+}
+
 add_action( 'admin_init', 'gtm4wp_admin_init' );
 add_action( 'admin_menu', 'gtm4wp_add_admin_page' );
 add_action( 'admin_enqueue_scripts', 'gtm4wp_add_admin_js' );
 add_action( 'admin_notices', 'gtm4wp_show_warning' );
 add_action( 'admin_head', 'gtm4wp_admin_head' );
+add_filter( 'plugin_action_links', 'gtm4wp_add_plugin_action_links', 10, 2 );

@@ -12,7 +12,7 @@
 		.prepend('<h2 class="nav-tab-wrapper">' + admintabs.join('') + '</h2>');
   
 	jQuery(".nav-tab-wrapper a")
-		.bind("click", function() {
+		.on("click", function() {
 			jQuery(".nav-tab-wrapper a.nav-tab-active")
 				.removeClass("nav-tab-active");
 				

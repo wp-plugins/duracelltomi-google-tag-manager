@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Tag Manager for WordPress\n"
 "POT-Creation-Date: 2013-09-19 11:27+0100\n"
-"PO-Revision-Date: 2013-09-20 16:20+0100\n"
+"PO-Revision-Date: 2013-10-13 12:53+0100\n"
 "Last-Translator: Thomas Geiger <duracelltomi@gmail.com>\n"
 "Language-Team: JabJab Online Marketing\n"
 "Language: English\n"
@@ -132,8 +132,8 @@ msgstr ""
 "kifejezést, a keresés hivatkozó oldalát és a találatok számát."
 
 #: ../admin/admin.php:61
-msgid "Outbound link click events"
-msgstr "Esemény kimenő hivatkozásokra kattintáshoz"
+msgid "Outbound link click events (gtm4wp.outboundClick)"
+msgstr "Esemény kimenő hivatkozásokra kattintáshoz (gtm4wp.outboundClick)"
 
 #: ../admin/admin.php:62
 msgid ""
@@ -145,8 +145,8 @@ msgstr ""
 "egy másik oldalra."
 
 #: ../admin/admin.php:65
-msgid "Download click events"
-msgstr "Esemény letöltés kattintásokhoz"
+msgid "Download click events (gtm4wp.downloadClick)"
+msgstr "Esemény letöltés kattintásokhoz (gtm4wp.downloadClick)"
 
 #: ../admin/admin.php:66
 msgid ""
@@ -170,8 +170,8 @@ msgstr ""
 "kiterjesztéseket kell követni a letöltések kezelése során."
 
 #: ../admin/admin.php:73
-msgid "Email click events"
-msgstr "Esemény email link kattintásokhoz"
+msgid "Email click events (gtm4wp.emailClick)"
+msgstr "Esemény email link kattintásokhoz (gtm4wp.emailClick)"
 
 #: ../admin/admin.php:74
 msgid ""
@@ -382,3 +382,28 @@ msgstr ""
 #: ../integration/woocommerce.php:48
 msgid "SKU:"
 msgstr "Cikkszám:"
+
+#: ../admin/admin.php:77
+msgid "Form fill events (gtm4wp.formElementEnter & gtm4wp.formElementLeave)"
+msgstr ""
+"Form kitöltés események (gtm4wp.formElementEnter & gtm4wp.formElementLeave)"
+
+#: ../admin/admin.php:78
+msgid ""
+"Check this option to include a Tag Manager event when a visitor moves "
+"between elements of a form (comment, contact, etc)."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani, "
+"amikor egy látogató egy űrlap elemei között mozog (hozzászólás, kapcsolat, "
+"stb.)"
+
+msgid ""
+"In October 2013 Google released a new feature called <a href=\"https://"
+"support.google.com/tagmanager/answer/3415369?hl=en\" target=\"_blank\">auto "
+"event tracking</a>. It is up to you how you use click events either using "
+"Google's solution or the settings below."
+msgstr ""
+"2013 októberében a Google kihozott egy új <a href=\"https://support.google."
+"com/tagmanager/answer/3415369?hl=en\" target=\"_blank\">automatikus esemény "
+"követés</a> funkciót. Választhat, melyiket esemény követést használja, a "
+"Google megoldását vagy az alábbi beállításokat."

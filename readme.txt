@@ -1,10 +1,10 @@
 === DuracellTomi's Google Tag Manager for WordPress ===
 Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
-Tags: google tag manager, tag manager, google
+Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing
 Requires at least: 3.0.1
 Tested up to: 3.6.1
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -38,6 +38,7 @@ This plugin can fire several Tag Manager events so that you can include special 
 * the visitor clicks on an outbound link
 * the visitor clicks on a download link
 * the visitor clicks on an email link
+* the visitor moves between elements of a form (comment, contact, etc.)
 
 Link URLs are included in the Tag Manager event so that you can use them for example in a Google Analytics event tag.
 
@@ -60,7 +61,7 @@ More integration to come!
 
 == Installation ==
 
-1. Upload `google-tag-manager-for-wordpress` to the `/wp-content/plugins/` directory
+1. Upload `duracelltomi-google-tag-manager-for-wordpress` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Go to Settings / Google Tag Manager and enter your Google Tag Manager container ID and setup additional options
 
@@ -72,11 +73,11 @@ Google Tag Manager is not just about visitor tracking.
 The ability to include a Google/Universal Analytics tag is only one feature
 you can manage.
 
-Therefore there is no need to have an option to exclude the container code snippet
+Therefor there is no need to have an option to exclude the container code snippet
 on certain cases.
 
-If you want to exclude logged in users or certains user roles, use the corresponting dataLayer variable
-and and exclude filter in Google Tag Manager.
+If you want to exclude logged in users or certain user roles, use the corresponting dataLayer variable (visitorType)
+and an exclude filter in Google Tag Manager.
 
 == Screenshots ==
 
@@ -88,9 +89,29 @@ and and exclude filter in Google Tag Manager.
 
 == Changelog ==
 
+= 0.2 =
+* ! BACKWARD INCOMPATIBLE CHANGE ! - Names of Tag Manager click events has been changed to comply with naming conventions:
+	* ContactFormSubmitted -> gtm4wp.contactForm7Submitted
+	* DownloadClick -> gtm4wp.downloadClick
+	* EmailClick -> gtm4wp.emailClick
+	* OutboundClick -> gtm4wp.outboundClick
+	* AddProductToCart -> gtm4wp.addProductToCart
+* Updated: click events are now disabled by default to reflect recently released Tag Manager auto events. I do not plan to remove this functionality. You can decide which solution you would like to use :-)
+* Updated: language template (pot) file and Hungarian translation
+* Added: new form move events to track how visitors interact with your (comment, contact, etc.) forms
+* Added: event names to admin options page so that you know what events to use in Google Tag Manager
+* Added: Google Tag Manager icon to admin settings page
+* Added: Settings link to admin plugins page
+* Fixed: null value in visitorType dataLayer variable if no logged in user exists (now 'visitor-logged-out')
+
 = 0.1 =
 * First beta release
 
 == Upgrade Notice ==
 
+= 0.2 =
+BACKWARD INCOMPATIBLE CHANGE: Names of Tag Manager click events has been changed to comply naming conventions.
+See changelog for details. Do not forget to update your Tag Manager container setup after upgrading this plugin!
+
+= 0.1 =
 This is the first public beta, no upgrade is needed.

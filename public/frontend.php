@@ -21,7 +21,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	
 	if ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_USERROLE] ) {
 		get_currentuserinfo();
-		$dataLayer["visitorType"] = $current_user->roles[0];
+		$dataLayer["visitorType"] = ( $current_user->roles[0] == NULL ? "visitor-logged-out" : $current_user->roles[0] );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_POSTTITLE] ) {
@@ -227,6 +227,10 @@ function gtm4wp_enqueue_scripts() {
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WPCF7] ) {
 		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-contact-form-7-tracker.js", array( "jquery-core" ), "1.0", false );
+	}
+
+	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_FORMMOVE] ) {
+		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-form-move-tracker.js", array( "jquery-core" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE] ) {

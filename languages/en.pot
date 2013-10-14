@@ -111,7 +111,7 @@ msgid ""
 msgstr ""
 
 #: ../admin/admin.php:61
-msgid "Outbound link click events"
+msgid "Outbound link click events (gtm4wp.outboundClick)"
 msgstr ""
 
 #: ../admin/admin.php:62
@@ -121,7 +121,7 @@ msgid ""
 msgstr ""
 
 #: ../admin/admin.php:65
-msgid "Download click events"
+msgid "Download click events (gtm4wp.downloadClick)"
 msgstr ""
 
 #: ../admin/admin.php:66
@@ -141,7 +141,7 @@ msgid ""
 msgstr ""
 
 #: ../admin/admin.php:73
-msgid "Email click events"
+msgid "Email click events (gtm4wp.emailClick)"
 msgstr ""
 
 #: ../admin/admin.php:74
@@ -316,4 +316,16 @@ msgstr ""
 
 #: ../integration/woocommerce.php:48
 msgid "SKU:"
+msgstr ""
+
+#: ../admin/admin.php:77
+msgid "Form fill events (gtm4wp.formElementEnter & gtm4wp.formElementLeave)"
+msgstr ""
+
+#: ../admin/admin.php:78
+msgid "Check this option to include a Tag Manager event when a visitor moves between elements of a form (comment, contact, etc)."
+msgstr ""
+
+
+msgid "In October 2013 Google released a new feature called <a href=\"https://support.google.com/tagmanager/answer/3415369?hl=en\" target=\"_blank\">auto event tracking</a>. It is up to you how you use click events either using Google's solution or the settings below."
 msgstr ""

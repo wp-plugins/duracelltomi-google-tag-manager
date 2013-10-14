@@ -18,6 +18,7 @@ define( 'GTM4WP_OPTION_EVENTS_OUTBOUND',       'event-outbound' );
 define( 'GTM4WP_OPTION_EVENTS_DOWNLOADS',      'event-downloads' );
 define( 'GTM4WP_OPTION_EVENTS_DWLEXT',         'event-download-extensions' );
 define( 'GTM4WP_OPTION_EVENTS_EMAILCLICKS',    'event-email-clicks' );
+define( 'GTM4WP_OPTION_EVENTS_FORMMOVE',       'event-form-move' );
 
 define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',       'integrate-wpcf7' );
 define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE', 'integrate-woocommerce' );
@@ -40,10 +41,11 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_INCLUDE_POSTTITLE   => false,
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => false,
 	
-	GTM4WP_OPTION_EVENTS_OUTBOUND    => true,
-	GTM4WP_OPTION_EVENTS_DOWNLOADS   => true,
+	GTM4WP_OPTION_EVENTS_OUTBOUND    => false,
+	GTM4WP_OPTION_EVENTS_DOWNLOADS   => false,
 	GTM4WP_OPTION_EVENTS_DWLEXT      => "pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,gz,tar",
-	GTM4WP_OPTION_EVENTS_EMAILCLICKS => true,
+	GTM4WP_OPTION_EVENTS_EMAILCLICKS => false,
+	GTM4WP_OPTION_EVENTS_FORMMOVE    => true,
 
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => true,
 	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,

@@ -1,10 +1,10 @@
 jQuery( function() {
 	jQuery( "a[href^=mailto]" )
-		.bind( "click", function() {
+		.on( "click", function() {
 			var gtm4wp_linkparts = jQuery( this ).attr( "href" ).split( ":" );
 
 			window[ gtm4wp_datalayer_name ].push({
-				'event': 'EmailClick',
+				'event': 'gtm4wp.emailClick',
 				'linkhref': gtm4wp_linkparts
 			});
 		})

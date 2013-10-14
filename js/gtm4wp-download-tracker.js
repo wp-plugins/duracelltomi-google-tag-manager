@@ -3,9 +3,9 @@ function track_downloads(track_extensions) {
 
 	for ( var i = 0; i < gtm4wp_extensions_to_track.length; i++ ) {
 		jQuery( "a[href$=\\." + gtm4wp_extensions_to_track[i].toLowerCase() + "], a[href$=\\." + gtm4wp_extensions_to_track[i].toUpperCase() + "]" )
-			.bind( "click", function() {
+			.on( "click", function() {
 				window[ gtm4wp_datalayer_name ].push({
-					'event': 'DownloadClick',
+					'event': 'gtm4wp.downloadClick',
 					'linkhref': jQuery( this ).attr( "href" )
 				});
 			})
