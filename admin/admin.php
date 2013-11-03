@@ -145,12 +145,14 @@ function gtm4wp_admin_output_field( $args ) {
 	switch( $args["label_for"] ) {
 		case GTM4WP_ADMIN_GROUP_GTMID: {
 			echo '<input type="text" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_CODE . ']" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_CODE . ']" value="' . $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] . '" /><br />' . $args["description"];
+			echo '<br /><span class="gtmid_validation_error">' . __( "This does not seems to be a valid Google Tag Manager ID! Please check and try again", GTM4WP_TEXTDOMAIN ) . '</span>';
 			
 			break;
 		}
 		
 		case GTM4WP_ADMIN_GROUP_DATALAYER: {
 			echo '<input type="text" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" value="' . $gtm4wp_options[GTM4WP_OPTION_DATALAYER_NAME] . '" /><br />' . $args["description"];
+			echo '<br /><span class="datalayername_validation_error">' . __( "This does not seems to be a valid JavaScript variable name! Please check and try again", GTM4WP_TEXTDOMAIN ) . '</span>';
 			
 			break;
 		}
@@ -401,26 +403,41 @@ function gtm4wp_add_admin_js($hook) {
 
 function gtm4wp_admin_head() {
 	echo '
+<style type="text/css">
+	.gtmid_validation_error,
+	.datalayername_validation_error {
+		display: none;
+		color: #c00;
+		font-weight: bold;
+	}
+</style>
 <script type="text/javascript">
 	jQuery(function() {
 		jQuery( "#gtm4wp-options\\\\[gtm-code\\\\]" )
 			.bind( "blur", function() {
 				var gtmid_regex = /^GTM-[A-Z0-9]+$/;
 				if ( ! gtmid_regex.test( jQuery( this ).val() ) ) {
-					alert( "' . __( "This does not seems to be a valid Google Tag Manager ID! Please check and try again", GTM4WP_TEXTDOMAIN ) . '" );
-					jQuery( this ).focus();
+					jQuery( ".gtmid_validation_error" )
+						.show();
+				} else {
+					jQuery( ".gtmid_validation_error" )
+						.hide();
 				}
 			});
 
 		jQuery( "#gtm4wp-options\\\\[gtm-datalayer-variable-name\\\\]" )
 			.bind( "blur", function() {
 				var currentval = jQuery( this ).val();
+
+				jQuery( ".datalayername_validation_error" )
+					.hide();
+
 				if ( currentval != "" ) {
 					// I know this is not the exact definition for a variable name but I think other kind of variable names should not be used.
 					var gtmvarname_regex = /^[a-zA-Z][a-zA-Z0-9_-]*$/;
 					if ( ! gtmvarname_regex.test( currentval ) ) {
-						alert( "' . __( "This does not seems to be a valid JavaScript variable name! Please check and try again", GTM4WP_TEXTDOMAIN ) . '" );
-						jQuery( this ).focus();
+						jQuery( ".datalayername_validation_error" )
+							.show();
 					}
 				}
 			});
