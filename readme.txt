@@ -1,10 +1,10 @@
 === DuracellTomi's Google Tag Manager for WordPress ===
 Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
-Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing
+Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
-Tested up to: 3.6.1
-Stable tag: 0.2
+Tested up to: 3.7.1
+Stable tag: 0.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -89,6 +89,10 @@ and an exclude filter in Google Tag Manager.
 
 == Changelog ==
 
+= 0.3 =
+* Updated: admin page does not show an alert box if Tag Manager ID or dataLayer variable name is incorrect. Instead it shows a warning line below the input field.
+* Updated: rewritten the code for WooCommerce dynamic remarketing. Added tag for homepage and order completed page.
+
 = 0.2 =
 * ! BACKWARD INCOMPATIBLE CHANGE ! - Names of Tag Manager click events has been changed to comply with naming conventions:
 	* ContactFormSubmitted -> gtm4wp.contactForm7Submitted
@@ -108,6 +112,9 @@ and an exclude filter in Google Tag Manager.
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.3 =
+This is a minor release. If you are using WooCommerce you should update to include more accurate adwords dynamic remarketing feature.
 
 = 0.2 =
 BACKWARD INCOMPATIBLE CHANGE: Names of Tag Manager click events has been changed to comply naming conventions.
