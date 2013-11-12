@@ -2,6 +2,12 @@
 define( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtp4wp_compile_datalayer");
 define( GTM4WP_WPFILTER_COMPILE_REMARKTING, "gtp4wp_compile_remarkering");
 
+if ( $GLOBALS["gtm4wp_options"][GTM4WP_OPTION_DATALAYER_NAME] == "" ) {
+	$GLOBALS["gtm4wp_datalayer_name"] = "dataLayer";
+} else {
+	$GLOBALS["gtm4wp_datalayer_name"] = $GLOBALS["gtm4wp_options"][GTM4WP_OPTION_DATALAYER_NAME];
+}
+
 function gtm4wp_is_assoc($arr) {
 	// borrowed from
 	// http://stackoverflow.com/questions/173400/php-arrays-a-good-way-to-check-if-an-array-is-associative-or-sequential
@@ -145,16 +151,10 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 }
 
 function gtm4wp_get_the_gtm_tag() {
-	global $gtm4wp_options;
+	global $gtm4wp_options, $gtm4wp_datalayer_name;
 	
 	$_gtm_tag = '';
 	
-	if ( $gtm4wp_options[GTM4WP_OPTION_DATALAYER_NAME] == "" ) {
-		$gtm4wp_datalayer_name = "dataLayer";
-	} else {
-		$gtm4wp_datalayer_name = $gtm4wp_options[GTM4WP_OPTION_DATALAYER_NAME];
-	}
-
 	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] != "" ) {
 		$_gtm_tag .= '
 <!-- Google Tag Manager for WordPress by DuracellTomi -->
@@ -174,9 +174,6 @@ function gtm4wp_get_the_gtm_tag() {
 			$gtm4wp_datalayer_data["google_tag_params"] = "-~-window.google_tag_params-~-";
 		}
 
-		$_gtm_tag .= '
-	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";';
-		
 		if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
 			$_gtm_tag .= '
 	jQuery( function() {
@@ -185,11 +182,11 @@ function gtm4wp_get_the_gtm_tag() {
 		}
 		
 		$_gtm_tag .= '
-	var ' . $gtm4wp_datalayer_name . ' = [' . str_replace(
+	var ' . $gtm4wp_datalayer_name . '.push(' . str_replace(
 			array( '"-~-', '-~-"' ),
 			array( "", "" ),
 			json_encode( $gtm4wp_datalayer_data )
-		) . '];
+		) . ');
 </script>';
 	
 		$_gtm_tag .= '
@@ -240,9 +237,39 @@ function gtm4wp_enqueue_scripts() {
 }
 
 function gtm4wp_wp_footer() {
-	gtm4wp_the_gtm_tag();
+	global $gtm4wp_options;
+
+	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == GTM4WP_PLACEMENT_FOOTER ) {
+		gtm4wp_the_gtm_tag();
+	}
+}
+
+function gtm4wp_wp_body_open() {
+	global $gtm4wp_options;
+
+	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == GTM4WP_PLACEMENT_CUSTOM ) {
+		gtm4wp_the_gtm_tag();
+	}
+}
+
+function gtm4wp_wp_header() {
+	global $gtm4wp_datalayer_name;
+
+	$_gtm_header_content = '
+<!-- Google Tag Manager for WordPress by DuracellTomi -->
+<script type="text/javascript">
+	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
+	'.$gtm4wp_datalayer_name.' = [];
+</script>
+<!-- End Google Tag Manager -->';
+
+	echo $_gtm_header_content;
 }
 
 add_action( "wp_enqueue_scripts", "gtm4wp_enqueue_scripts" );
+add_action( "wp_head", "gtm4wp_wp_header", 1 );
 add_action( "wp_footer", "gtm4wp_wp_footer" );
 add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_add_basic_datalayer_data" );
+
+// to be able to easily migrate from other Google Tag Manager plugins
+add_action( "body_open", "gtm4wp_wp_body_open" );
