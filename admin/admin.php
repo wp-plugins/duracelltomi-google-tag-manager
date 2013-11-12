@@ -4,6 +4,7 @@ define( 'GTM4WP_ADMIN_GROUP',             'gtm4wp-admin-group' );
 
 define( 'GTM4WP_ADMIN_GROUP_GENERAL',     'gtm4wp-admin-group-general' );
 define( 'GTM4WP_ADMIN_GROUP_GTMID',       'gtm4wp-admin-group-gtm-id' );
+define( 'GTM4WP_ADMIN_GROUP_PLACEMENT',   'gtm4wp-admin-code-placement' );
 define( 'GTM4WP_ADMIN_GROUP_DATALAYER',   'gtm4wp-admin-group-datalayer-name' );
 define( 'GTM4WP_ADMIN_GROUP_INFO',        'gtm4wp-admin-group-datalayer-info' );
 
@@ -149,6 +150,13 @@ function gtm4wp_admin_output_field( $args ) {
 			
 			break;
 		}
+
+		case GTM4WP_ADMIN_GROUP_PLACEMENT: {
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_0" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="0" ' . ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == 0 ? 'checked="checked"' : '' ) . '/> ' . __( "Footer of the page (not recommended by Google, no tweak in your template required)", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_1" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="1" ' . ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == 1 ? 'checked="checked"' : '' ) . '/> ' . __( "Custom (needs tweak in your template)", GTM4WP_TEXTDOMAIN ) . '<br />' . $args["description"];
+			
+			break;
+		}
 		
 		case GTM4WP_ADMIN_GROUP_DATALAYER: {
 			echo '<input type="text" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" value="' . $gtm4wp_options[GTM4WP_OPTION_DATALAYER_NAME] . '" /><br />' . $args["description"];
@@ -223,6 +231,11 @@ function gtm4wp_sanitize_options($options) {
 			} else {
 				$output[$optionname] = $newoptionvalue;
 			}
+		} else if ( $optionname == GTM4WP_ADMIN_GROUP_PLACEMENT ) {
+			$output[$optionname] = (int) $newoptionvalue;
+			if ( ( $output[$optionname] < 0) || ( $output[$optionname] > 1 ) ) {
+				$output[$optionname] = 0;
+			}
 		} else {
 			$output[$optionname] = $newoptionvalue;
 		}
@@ -252,6 +265,18 @@ function gtm4wp_admin_init() {
 		array(
 			"label_for" => GTM4WP_ADMIN_GROUP_GTMID,
 			"description" => __( "Enter your Google Tag Manager ID here.", GTM4WP_TEXTDOMAIN )
+		)
+	);
+
+	add_settings_field(
+		GTM4WP_ADMIN_GROUP_PLACEMENT,
+		__( 'Container code placement', GTM4WP_TEXTDOMAIN ),
+		'gtm4wp_admin_output_field',
+		GTM4WP_ADMINSLUG,
+		GTM4WP_ADMIN_GROUP_GENERAL,
+		array(
+			"label_for" => GTM4WP_ADMIN_GROUP_PLACEMENT,
+			"description" => __( "Select how your container code should be included in your website.<br />If you select 'Custom' you need to edit your template file and add the following line just after the opening &lt;body&gt; tag:<br /><code>&lt;?php gtm4wp_the_gtm_tag(); ?&gt;</code>", GTM4WP_TEXTDOMAIN )
 		)
 	);
 
