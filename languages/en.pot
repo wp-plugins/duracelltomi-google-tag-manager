@@ -329,3 +329,21 @@ msgstr ""
 
 msgid "In October 2013 Google released a new feature called <a href=\"https://support.google.com/tagmanager/answer/3415369?hl=en\" target=\"_blank\">auto event tracking</a>. It is up to you how you use click events either using Google's solution or the settings below."
 msgstr ""
+
+msgid ""
+"Footer of the page (not recommended by Google, no tweak in your template "
+"required)"
+msgstr ""
+
+msgid "Custom (needs tweak in your template)"
+msgstr ""
+
+msgid "Container code placement"
+msgstr ""
+
+msgid ""
+"Select how your container code should be included in your website.<br />If "
+"you select 'Custom' you need to edit your template file and add the "
+"following line just after the opening &lt;body&gt; tag:<br /><code>&lt;?php "
+"gtm4wp_the_gtm_tag(); ?&gt;</code>"
+msgstr ""
