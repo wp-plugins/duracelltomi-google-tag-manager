@@ -276,7 +276,7 @@ function gtm4wp_admin_init() {
 		GTM4WP_ADMIN_GROUP_GENERAL,
 		array(
 			"label_for" => GTM4WP_ADMIN_GROUP_PLACEMENT,
-			"description" => __( "Select how your container code should be included in your website.<br />If you select 'Custom' you need to edit your template file and add the following line just after the opening &lt;body&gt; tag:<br /><code>&lt;?php gtm4wp_the_gtm_tag(); ?&gt;</code>", GTM4WP_TEXTDOMAIN )
+			"description" => __( "Select how your container code should be included in your website.<br />If you select 'Custom' you need to edit your template file and add the following line just after the opening &lt;body&gt; tag:<br /><code>&lt;?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?&gt;</code>", GTM4WP_TEXTDOMAIN )
 		)
 	);
 
