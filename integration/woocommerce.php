@@ -55,13 +55,13 @@ function gtm4wp_woocommerce_datalayer_filter_order( $dataLayer ) {
 			  "quantity" => $item['qty']
 			);
 			
-			$_sumprice += $item['qty'] * $_prodprice;
+			$_sumprice += $_prodprice;
 			$_product_ids[] = "'" . $_product->id . "'";
 		}
 	}
 
 	$dataLayer["transactionProducts"] = $_products;
-	$dataLayer["event"] = "OrderCompleted";
+	$dataLayer["event"] = "gtm4wp.orderCompleted";
 
 	$dataLayer["ecomm_prodid"] = '[' . implode(", ", $_product_ids) . ']';
 	$dataLayer["ecomm_pagetype"] = "purchase";
