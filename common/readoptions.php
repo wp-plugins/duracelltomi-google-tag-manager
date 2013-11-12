@@ -1,6 +1,7 @@
 <?php
 define( 'GTM4WP_OPTIONS',                      'gtm4wp-options' );
 define( 'GTM4WP_OPTION_GTM_CODE',              'gtm-code' );
+define( 'GTM4WP_OPTION_GTM_PLACEMENT',         'gtm-code-placement' );
 define( 'GTM4WP_OPTION_DATALAYER_NAME',        'gtm-datalayer-variable-name' );
 
 define( 'GTM4WP_OPTION_INCLUDE_REMARKETING',   'include-remarketing' );
@@ -24,11 +25,15 @@ define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',       'integrate-wpcf7' );
 define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE', 'integrate-woocommerce' );
 define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE', 'integrate-wp-e-commerce' );
 
+define( 'GTM4WP_PLACEMENT_FOOTER',             0 );
+define( 'GTM4WP_PLACEMENT_BODYOPEN',           1 );
+
 $gtm4wp_options = array();
 
 $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_GTM_CODE            => "",
 	GTM4WP_OPTION_DATALAYER_NAME      => "",
+	GTM4WP_OPTION_GTM_PLACEMENT       => GTM4WP_PLACEMENT_FOOTER,
 
 	GTM4WP_OPTION_INCLUDE_REMARKETING => false,
 	GTM4WP_OPTION_INCLUDE_LOGGEDIN    => false,
