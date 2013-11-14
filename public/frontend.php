@@ -177,7 +177,7 @@ function gtm4wp_get_the_gtm_tag() {
 		if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
 			$_gtm_tag .= '
 	jQuery( function() {
-		track_downloads( "'.str_replace('"', '', $gtm4wp_options[GTM4WP_OPTION_EVENTS_DWLEXT]).'" );
+		gtm4wp_track_downloads( "'.str_replace('"', '', $gtm4wp_options[GTM4WP_OPTION_EVENTS_DWLEXT]).'" );
 	});';
 		}
 		
