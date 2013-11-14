@@ -1,4 +1,4 @@
-function track_downloads(track_extensions) {
+function gtm4wp_track_downloads(track_extensions) {
 	var gtm4wp_extensions_to_track = track_extensions.split(",");
 
 	for ( var i = 0; i < gtm4wp_extensions_to_track.length; i++ ) {
