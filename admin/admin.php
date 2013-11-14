@@ -420,9 +420,9 @@ function gtm4wp_add_admin_js($hook) {
 	global $gtp4wp_plugin_url;
 	
 	if ( $hook == "settings_page_" . GTM4WP_ADMINSLUG ) {
-		wp_enqueue_script( "admin-tabcreator", $gtp4wp_plugin_url . "/js/admin-tabcreator.js", array( "jquery-core" ), "1.0" );
+		wp_enqueue_script( "admin-tabcreator", $gtp4wp_plugin_url . "js/admin-tabcreator.js", array( "jquery-core" ), "1.0" );
 
-		wp_enqueue_style( "gtm4wp-validate", $gtp4wp_plugin_url . "/css/admin-gtm4wp.css", array(), "1.0" );
+		wp_enqueue_style( "gtm4wp-validate", $gtp4wp_plugin_url . "css/admin-gtm4wp.css", array(), "1.0" );
 	}
 }
 

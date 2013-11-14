@@ -211,28 +211,28 @@ function gtm4wp_enqueue_scripts() {
 	global $gtm4wp_options, $gtp4wp_plugin_url;
 		
 	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_OUTBOUND] ) {
-		wp_enqueue_script( "gtm4wp-outbound-click-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-outbound-click-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-outbound-click-tracker", $gtp4wp_plugin_url . "js/gtm4wp-outbound-click-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
-		wp_enqueue_script( "gtm4wp-download-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-download-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-download-tracker", $gtp4wp_plugin_url . "js/gtm4wp-download-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_EMAILCLICKS] ) {
-		wp_enqueue_script( "gtm4wp-email-link-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-email-link-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-email-link-tracker", $gtp4wp_plugin_url . "js/gtm4wp-email-link-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WPCF7] ) {
-		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-contact-form-7-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "js/gtm4wp-contact-form-7-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_FORMMOVE] ) {
-		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-form-move-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "js/gtm4wp-form-move-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE] ) {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
-		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "/js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
 	}
 }
 
