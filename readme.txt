@@ -4,7 +4,7 @@ Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 3.7.1
-Stable tag: 0.3
+Stable tag: 0.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -30,6 +30,7 @@ very easily since you can fire them using rules that include
 * post types
 * logged in status
 * logged in user role
+* search data
 
 = Tag Manager Events =
 
@@ -39,6 +40,7 @@ This plugin can fire several Tag Manager events so that you can include special 
 * the visitor clicks on a download link
 * the visitor clicks on an email link
 * the visitor moves between elements of a form (comment, contact, etc.)
+* the visitor clicks on a Facebook like/share (limited feature) or Twitter button
 
 Link URLs are included in the Tag Manager event so that you can use them for example in a Google Analytics event tag.
 
@@ -73,11 +75,44 @@ Google Tag Manager is not just about visitor tracking.
 The ability to include a Google/Universal Analytics tag is only one feature
 you can manage.
 
-Therefor there is no need to have an option to exclude the container code snippet
+Therefore there is no need to have an option to exclude the container code snippet
 on certain cases.
 
 If you want to exclude logged in users or certain user roles, use the corresponting dataLayer variable (visitorType)
 and an exclude filter in Google Tag Manager.
+
+= How do I put the Google Tag Manager container code next to the opening body tag? =
+
+Go to the admin section of the plugin and select "Custom" from the placement settings.
+This way my plugin does not put the code snippet into the footer of the page.
+
+In this case you have to edit your template files.
+Go to `wp-content/plugins/themes/<your theme dir>` and edit `header.php`.
+In most cases you will find the opening `<body>` tag here.
+
+If you can not find it, contact the author of the theme and ask for instructions.
+
+In case you found the opening `<body>` tag, open a new line just after it and insert this line of code:
+`<?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?>`
+
+Be carefull not to include this line inside any `<div>`, `<p>`, `<header>`, `<article>` and so on.
+It can break you theme.
+
+= Why can not this plugin insert the container snippet after the opening body tag automatically? =
+
+Currently WordPress has two 'commands' or 'hooks' that a programmer can use: one for the `<head>` section and
+one for the bottom of `<body>`. There is no way to inject any content after the opening body tag.
+
+Fortunately some theme authors already resolved this so in some cases you do not need to edit your template files.
+I suggest first to select the Custom placement and use Google Tag Assistant Chrome browser extension to check
+whether the container code is placed as expected.
+
+If it shows an error, go and edit your theme manually.
+
+= Facebook like/share/send button events do not fire for me, why? =
+
+It is a limitation of Facebook. Click event tracking is only available for html5/xfbml buttons.
+If you or your social plugin inserts the Facebook buttons using IFRAME-s (like Sociable), it is not possible to track clicks.
 
 == Screenshots ==
 
@@ -88,6 +123,12 @@ and an exclude filter in Google Tag Manager.
 5. Advanced settings
 
 == Changelog ==
+
+= 0.4 =
+* New: you can now select container code placement. This way you can insert the code snippet after the opening body tag. Please read FAQ for details
+* New: initial support for social event tracking for Facebook and Twitter buttons. Please read FAQ for details
+* Updated: event name on successful WooCommerce transacion: OrderCompleted -> gtm4wp.orderCompleted
+* Fixed: frontend JS codes did not load on some WordPress installs
 
 = 0.3 =
 * Updated: admin page does not show an alert box if Tag Manager ID or dataLayer variable name is incorrect. Instead it shows a warning line below the input field.
@@ -112,6 +153,10 @@ and an exclude filter in Google Tag Manager.
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.4 =
+Important change: Tag Manager event name of a WooCommerce successful order has been changed. 
+See changelog for details.
 
 = 0.3 =
 This is a minor release. If you are using WooCommerce you should update to include more accurate adwords dynamic remarketing feature.
