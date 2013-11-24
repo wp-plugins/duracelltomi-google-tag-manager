@@ -77,6 +77,10 @@ $GLOBALS["gtm4wp_eventfieldtexts"] = array(
 	GTM4WP_OPTION_EVENTS_FORMMOVE => array(
 		"label"       => __( "Form fill events (gtm4wp.formElementEnter & gtm4wp.formElementLeave)", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include a Tag Manager event when a visitor moves between elements of a form (comment, contact, etc).", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_EVENTS_SOCIAL => array(
+		"label"       => __( "Social actions (gtm4wp.socialAction)", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a Tag Manager event when a visitor uses a social button to share/like content on a social network.", GTM4WP_TEXTDOMAIN )
 	)
 );
 

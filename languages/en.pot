@@ -347,3 +347,11 @@ msgid ""
 "following line just after the opening &lt;body&gt; tag:<br /><code>&lt;?php "
 "if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?&gt;</code>"
 msgstr ""
+
+msgid "Social actions (gtm4wp.socialAction)"
+msgstr ""
+
+msgid ""
+"Check this option to include a Tag Manager event when a visitor uses a "
+"social button to share/like content on a social network."
+msgstr ""
