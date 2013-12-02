@@ -52,7 +52,7 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_EVENTS_DWLEXT      => "pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,gz,tar",
 	GTM4WP_OPTION_EVENTS_EMAILCLICKS => false,
 	GTM4WP_OPTION_EVENTS_FORMMOVE    => true,
-	GTM4WP_OPTION_EVENTS_FORMMOVE    => false,
+	GTM4WP_OPTION_EVENTS_SOCIAL      => false,
 
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => true,
 	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,
