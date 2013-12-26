@@ -22,6 +22,13 @@ define( 'GTM4WP_OPTION_EVENTS_EMAILCLICKS',    'event-email-clicks' );
 define( 'GTM4WP_OPTION_EVENTS_FORMMOVE',       'event-form-move' );
 define( 'GTM4WP_OPTION_EVENTS_SOCIAL',         'event-social' );
 
+define( 'GTM4WP_OPTION_SCROLLER_ENABLED',      'scroller-enabled' );
+define( 'GTM4WP_OPTION_SCROLLER_DEBUGMODE',    'scroller-debug-mode' );
+define( 'GTM4WP_OPTION_SCROLLER_CALLBACKTIME', 'scroller-callback-time' );
+define( 'GTM4WP_OPTION_SCROLLER_DISTANCE',     'scroller-distance' );
+define( 'GTM4WP_OPTION_SCROLLER_CONTENTID',    'scroller-contentid' );
+define( 'GTM4WP_OPTION_SCROLLER_READERTIME',   'scroller-readertime' );
+
 define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',       'integrate-wpcf7' );
 define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE', 'integrate-woocommerce' );
 define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE', 'integrate-wp-e-commerce' );
@@ -53,6 +60,13 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_EVENTS_EMAILCLICKS => false,
 	GTM4WP_OPTION_EVENTS_FORMMOVE    => true,
 	GTM4WP_OPTION_EVENTS_SOCIAL      => false,
+	
+	GTM4WP_OPTION_SCROLLER_ENABLED      => false,
+	GTM4WP_OPTION_SCROLLER_DEBUGMODE    => false,
+	GTM4WP_OPTION_SCROLLER_CALLBACKTIME => 100,
+	GTM4WP_OPTION_SCROLLER_DISTANCE     => 150,
+	GTM4WP_OPTION_SCROLLER_CONTENTID    => "content",
+	GTM4WP_OPTION_SCROLLER_READERTIME   => 60,
 
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => true,
 	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,

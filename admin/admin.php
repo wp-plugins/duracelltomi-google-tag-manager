@@ -10,6 +10,7 @@ define( 'GTM4WP_ADMIN_GROUP_INFO',        'gtm4wp-admin-group-datalayer-info' );
 
 define( 'GTM4WP_ADMIN_GROUP_INCLUDES',    'gtm4wp-admin-group-includes' );
 define( 'GTM4WP_ADMIN_GROUP_EVENTS',      'gtm4wp-admin-group-events' );
+define( 'GTM4WP_ADMIN_GROUP_SCROLLER',    'gtm4wp-admin-group-scroller' );
 define( 'GTM4WP_ADMIN_GROUP_INTEGRATION', 'gtm4wp-admin-group-integration' );
 define( 'GTM4WP_ADMIN_GROUP_ADVANCED',    'gtm4wp-admin-group-advanced' );
 define( 'GTM4WP_ADMIN_GROUP_CREDITS',     'gtm4wp-admin-group-credits' );
@@ -84,6 +85,33 @@ $GLOBALS["gtm4wp_eventfieldtexts"] = array(
 	)
 );
 
+$GLOBALS["gtm4wp_scrollerfieldtexts"] = array(
+	GTM4WP_OPTION_SCROLLER_ENABLED      => array(
+		"label"       => __( "Enabled", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Enable scroll tracker script on your website.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_SCROLLER_DEBUGMODE    => array(
+		"label"       => __( "Debug mode", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Fire console.log() commands instead of dataLayer events.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_SCROLLER_CALLBACKTIME => array(
+		"label"       => __( "Time delay before location check", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Enter the number of milliseconds after the script checks the current location. It prevents too many events being fired while scrolling.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_SCROLLER_DISTANCE     => array(
+		"label"       => __( "Minimum distance", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "The minimum amount of pixels that a visitor has to scroll before we treat the move as scrolling.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_SCROLLER_CONTENTID    => array(
+		"label"       => __( "Content ID", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Enter the DOM ID of the content element in your template. Leave it empty for default(content). Do not include the # sign.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_SCROLLER_READERTIME   => array(
+		"label"       => __( "Scroller time", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Enter the number of milliseconds after the the scroller user is being treated as a reader, someone who really reads the content, not just scrolls through it.", GTM4WP_TEXTDOMAIN )
+	)
+);
+
 $GLOBALS["gtm4wp_integratefieldtexts"] = array(
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => array(
 		"label"         => __( "Contact Form 7", GTM4WP_TEXTDOMAIN ),
@@ -118,6 +146,14 @@ function gtm4wp_admin_output_section( $args ) {
 			echo '<p style="font-weight: bold;">';
 			_e( 'In October 2013 Google released a new feature called <a href="https://support.google.com/tagmanager/answer/3415369?hl=en" target="_blank">auto event tracking</a>. It is up to you how you use click events either using Google\'s solution or the settings below.', GTM4WP_TEXTDOMAIN );
 			echo '</p>';
+
+			break;        
+		}
+		
+		case GTM4WP_ADMIN_GROUP_SCROLLER: {
+			_e( "Fire tags based on how the visitor scrolls through your page.", GTM4WP_TEXTDOMAIN );
+			echo '<br />';
+			printf( __( 'Based on the script originaly posted to <a href="%s">Analytics Talk</a>', GTM4WP_TEXTDOMAIN ) , "http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/");
 
 			break;        
 		}
@@ -178,7 +214,12 @@ function gtm4wp_admin_output_field( $args ) {
 		default: {
 			$optval = $gtm4wp_options[$args["optionfieldid"]];
 			
-			switch(gettype($optval)) {
+			// fix wrong data type saved in v0.4
+			if ( GTM4WP_OPTION_EVENTS_SOCIAL == $args["optionfieldid"] ) {
+				$optval = ( boolean )( $optval );
+			}
+			
+			switch( gettype( $optval ) ) {
 				case "boolean": {
 					echo '<input type="checkbox" id="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" name="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" value="1" ' . checked( 1, $optval, false ) . ' /><br />' . $args["description"];
 
@@ -193,6 +234,20 @@ function gtm4wp_admin_output_field( $args ) {
 					break;
 				}
 				
+				case "integer": {
+					echo '<input type="number" step="1" min="1" class="small-text" id="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" name="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" value="' . esc_attr( $optval ) . '" /><br />' . $args["description"];
+
+					if ( isset( $args["plugintocheck"] ) ) {
+						if ( is_plugin_active( $args["plugintocheck"] ) ) {
+							echo "<br />" . __( 'This plugin is <strong class="gtm4wp-plugin-active">active</strong>, it is strongly recomment to enable this integration!', GTM4WP_TEXTDOMAIN );
+						} else {
+							echo "<br />" . __( 'This plugin is <strong class="gtm4wp-plugin-not-active">not active</strong>, enabling this integration could cause issues on frontend!', GTM4WP_TEXTDOMAIN );
+						}
+					}
+
+					break;
+				}
+
 				default : {
 					echo '<input type="text" id="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" name="' . GTM4WP_OPTIONS . '[' . $args["optionfieldid"] . ']" value="' . esc_attr( $optval ) . '" size="80" /><br />' . $args["description"];
 				}
@@ -211,18 +266,23 @@ function gtm4wp_sanitize_options($options) {
 			$newoptionvalue = "";
 		}
 
+		// "include" settings
 		if ( substr($optionname, 0, 8) == "include-" ) {
 			$output[$optionname] = (boolean) $newoptionvalue;
 
+		// tracked download extensions
 		} else if ( $optionname == GTM4WP_OPTION_EVENTS_DWLEXT ) {
 			$output[$optionname] = str_replace( " ", "", trim( $newoptionvalue ) );
 
+		// dataLayer events
 		} else if ( substr($optionname, 0, 6) == "event-" ) {
 			$output[$optionname] = (boolean) $newoptionvalue;
 
+		// integrations
 		} else if ( substr($optionname, 0, 10) == "integrate-" ) {
 			$output[$optionname] = (boolean) $newoptionvalue;
 
+		// GTM code or dataLayer variable name
 		} else if ( ( $optionname == GTM4WP_OPTION_GTM_CODE ) || ( $optionname == GTM4WP_OPTION_DATALAYER_NAME ) ) {
 			$newoptionvalue = trim($newoptionvalue);
 			
@@ -235,13 +295,36 @@ function gtm4wp_sanitize_options($options) {
 			} else {
 				$output[$optionname] = $newoptionvalue;
 			}
-		} else if ( $optionname == GTM4WP_ADMIN_GROUP_PLACEMENT ) {
+
+		// GTM container code placement
+		} else if ( $optionname == GTM4WP_OPTION_GTM_PLACEMENT ) {
 			$output[$optionname] = (int) $newoptionvalue;
 			if ( ( $output[$optionname] < 0) || ( $output[$optionname] > 1 ) ) {
 				$output[$optionname] = 0;
 			}
+
+		// scroll tracking content ID
+		} else if ( $optionname == GTM4WP_OPTION_SCROLLER_CONTENTID ) {
+			$output[$optionname] = trim( str_replace( "#", "", $newoptionvalue ) );
+		// anything else
 		} else {
-			$output[$optionname] = $newoptionvalue;
+			switch( gettype($optionvalue)) {
+				case "boolean": {
+					$output[$optionname] = (boolean) $newoptionvalue;
+					
+					break;
+				}
+
+				case "integer": {
+					$output[$optionname] = (int) $newoptionvalue;
+					
+					break;
+				}
+
+				default: {
+					$output[$optionname] = $newoptionvalue;
+				}
+			} // end switch
 		}
 	}
 	
@@ -249,7 +332,7 @@ function gtm4wp_sanitize_options($options) {
 }
 
 function gtm4wp_admin_init() {
-	global $gtm4wp_includefieldtexts, $gtm4wp_eventfieldtexts, $gtm4wp_integratefieldtexts;
+	global $gtm4wp_includefieldtexts, $gtm4wp_eventfieldtexts, $gtm4wp_integratefieldtexts, $gtm4wp_scrollerfieldtexts;
 	
 	register_setting( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS, "gtm4wp_sanitize_options" );
 	
@@ -320,6 +403,28 @@ function gtm4wp_admin_init() {
 			'gtm4wp_admin_output_field',
 			GTM4WP_ADMINSLUG,
 			GTM4WP_ADMIN_GROUP_EVENTS,
+			array(
+				"label_for" => "gtm4wp-options[" . $fieldid . "]",
+				"description" => $fielddata["description"],
+				"optionfieldid" => $fieldid
+			)
+		);
+	}
+
+	add_settings_section(
+		GTM4WP_ADMIN_GROUP_SCROLLER,
+		__( 'Scroll tracking', GTM4WP_TEXTDOMAIN ),
+		'gtm4wp_admin_output_section',
+		GTM4WP_ADMINSLUG
+	);
+	
+	foreach($gtm4wp_scrollerfieldtexts as $fieldid => $fielddata) {
+		add_settings_field(
+			"gtm4wp-admin-" . $fieldid . "-id",
+			$fielddata["label"],
+			'gtm4wp_admin_output_field',
+			GTM4WP_ADMINSLUG,
+			GTM4WP_ADMIN_GROUP_SCROLLER,
 			array(
 				"label_for" => "gtm4wp-options[" . $fieldid . "]",
 				"description" => $fielddata["description"],

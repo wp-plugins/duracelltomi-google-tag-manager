@@ -212,40 +212,44 @@ function gtm4wp_the_gtm_tag() {
 function gtm4wp_enqueue_scripts() {
 	global $gtm4wp_options, $gtp4wp_plugin_url;
 		
-	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_OUTBOUND] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_OUTBOUND ] ) {
 		wp_enqueue_script( "gtm4wp-outbound-click-tracker", $gtp4wp_plugin_url . "js/gtm4wp-outbound-click-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DOWNLOADS ] ) {
 		wp_enqueue_script( "gtm4wp-download-tracker", $gtp4wp_plugin_url . "js/gtm4wp-download-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_EMAILCLICKS] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_EMAILCLICKS ] ) {
 		wp_enqueue_script( "gtm4wp-email-link-tracker", $gtp4wp_plugin_url . "js/gtm4wp-email-link-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WPCF7] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WPCF7 ] ) {
 		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "js/gtm4wp-contact-form-7-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_FORMMOVE] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_FORMMOVE ] ) {
 		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "js/gtm4wp-form-move-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_SOCIAL] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_SOCIAL ] ) {
 		wp_enqueue_script( "gtm4wp-social-actions", $gtp4wp_plugin_url . "js/gtm4wp-social-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
 		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
+	}
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
+		wp_enqueue_script( "gtm4wp-scroll-tracking", $gtp4wp_plugin_url . "js/analytics-talk-content-tracking.js", array( "jquery" ), "1.0", false );
 	}
 }
 
 function gtm4wp_wp_footer() {
 	global $gtm4wp_options;
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == GTM4WP_PLACEMENT_FOOTER ) {
+	if ( GTM4WP_PLACEMENT_FOOTER == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
 		gtm4wp_the_gtm_tag();
 	}
 }
@@ -253,21 +257,33 @@ function gtm4wp_wp_footer() {
 function gtm4wp_wp_body_open() {
 	global $gtm4wp_options;
 
-	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == GTM4WP_PLACEMENT_CUSTOM ) {
+	if ( GTM4WP_PLACEMENT_CUSTOM == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
 		gtm4wp_the_gtm_tag();
 	}
 }
 
 function gtm4wp_wp_header() {
-	global $gtm4wp_datalayer_name;
+	global $gtm4wp_datalayer_name, $gtm4wp_options;
 
 	$_gtm_header_content = '
-<!-- Google Tag Manager for WordPress by DuracellTomi -->
+<!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
 <script type="text/javascript">
 	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
-	' . $gtm4wp_datalayer_name . ' = new Array();
+	' . $gtm4wp_datalayer_name . ' = new Array();';
+	
+	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
+		$_gtm_header_content .= '
+
+	var gtm4wp_scrollerscript_debugmode         = ' . ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_DEBUGMODE ] ? 'true' : 'false' ) . ';
+	var gtm4wp_scrollerscript_callbacktime      = ' . (int) $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_CALLBACKTIME ] . ';
+	var gtm4wp_scrollerscript_readerlocation    = ' . (int) $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_DISTANCE ] . ';
+	var gtm4wp_scrollerscript_contentelementid  = "' . $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_CONTENTID ] . '";
+	var gtm4wp_scrollerscript_scannertime       = ' . (int) $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_READERTIME ] . ';';
+	}
+
+	$_gtm_header_content .= '
 </script>
-<!-- End Google Tag Manager -->';
+<!-- End Google Tag Manager for WordPress by DuracellTomi -->';
 
 	echo $_gtm_header_content;
 }
