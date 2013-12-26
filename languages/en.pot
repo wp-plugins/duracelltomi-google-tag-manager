@@ -355,3 +355,55 @@ msgid ""
 "Check this option to include a Tag Manager event when a visitor uses a "
 "social button to share/like content on a social network."
 msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Enable scroll tracker script on your website."
+msgstr ""
+
+msgid "Debug mode"
+msgstr "Fire console.log() commands instead of dataLayer events."
+
+msgid "Time delay before location check"
+msgstr ""
+
+msgid ""
+"Enter the number of milliseconds after the script checks the current "
+"location. It prevents too many events being fired while scrolling."
+msgstr ""
+
+msgid "Minimum distance"
+msgstr ""
+
+msgid ""
+"The minimum amount of pixels that a visitor has to scroll before we treat "
+"the move as scrolling."
+msgstr ""
+
+msgid "Content ID"
+msgstr ""
+
+msgid ""
+"Enter the DOM ID of the content element in your template. Leave it empty for "
+"default(content). Do not include the # sign."
+msgstr ""
+
+msgid "Scroller time"
+msgstr ""
+
+msgid ""
+"Enter the number of milliseconds after the the scroller user is being "
+"treated as a reader, someone who really reads the content, not just scrolls "
+"through it."
+msgstr ""
+
+msgid "Fire tags based on how the visitor scrolls through your page."
+msgstr ""
+
+msgid ""
+"Based on the script originaly posted to <a href=\"%s\">Analytics Talk</a>"
+msgstr ""
+
+msgid "Scroll tracking"
+msgstr ""

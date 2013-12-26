@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Google Tag Manager for WordPress\n"
 "POT-Creation-Date: 2013-09-19 11:27+0100\n"
-"PO-Revision-Date: 2013-11-17 15:56+0100\n"
+"PO-Revision-Date: 2013-12-25 16:45+0100\n"
 "Last-Translator: Thomas Geiger <duracelltomi@gmail.com>\n"
 "Language-Team: JabJab Online Marketing\n"
 "Language: English\n"
@@ -443,3 +443,67 @@ msgid ""
 msgstr ""
 "Kapcsolja be ezt a beállítást, ha szeretne Tag Manager eseményt kiváltani, "
 "amikor egy látogató egy közösségi gomb segítségével megoszt/lájkol tartalmat."
+
+msgid "Enabled"
+msgstr "Engedélyezve"
+
+msgid "Enable scroll tracker script on your website."
+msgstr "Görgetés követés engedélyezése az oldalon."
+
+msgid "Debug mode"
+msgstr "Hibakereső üzemmód"
+
+msgid "Fire console.log() commands instead of dataLayer events."
+msgstr "console.log() parancsok dataLayer események helyett."
+
+msgid "Time delay before location check"
+msgstr "Kivárt idő a pozíció ellenőrzésére"
+
+msgid ""
+"Enter the number of milliseconds after the script checks the current "
+"location. It prevents too many events being fired while scrolling."
+msgstr ""
+"Adja meg, mennyi milliszekundumot várjon a program az aktuális görgetés "
+"helyének ellenőrzéséhez. Segít abban, hogy ne legyen túl sok esemény a "
+"folyamatos görgetés során. "
+
+msgid "Minimum distance"
+msgstr "Minimum távolság"
+
+msgid ""
+"The minimum amount of pixels that a visitor has to scroll before we treat "
+"the move as scrolling."
+msgstr ""
+"A legkisebb távolság pixelben, amit a felhasználónak görgetnie kell ahhoz, "
+"hogy mozgásnak vegyük a görgetést."
+
+msgid "Content ID"
+msgstr "Tartalom azonosító"
+
+msgid ""
+"Enter the DOM ID of the content element in your template. Leave it empty for "
+"default(content). Do not include the # sign."
+msgstr ""
+"Adja meg annak a tartalom DOM elemének az azonosítóját. Hagyja üresen az "
+"alapértelmezetthez (content). Ne használja a # jelet."
+
+msgid "Scroller time"
+msgstr "Görgető felhasználó"
+
+msgid ""
+"Enter the number of milliseconds after the the scroller user is being "
+"treated as a reader, someone who really reads the content, not just scrolls "
+"through it."
+msgstr ""
+"Adja meg, hány milliszekundum után számít a látogató olvasónak, aki tényleg "
+"el is olvassa a tartalmat, nem csak átfutja."
+
+msgid "Fire tags based on how the visitor scrolls through your page."
+msgstr "Címkék aktiválása, ahogy a felhasználó görget az oldalon belül."
+
+msgid ""
+"Based on the script originaly posted to <a href=\"%s\">Analytics Talk</a>"
+msgstr "Az <a href=\"%s\">Analytics Talk</a> scriptje alapján."
+
+msgid "Scroll tracking"
+msgstr "Görgetés figyelés"
