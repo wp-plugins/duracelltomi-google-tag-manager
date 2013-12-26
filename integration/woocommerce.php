@@ -1,90 +1,6 @@
 <?php
-$gtm4wp_woocommerce_completed_order_id = 0;
-$gtp4wp_woocommerce_remarketing_sku_list = array();
-$gtp4wp_woocommerce_remarketing_totalvalue = 0;
-
-function gtm4wp_woocommerce_datalayer_filter_order( $dataLayer ) {
-	global $gtm4wp_woocommerce_completed_order_id, $woocommerce;
-
-	$order = new WC_Order( $gtm4wp_woocommerce_completed_order_id );
-
-	$dataLayer["transactionId"]             = $order->get_order_number();
-	$dataLayer["transactionDate"]           = date("c");
-	$dataLayer["transactionType"]           = "sale";
-	$dataLayer["transactionAffiliation"]    = get_bloginfo( 'name' );
-	$dataLayer["transactionTotal"]          = $order->get_total();
-	$dataLayer["transactionShipping"]       = $order->get_shipping();
-	$dataLayer["transactionTax"]            = $order->get_total_tax();
-	$dataLayer["transactionPaymentType"]    = $order->payment_method_title;
-	$dataLayer["transactionCurrency"]       = get_woocommerce_currency();
-	$dataLayer["transactionShippingMethod"] = $order->get_shipping_method();
-	$dataLayer["transactionPromoCode"]      = implode( ", ", $order->get_used_coupons() );
-
-	$_products = array();
-	$_sumprice = 0;
-	$_product_ids = array();
-
-	if ( $order->get_items() ) {
-		foreach ( $order->get_items() as $item ) {
-			$_product = $order->get_product_from_item( $item );
-
-        		if ( isset( $_product->variation_data ) ) {
-
-				$_category = woocommerce_get_formatted_variation( $_product->variation_data, true );
-
-			} else {
-				$out = array();
-				$categories = get_the_terms( $_product->id, 'product_cat' );
-				if ( $categories ) {
-					foreach ( $categories as $category ) {
-						$out[] = $category->name;
-					}
-				}
-				
-				$_category = implode( " / ", $out );
-			}
-
-			$_prodprice = $order->get_item_total( $item );
-			$_products[] = array(
-			  "id"       => $_product->id,
-			  "name"     => $item['name'],
-			  "sku"      => $_product->get_sku() ? __( 'SKU:', GTM4WP_TEXTDOMAIN ) . ' ' . $_product->get_sku() : $_product->id,
-			  "category" => $_category,
-			  "price"    => $_prodprice,
-			  "currency" => get_woocommerce_currency(),
-			  "quantity" => $item['qty']
-			);
-			
-			$_sumprice += $_prodprice;
-			$_product_ids[] = "'" . $_product->id . "'";
-		}
-	}
-
-	$dataLayer["transactionProducts"] = $_products;
-	$dataLayer["event"] = "gtm4wp.orderCompleted";
-
-	$dataLayer["ecomm_prodid"] = '[' . implode(", ", $_product_ids) . ']';
-	$dataLayer["ecomm_pagetype"] = "purchase";
-	$dataLayer["ecomm_totalvalue"] = $_sumprice;
-
-	return $dataLayer;
-}
-
-function gtm4wp_woocommerce_thankyou( $order_id ) {
-	global $gtm4wp_woocommerce_completed_order_id;
-
-	if ( 1 == get_post_meta( $order_id, '_ga_tracked', true ) ) {
-		return;
-	}
-
-	$gtm4wp_woocommerce_completed_order_id = $order_id;
-	add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_woocommerce_datalayer_filter_order" );
-
-	update_post_meta( $order_id, '_ga_tracked', 1 );
-}
-
 function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
-	global $woocommerce, $gtp4wp_woocommerce_remarketing_sku_list, $gtp4wp_woocommerce_remarketing_totalvalue;
+	global $woocommerce;
 
 	if ( is_front_page() ) {
 		$dataLayer["ecomm_prodid"] = "";
@@ -120,12 +36,90 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 		$dataLayer["ecomm_prodid"] = '[' . implode( ", ", $product_ids ) . ']';
 		$dataLayer["ecomm_pagetype"] = "cart";
 		$dataLayer["ecomm_totalvalue"] = $woocommerce->cart->cart_contents_total;
-	} else if ( !is_order_received_page() ) {
+	} else if ( is_order_received_page() ) {
+		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? 0 : absint( $_GET['order'] ) );
+		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
+
+		if ( $order_id > 0 ) {
+			$order = new WC_Order( $order_id );
+			if ( $order->order_key != $order_key )
+				unset( $order );
+		}
+
+		if ( 1 == get_post_meta( $order_id, '_ga_tracked', true ) ) {
+			unset( $order );
+		}
+
+		if ( isset( $order ) ) {
+			$dataLayer["transactionId"]             = $order->get_order_number();
+			$dataLayer["transactionDate"]           = date("c");
+			$dataLayer["transactionType"]           = "sale";
+			$dataLayer["transactionAffiliation"]    = get_bloginfo( 'name' );
+			$dataLayer["transactionTotal"]          = $order->get_total();
+			$dataLayer["transactionShipping"]       = $order->get_shipping();
+			$dataLayer["transactionTax"]            = $order->get_total_tax();
+			$dataLayer["transactionPaymentType"]    = $order->payment_method_title;
+			$dataLayer["transactionCurrency"]       = get_woocommerce_currency();
+			$dataLayer["transactionShippingMethod"] = $order->get_shipping_method();
+			$dataLayer["transactionPromoCode"]      = implode( ", ", $order->get_used_coupons() );
+
+			$_products = array();
+			$_sumprice = 0;
+			$_product_ids = array();
+
+			if ( $order->get_items() ) {
+				foreach ( $order->get_items() as $item ) {
+					$_product = $order->get_product_from_item( $item );
+
+	        			if ( isset( $_product->variation_data ) ) {
+
+						$_category = woocommerce_get_formatted_variation( $_product->variation_data, true );
+
+					} else {
+						$out = array();
+						$categories = get_the_terms( $_product->id, 'product_cat' );
+						if ( $categories ) {
+							foreach ( $categories as $category ) {
+								$out[] = $category->name;
+							}
+						}
+					
+						$_category = implode( " / ", $out );
+					}
+
+					$_prodprice = $order->get_item_total( $item );
+					$_products[] = array(
+					  "id"       => $_product->id,
+					  "name"     => $item['name'],
+					  "sku"      => $_product->get_sku() ? __( 'SKU:', GTM4WP_TEXTDOMAIN ) . ' ' . $_product->get_sku() : $_product->id,
+					  "category" => $_category,
+					  "price"    => $_prodprice,
+					  "currency" => get_woocommerce_currency(),
+					  "quantity" => $item['qty']
+					);
+			
+					$_sumprice += $_prodprice;
+					$_product_ids[] = "'" . $_product->id . "'";
+				}
+			}
+
+			$dataLayer["transactionProducts"] = $_products;
+			$dataLayer["event"] = "gtm4wp.orderCompleted";
+
+			$dataLayer["ecomm_prodid"] = '[' . implode(", ", $_product_ids) . ']';
+			$dataLayer["ecomm_pagetype"] = "purchase";
+			$dataLayer["ecomm_totalvalue"] = $_sumprice;
+
+			update_post_meta( $order_id, '_ga_tracked', 1 );
+		}
+	} else {
 		$dataLayer["ecomm_pagetype"] = "siteview";
 	}
 
 	return $dataLayer;
 }
 
-add_action( "woocommerce_thankyou", "gtm4wp_woocommerce_thankyou" );
-add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_woocommerce_datalayer_filter_items" );
+// do not add filter if someone enabled WooCommerce integration without an activated WooCommerce plugin
+if ( isset ( $woocommerce ) ) {
+	add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_woocommerce_datalayer_filter_items" );
+}
