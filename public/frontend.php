@@ -269,7 +269,9 @@ function gtm4wp_wp_header() {
 <!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
 <script type="text/javascript">
 	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
-	' . $gtm4wp_datalayer_name . ' = new Array();';
+	if ( "undefined" == typeof '.$gtm4wp_datalayer_name.' ) {
+		' . $gtm4wp_datalayer_name . ' = new Array();
+	}';
 	
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
 		$_gtm_header_content .= '
