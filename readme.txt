@@ -3,8 +3,8 @@ Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
-Tested up to: 3.7.1
-Stable tag: 0.4
+Tested up to: 3.8
+Stable tag: 0.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -44,6 +44,24 @@ This plugin can fire several Tag Manager events so that you can include special 
 
 Link URLs are included in the Tag Manager event so that you can use them for example in a Google Analytics event tag.
 
+= Scroll tracking =
+
+Fire tags based on how the visitor scrolls from the top to the bottom of a page.
+You can track this as Analytics events and/or fire remarketing/conversion tags to if you want to track micro conversions.
+Separate readers (who spend a specified amount of time on a page) from scrollers (who only scroll through within seconds)
+
+Scroll tracking is based on the solution originally created by
+
+* Nick Mihailovski
+* Thomas Baekdal
+* Avinash Kaushik
+* Joost de Valk
+* Eivind Savio
+* Justin Cutroni
+
+Oroginal script:
+http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
+
 = Google AdWords remarketing =
 
 Google Tag Manager for WordPress can add every dataLayer variable as an AdWords remarketing custom parameter list.
@@ -69,14 +87,29 @@ More integration to come!
 
 == Frequently Asked Questions ==
 
+= How can I track scroll events in Google Tag Manager? =
+
+To track scrolling of your visitor you need to setup some tag in Google Tag Manager.
+
+What type of tags?
+In most cases you will need Google/Universal Analytics event tags but you can use AdWords remarketing
+or conversion tags as well to collect micro conversions or to focus only on visitors who spend more time
+reading your contents.
+
+There are five dataLayer events you can use in your rule definitions:
+
+* gtm4wp.reading.articleLoaded: the content has been loaded
+* gtm4wp.reading.startReading: the visitor started to scroll. You can use the dataLayer variable `timeToScroll` to see how many seconds have passed since the article has been loaded
+* gtm4wp.reading.contentBottom: the visitor reached the end of the content (not the page!). `timeToScroll` dataLayer variable updated
+* gtm4wp.reading.pagebottom: the visitor reached the end of the page. `timeToScroll` dataLayer variable updated
+* gtm4wp.reading.readerType: at this point we are confident whether the visitor is a 'scanner' or 'reader' depending on how much time have passed since the content has been loaded. `readerType` dataLayer variable holds the type of the visitor
+
 = Can I exclude certain user roles from being tracked? =
 
 Google Tag Manager is not just about visitor tracking.
-The ability to include a Google/Universal Analytics tag is only one feature
-you can manage.
+The ability to include a Google/Universal Analytics tag is only one feature you can manage.
 
-Therefore there is no need to have an option to exclude the container code snippet
-on certain cases.
+Therefore there is no need to have an option to exclude the container code snippet on certain cases.
 
 If you want to exclude logged in users or certain user roles, use the corresponting dataLayer variable (visitorType)
 and an exclude filter in Google Tag Manager.
@@ -101,9 +134,9 @@ It can break you theme.
 = Why can not this plugin insert the container snippet after the opening body tag automatically? =
 
 Currently WordPress has two 'commands' or 'hooks' that a programmer can use: one for the `<head>` section and
-one for the bottom of `<body>`. There is no way to inject any content after the opening body tag.
+one for the bottom of `<body>`. There is no way to inject any content after the opening body tag without manually editing your template files.
 
-Fortunately some theme authors already resolved this so in some cases you do not need to edit your template files.
+Fortunately some theme authors already resolved this so in some cases you do not need to edit your template.
 I suggest first to select the Custom placement and use Google Tag Assistant Chrome browser extension to check
 whether the container code is placed as expected.
 
@@ -112,7 +145,7 @@ If it shows an error, go and edit your theme manually.
 = Facebook like/share/send button events do not fire for me, why? =
 
 It is a limitation of Facebook. Click event tracking is only available for html5/xfbml buttons.
-If you or your social plugin inserts the Facebook buttons using IFRAME-s (like Sociable), it is not possible to track clicks.
+If you or your social plugin inserts the Facebook buttons using IFRAME-s (like Sociable), it is not possible to track likes.
 
 == Screenshots ==
 
@@ -121,12 +154,20 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 3. Events
 4. Integration panel
 5. Advanced settings
+6. Scroll tracking
 
 == Changelog ==
 
+= 0.5 =
+* Added: scroll tracking
+* Fixed: social tracking option on the admin panel was being shown as an edit box instead of a checbox
+* Fixed: WooCommerce transaction data was not included in the dataLayer if you selected "Custom" code placement
+* Fixed: do not do anything if you enabled WooCommerce integration but did not activate WooCommerce plugin itself
+* Updated: do not re-declare dataLayer variable if it already exists (because another script already created it before my plugin was run)
+
 = 0.4 =
-* New: you can now select container code placement. This way you can insert the code snippet after the opening body tag. Please read FAQ for details
-* New: initial support for social event tracking for Facebook and Twitter buttons. Please read FAQ for details
+* Added: you can now select container code placement. This way you can insert the code snippet after the opening body tag. Please read FAQ for details
+* Added: initial support for social event tracking for Facebook and Twitter buttons. Please read FAQ for details
 * Updated: event name on successful WooCommerce transacion: OrderCompleted -> gtm4wp.orderCompleted
 * Fixed: frontend JS codes did not load on some WordPress installs
 
@@ -153,6 +194,9 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.5 =
+Besides of some fixes this version includes scroll tracking events for Google Tag Manager.
 
 = 0.4 =
 Important change: Tag Manager event name of a WooCommerce successful order has been changed. 
