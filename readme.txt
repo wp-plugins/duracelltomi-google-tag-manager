@@ -4,7 +4,7 @@ Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 0.5
+Stable tag: 0.5.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -158,6 +158,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.5.1 =
+
+* Fixed: WooCommerce integration did not work on some environments
+
 = 0.5 =
 * Added: scroll tracking
 * Fixed: social tracking option on the admin panel was being shown as an edit box instead of a checbox
@@ -194,6 +198,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.5.1 =
+
+Bug fix release for WooCommerce users
 
 = 0.5 =
 Besides of some fixes this version includes scroll tracking events for Google Tag Manager.
