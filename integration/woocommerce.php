@@ -120,6 +120,6 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 }
 
 // do not add filter if someone enabled WooCommerce integration without an activated WooCommerce plugin
-if ( isset ( $woocommerce ) ) {
+if ( isset ( $GLOBALS["woocommerce"] ) ) {
 	add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_woocommerce_datalayer_filter_items" );
 }
