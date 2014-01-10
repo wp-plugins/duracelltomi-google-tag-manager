@@ -14,6 +14,19 @@ function gtm4wp_is_assoc($arr) {
 	return array_keys($arr) !== range(0, count($arr) - 1);
 }
 
+if ( !function_exists( "getallheaders") ) { 
+	function getallheaders() { 
+		$headers = ""; 
+		foreach ( $_SERVER as $name => $value ) { 
+			if ( substr($name, 0, 5) == "HTTP_" ) { 
+				$headers[ str_replace(' ', '-', ucwords( strtolower( str_replace( '_', ' ', substr( $name, 5 ) ) ) ) ) ] = $value; 
+			} 
+		} 
+		
+		return $headers; 
+	} 
+}
+
 function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	global $current_user, $wp_query, $gtm4wp_options;
 	
@@ -139,12 +152,37 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		$dataLayer["siteSearchResults"] = $wp_query->post_count;
 	}
 	
-	if ( is_front_page() && $gtm4wp_options[GTM4WP_OPTION_INCLUDE_POSTTYPE] ) {
+	if ( is_front_page() && $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTYPE ] ) {
 		$dataLayer["pagePostType"] = "frontpage";
 	}
 	
-	if ( !is_front_page() && is_home() && $gtm4wp_options[GTM4WP_OPTION_INCLUDE_POSTTYPE] ) {
+	if ( !is_front_page() && is_home() && $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTYPE ] ) {
 		$dataLayer["pagePostType"] = "bloghome";
+	}
+	
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_BROWSERDATA ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_OSDATA ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_DEVICEDATA ] ) {
+		require_once( dirname( __FILE__ ) . "/../js/whichbrowser/libraries/whichbrowser.php" );
+
+		$detected = new WhichBrowser( array( "headers" => getallheaders() ) );
+
+		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_BROWSERDATA ] ) {
+			$dataLayer["browserName"]         = $detected->browser->name;
+			$dataLayer["browserVersion"]      = $detected->browser->version->value;
+
+			$dataLayer["browserEngineName"]         = $detected->engine->name;
+			$dataLayer["browserEngineVersion"]      = $detected->engine->version->value;
+		}
+
+		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_OSDATA ] ) {
+			$dataLayer["osName"]         = $detected->os->name;
+			$dataLayer["osVersion"]      = $detected->os->version->value;
+		}
+
+		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_DEVICEDATA ] ) {
+			$dataLayer["deviceType"]         = $detected->device->type;
+			$dataLayer["deviceManufacturer"] = $detected->device->manufacturer;
+			$dataLayer["deviceModel"]        = $detected->device->model;
+		}
 	}
 	
 	return $dataLayer;
@@ -238,7 +276,7 @@ function gtm4wp_enqueue_scripts() {
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
-		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
+//		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {

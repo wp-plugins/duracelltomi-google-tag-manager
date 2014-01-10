@@ -14,6 +14,9 @@ define( 'GTM4WP_OPTION_INCLUDE_AUTHOR',        'include-author' );
 define( 'GTM4WP_OPTION_INCLUDE_POSTDATE',      'include-postdate' );
 define( 'GTM4WP_OPTION_INCLUDE_POSTTITLE',     'include-posttitle' );
 define( 'GTM4WP_OPTION_INCLUDE_SEARCHDATA',    'include-searchdata' );
+define( 'GTM4WP_OPTION_INCLUDE_BROWSERDATA',   'include-browserdata' );
+define( 'GTM4WP_OPTION_INCLUDE_OSDATA',        'include-osdata' );
+define( 'GTM4WP_OPTION_INCLUDE_DEVICEDATA',    'include-devicedata' );
 
 define( 'GTM4WP_OPTION_EVENTS_OUTBOUND',       'event-outbound' );
 define( 'GTM4WP_OPTION_EVENTS_DOWNLOADS',      'event-downloads' );
@@ -53,6 +56,9 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_INCLUDE_POSTDATE    => false,
 	GTM4WP_OPTION_INCLUDE_POSTTITLE   => false,
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => false,
+	GTM4WP_OPTION_INCLUDE_BROWSERDATA => false,
+	GTM4WP_OPTION_INCLUDE_OSDATA      => false,
+	GTM4WP_OPTION_INCLUDE_DEVICEDATA  => false,
 	
 	GTM4WP_OPTION_EVENTS_OUTBOUND    => false,
 	GTM4WP_OPTION_EVENTS_DOWNLOADS   => false,

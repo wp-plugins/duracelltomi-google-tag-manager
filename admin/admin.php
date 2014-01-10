@@ -55,6 +55,18 @@ $GLOBALS["gtm4wp_includefieldtexts"] = array(
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => array(
 		"label"       => __( "Search data", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the search term, referring page URL and number of results on the search page.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_BROWSERDATA => array(
+		"label"       => __( "Browser data *", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include the name, version and engine data of the browser the visitor uses.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_OSDATA => array(
+		"label"       => __( "OS data *", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include the name and version of the operating system the visitor uses.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_DEVICEDATA  => array(
+		"label"       => __( "Device data *", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include the type of device the user is currently using (desktop, tablet or mobile) including manufacturer and model data.", GTM4WP_TEXTDOMAIN )
 	)
 );
 
@@ -137,6 +149,8 @@ function gtm4wp_admin_output_section( $args ) {
 
 		case GTM4WP_ADMIN_GROUP_INCLUDES: {
 			_e( "Here you can check what data is needed to be included in the dataLayer to be able to access them in Google Tag Manager", GTM4WP_TEXTDOMAIN );
+			echo "<br />";
+			printf( __( '* Browser, OS and Device data is provided using <a href="%s">WhichBrowser</a> library.', GTM4WP_TEXTDOMAIN ), "http://whichbrowser.net/" );
 
 			break;        
 		}
