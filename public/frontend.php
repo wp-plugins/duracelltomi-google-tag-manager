@@ -184,6 +184,11 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 			$dataLayer["deviceModel"]        = $detected->device->model;
 		}
 	}
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTCOUNT ] ) {
+		$dataLayer["postCountOnPage"] = (int) $wp_query->post_count;
+		$dataLayer["postCountTotal"]  = (int) $wp_query->found_posts;
+	}
 	
 	return $dataLayer;
 }

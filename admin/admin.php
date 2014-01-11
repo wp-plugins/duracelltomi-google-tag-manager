@@ -52,6 +52,10 @@ $GLOBALS["gtm4wp_includefieldtexts"] = array(
 		"label"       => __( "Post title", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the title of the current post.", GTM4WP_TEXTDOMAIN )
 	),
+	GTM4WP_OPTION_INCLUDE_POSTCOUNT   => array(
+		"label"       => __( "Post count", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include the count of the posts currently shown on the page and the total number of posts in the category/tag/any taxonomy.", GTM4WP_TEXTDOMAIN )
+	),
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => array(
 		"label"       => __( "Search data", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the search term, referring page URL and number of results on the search page.", GTM4WP_TEXTDOMAIN )

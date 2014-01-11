@@ -436,3 +436,11 @@ msgid ""
 "* Browser, OS and Device data is provided using <a href=\"%s\">WhichBrowser</"
 "a> library."
 msgstr ""
+
+msgid "Post count"
+msgstr ""
+
+msgid ""
+"Check this option to include the count of the posts currently shown on the "
+"page and the total number of posts in the category/tag/any taxonomy."
+msgstr ""
