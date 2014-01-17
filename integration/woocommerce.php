@@ -129,8 +129,8 @@ function gtm4wp_woocommerce_single_add_to_cart_tracking() {
 	$woocommerce->add_inline_js("
 		$('.single_add_to_cart_button').click(function() {
 			". $gtm4wp_datalayer_name .".push({
-				'event': 'gtm4wp.addToCart',
-				'productName': '". esc_js( $product->$post->post_title ) ."',
+				'event': 'gtm4wp.addProductToCart',
+				'productName': '". esc_js( $product->post->post_title ) ."',
 				'productSKU': '". esc_js( $product->get_sku() ) ."',
 				'productID': '". esc_js( $product->id ) ."'
 			});
@@ -144,7 +144,7 @@ function gtm4wp_woocommerce_loop_add_to_cart_tracking() {
 	$woocommerce->add_inline_js("
 		$('.add_to_cart_button:not(.product_type_variable, .product_type_grouped)').click(function() {
 			". $gtm4wp_datalayer_name .".push({
-				'event': 'gtm4wp.addToCart',
+				'event': 'gtm4wp.addProductToCart',
 				'productName': $( this ).parent().find('h3').text(),
 				'productSKU': $( this ).data( 'product_sku' ),
 				'productID': $( this ).data( 'product_id' ),
