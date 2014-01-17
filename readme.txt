@@ -4,7 +4,7 @@ Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 0.5.1
+Stable tag: 0.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -28,9 +28,21 @@ very easily since you can fire them using rules that include
 * post/page tag names
 * post/page author names
 * post types
+* post count on the current page + in the current category/tag/taxonomy
 * logged in status
 * logged in user role
 * search data
+* browser data (name, version, engine) (!)
+* OS data (name, version) (!)
+* device data (type, manufacturer, model) (!)
+
+(!) Data is provided using the WhichBrowser library: http://whichbrowser.net/
+
+Use search data to generate Analytics events when an empty search result is being shown.
+This is useful to see what people are searching for that is not available on your site (for example a product).
+
+Use post count to generate Analytics events when an empty result is being shown.
+This can be useful to catch empty (product) categories.
 
 = Tag Manager Events =
 
@@ -86,6 +98,16 @@ More integration to come!
 1. Go to Settings / Google Tag Manager and enter your Google Tag Manager container ID and setup additional options
 
 == Frequently Asked Questions ==
+
+= How can I track add-to-cart events in WooCommerce =
+
+To track add-to-cart events you have to catch the dataLayer event gtm4wp.addToCart
+
+There are 3 additional dataLayer variables that can be accessed during the event:
+
+* productName: the name of the product where the cart button has been pressed
+* productSKU: the SKU you entered in your product settings
+* productID: the ID of the WordPress post that holds your product data
 
 = How can I track scroll events in Google Tag Manager? =
 
@@ -158,6 +180,12 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.6 =
+
+* Updated: better add-to-cart events for WooCommerce, it includes now product name, SKU and ID
+* Added: browser, OS and device data to dataLayer variables
+* Added: postCountOnPage and postCountTotal dataLayer variables to track empty categories/tags/taxonomies
+
 = 0.5.1 =
 
 * Fixed: WooCommerce integration did not work on some environments
@@ -199,9 +227,13 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Upgrade Notice ==
 
+= 0.6 =
+
+Improved add-to-cart events for WooCommerce, added browser/OS/device infos and post count infos.
+
 = 0.5.1 =
 
-Bug fix release for WooCommerce users
+Bug fix release for WooCommerce users.
 
 = 0.5 =
 Besides of some fixes this version includes scroll tracking events for Google Tag Manager.
