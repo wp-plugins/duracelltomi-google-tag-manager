@@ -32,11 +32,11 @@ very easily since you can fire them using rules that include
 * logged in status
 * logged in user role
 * search data
-* browser data (name, version, engine) (!)
-* OS data (name, version) (!)
-* device data (type, manufacturer, model) (!)
+* browser data (name, version, engine)
+* OS data (name, version)
+* device data (type, manufacturer, model)
 
-(!) Data is provided using the WhichBrowser library: http://whichbrowser.net/
+Data is provided using the WhichBrowser library: http://whichbrowser.net/
 
 Use search data to generate Analytics events when an empty search result is being shown.
 This is useful to see what people are searching for that is not available on your site (for example a product).
