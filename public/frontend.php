@@ -200,41 +200,6 @@ function gtm4wp_get_the_gtm_tag() {
 	
 	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] != "" ) {
 		$_gtm_tag .= '
-<!-- Google Tag Manager for WordPress by DuracellTomi -->
-<script type="text/javascript">';
-
-		$gtm4wp_datalayer_data = array();
-		$gtm4wp_datalayer_data = (array) apply_filters( GTM4WP_WPFILTER_COMPILE_DATALAYER, $gtm4wp_datalayer_data );
-		
-		if ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_REMARKETING] ) {
-			// add adwords remarketing tags as suggested here:
-			// https://support.google.com/tagmanager/answer/3002580?hl=en
-
-			$gtm4wp_remarketing_tags = (array) apply_filters( GTM4WP_WPFILTER_COMPILE_REMARKTING, $gtm4wp_datalayer_data );
-
-			$_gtm_tag .= '
-	var google_tag_params = ' . json_encode( $gtm4wp_remarketing_tags ) . ';';
-			$gtm4wp_datalayer_data["google_tag_params"] = "-~-window.google_tag_params-~-";
-		}
-
-		if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
-			$_gtm_tag .= '
-	jQuery( function() {
-		gtm4wp_track_downloads( "' . str_replace( '"', '', $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DWLEXT ] ) . '" );
-	});';
-		}
-		
-		$_gtm_tag .= '
-	' . $gtm4wp_datalayer_name . '.push(' . str_replace(
-			array( '"-~-', '-~-"' ),
-			array( "", "" ),
-			json_encode( $gtm4wp_datalayer_data )
-		) . ');';
-
-		$_gtm_tag .= '
-</script>';
-	
-		$_gtm_tag .= '
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=' . $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] . '"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
@@ -305,7 +270,7 @@ function gtm4wp_wp_body_open() {
 	}
 }
 
-function gtm4wp_wp_header() {
+function gtm4wp_wp_header_begin() {
 	global $gtm4wp_datalayer_name, $gtm4wp_options;
 
 	$_gtm_header_content = '
@@ -333,8 +298,54 @@ function gtm4wp_wp_header() {
 	echo $_gtm_header_content;
 }
 
+function gtm4wp_wp_header_end() {
+	global $gtm4wp_datalayer_name, $gtm4wp_options;
+
+	$_gtm_tag = '';
+
+	if ( $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] != "" ) {
+		$_gtm_tag .= '
+<!-- Google Tag Manager for WordPress by DuracellTomi -->
+<script type="text/javascript">';
+
+		$gtm4wp_datalayer_data = array();
+		$gtm4wp_datalayer_data = (array) apply_filters( GTM4WP_WPFILTER_COMPILE_DATALAYER, $gtm4wp_datalayer_data );
+		
+		if ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_REMARKETING] ) {
+			// add adwords remarketing tags as suggested here:
+			// https://support.google.com/tagmanager/answer/3002580?hl=en
+
+			$gtm4wp_remarketing_tags = (array) apply_filters( GTM4WP_WPFILTER_COMPILE_REMARKTING, $gtm4wp_datalayer_data );
+
+			$_gtm_tag .= '
+	var google_tag_params = ' . json_encode( $gtm4wp_remarketing_tags ) . ';';
+			$gtm4wp_datalayer_data["google_tag_params"] = "-~-window.google_tag_params-~-";
+		}
+
+		if ( $gtm4wp_options[GTM4WP_OPTION_EVENTS_DOWNLOADS] ) {
+			$_gtm_tag .= '
+	jQuery( function() {
+		gtm4wp_track_downloads( "' . str_replace( '"', '', $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DWLEXT ] ) . '" );
+	});';
+		}
+		
+		$_gtm_tag .= '
+	' . $gtm4wp_datalayer_name . '.push(' . str_replace(
+			array( '"-~-', '-~-"' ),
+			array( "", "" ),
+			json_encode( $gtm4wp_datalayer_data )
+		) . ');';
+
+		$_gtm_tag .= '
+</script>';
+	}
+
+	echo $_gtm_tag;	
+}
+
 add_action( "wp_enqueue_scripts", "gtm4wp_enqueue_scripts" );
-add_action( "wp_head", "gtm4wp_wp_header", 1 );
+add_action( "wp_head", "gtm4wp_wp_header_begin", 1 );
+add_action( "wp_head", "gtm4wp_wp_header_end", 100 );
 add_action( "wp_footer", "gtm4wp_wp_footer" );
 add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_add_basic_datalayer_data" );
 
