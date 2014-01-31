@@ -33,6 +33,39 @@ define( 'GTM4WP_OPTION_SCROLLER_DISTANCE',     'scroller-distance' );
 define( 'GTM4WP_OPTION_SCROLLER_CONTENTID',    'scroller-contentid' );
 define( 'GTM4WP_OPTION_SCROLLER_READERTIME',   'scroller-readertime' );
 
+define( 'GTM4WP_OPTION_BLACKLIST_ENABLE',      'blacklist-enable' );
+define( 'GTM4WP_OPTION_BLACKLIST_ADADVISOR',   'blacklist-adadvisor' );
+define( 'GTM4WP_OPTION_BLACKLIST_ADROLL',      'blacklist-adroll' );
+define( 'GTM4WP_OPTION_BLACKLIST_AWCONV',      'blacklist-adwords-conversion' );
+define( 'GTM4WP_OPTION_BLACKLIST_AWREMARKET',  'blacklist-adwords-remarketing' );
+define( 'GTM4WP_OPTION_BLACKLIST_BIZO',        'blacklist-bizo' );
+define( 'GTM4WP_OPTION_BLACKLIST_CLICKTALE',   'blacklist-clicktale' );
+define( 'GTM4WP_OPTION_BLACKLIST_COMSCORE',    'blacklist-comscore' );
+define( 'GTM4WP_OPTION_BLACKLIST_CUSTOMHTML',  'blacklist-custom-html' );
+define( 'GTM4WP_OPTION_BLACKLIST_CUSTOMIMG',   'blacklist-custom-img-tag' );
+define( 'GTM4WP_OPTION_BLACKLIST_DBLCLKCOUNT', 'blacklist-doubleclick-counter' );
+define( 'GTM4WP_OPTION_BLACKLIST_DBLCLKSALES', 'blacklist-doubleclick-sales' );
+define( 'GTM4WP_OPTION_BLACKLIST_GACLASSIC',   'blacklist-google-analytics' );
+define( 'GTM4WP_OPTION_BLACKLIST_MARIN',       'blacklist-marin' );
+define( 'GTM4WP_OPTION_BLACKLIST_MPLEXIFRAME', 'blacklist-mediaplex-iframe' );
+define( 'GTM4WP_OPTION_BLACKLIST_MPLEXROI',    'blacklist-mediaplex-roi' );
+define( 'GTM4WP_OPTION_BLACKLIST_MEDIA6DEG',   'blacklist-media6degrees' );
+define( 'GTM4WP_OPTION_BLACKLIST_TURNCONV',    'blacklist-turn-conversion' );
+define( 'GTM4WP_OPTION_BLACKLIST_TURNDATA',    'blacklist-turn-data' );
+define( 'GTM4WP_OPTION_BLACKLIST_UA',          'blacklist-universal-analytics' );
+
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_DOMELEMENT',  'blacklist-macro-dom-element' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_CUSTOMJS',    'blacklist-macro-custom-js' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_CONSTANT',    'blacklist-macro-constant-string' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_1STCOOKIE',   'blacklist-macro-1st-party-cookie' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_EVENTNAME',   'blacklist-macro-event-name' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_JSVAR',       'blacklist-macro-javascript-variable' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_DLAYERVAR',   'blacklist-macro-datalayer-variable' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_RANDOMNUM',   'blacklist-macro-random-number' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_REFERRER',    'blacklist-macro-referrer' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_URL',         'blacklist-macro-url' );
+define( 'GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT',   'blacklist-macro-autoevent-variable' );
+
 define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',       'integrate-wpcf7' );
 define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE', 'integrate-woocommerce' );
 define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE', 'integrate-wp-e-commerce' );
@@ -76,7 +109,40 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_SCROLLER_CONTENTID    => "content",
 	GTM4WP_OPTION_SCROLLER_READERTIME   => 60,
 
-	GTM4WP_OPTION_INTEGRATE_WPCF7       => true,
+	GTM4WP_OPTION_BLACKLIST_ENABLE      => 0,
+	GTM4WP_OPTION_BLACKLIST_ADADVISOR   => false,
+	GTM4WP_OPTION_BLACKLIST_ADROLL      => false,
+	GTM4WP_OPTION_BLACKLIST_AWCONV      => false,
+	GTM4WP_OPTION_BLACKLIST_AWREMARKET  => false,
+	GTM4WP_OPTION_BLACKLIST_BIZO        => false,
+	GTM4WP_OPTION_BLACKLIST_CLICKTALE   => false,
+	GTM4WP_OPTION_BLACKLIST_COMSCORE    => false,
+	GTM4WP_OPTION_BLACKLIST_CUSTOMHTML  => false,
+	GTM4WP_OPTION_BLACKLIST_CUSTOMIMG   => false,
+	GTM4WP_OPTION_BLACKLIST_DBLCLKCOUNT => false,
+	GTM4WP_OPTION_BLACKLIST_DBLCLKSALES => false,
+	GTM4WP_OPTION_BLACKLIST_GACLASSIC   => false,
+	GTM4WP_OPTION_BLACKLIST_MARIN       => false,
+	GTM4WP_OPTION_BLACKLIST_MPLEXIFRAME => false,
+	GTM4WP_OPTION_BLACKLIST_MPLEXROI    => false,
+	GTM4WP_OPTION_BLACKLIST_MEDIA6DEG   => false,
+	GTM4WP_OPTION_BLACKLIST_TURNCONV    => false,
+	GTM4WP_OPTION_BLACKLIST_TURNDATA    => false,
+	GTM4WP_OPTION_BLACKLIST_UA          => false,
+
+	GTM4WP_OPTION_BLACKLIST_MACRO_DOMELEMENT => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_CUSTOMJS   => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_CONSTANT   => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_1STCOOKIE  => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_EVENTNAME  => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_JSVAR      => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_DLAYERVAR  => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_RANDOMNUM  => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_REFERRER   => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_URL        => true,
+	GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT  => true,
+
+	GTM4WP_OPTION_INTEGRATE_WPCF7       => false,
 	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,
 	GTM4WP_OPTION_INTEGRATE_WPECOMMERCE => false
 );

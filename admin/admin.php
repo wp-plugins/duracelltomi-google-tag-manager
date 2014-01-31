@@ -11,6 +11,8 @@ define( 'GTM4WP_ADMIN_GROUP_INFO',        'gtm4wp-admin-group-datalayer-info' );
 define( 'GTM4WP_ADMIN_GROUP_INCLUDES',    'gtm4wp-admin-group-includes' );
 define( 'GTM4WP_ADMIN_GROUP_EVENTS',      'gtm4wp-admin-group-events' );
 define( 'GTM4WP_ADMIN_GROUP_SCROLLER',    'gtm4wp-admin-group-scroller' );
+define( 'GTM4WP_ADMIN_GROUP_BLACKLIST',   'gtm4wp-admin-group-blacklist-tags' );
+define( 'GTM4WP_ADMIN_GROUP_BLACKLISTM',  'gtm4wp-admin-group-blacklist-macro' );
 define( 'GTM4WP_ADMIN_GROUP_INTEGRATION', 'gtm4wp-admin-group-integration' );
 define( 'GTM4WP_ADMIN_GROUP_ADVANCED',    'gtm4wp-admin-group-advanced' );
 define( 'GTM4WP_ADMIN_GROUP_CREDITS',     'gtm4wp-admin-group-credits' );
@@ -128,6 +130,136 @@ $GLOBALS["gtm4wp_scrollerfieldtexts"] = array(
 	)
 );
 
+$GLOBALS["gtm4wp_blacklistfieldtexts"] = array(
+	GTM4WP_OPTION_BLACKLIST_ENABLE       => array(
+		"label"         => __( "Enable blacklist/whitelist", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "Disable feature or select whether you want to whitelist or blacklist tags", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_AWCONV       => array(
+		"label"         => __( "AdWords Conversion Tracking Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_AWREMARKET       => array(
+		"label"         => __( "AdWords Remarketing Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_GACLASSIC       => array(
+		"label"         => __( "Google Analytics Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_UA       => array(
+		"label"         => __( "Universal Analytics Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_ADADVISOR       => array(
+		"label"         => __( "AdAdvisor Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_ADROLL       => array(
+		"label"         => __( "AdRoll Smart Pixel Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_BIZO       => array(
+		"label"         => __( "Bizo Insight Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_CLICKTALE       => array(
+		"label"         => __( "ClickTale Standard Tracking Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_COMSCORE       => array(
+		"label"         => __( "comScore Unified Digital Measurement Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_CUSTOMHTML       => array(
+		"label"         => __( "Custom HTML Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_CUSTOMIMG       => array(
+		"label"         => __( "Custom Image Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_DBLCLKCOUNT       => array(
+		"label"         => __( "DoubleClick Floodlight Counter Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_DBLCLKSALES       => array(
+		"label"         => __( "DoubleClick Floodlight Sales Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MARIN       => array(
+		"label"         => __( "Marin Software Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MPLEXIFRAME       => array(
+		"label"         => __( "Mediaplex - IFRAME MCT Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MPLEXROI       => array(
+		"label"         => __( "Mediaplex - Standard IMG ROI Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MEDIA6DEG       => array(
+		"label"         => __( "Media6Degrees Universal Pixel Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_TURNCONV       => array(
+		"label"         => __( "Turn Conversion Tracking Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_TURNDATA       => array(
+		"label"         => __( "Turn Data Collection Tag", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	)
+);
+
+$GLOBALS["gtm4wp_blacklistmfieldtexts"] = array(
+	GTM4WP_OPTION_BLACKLIST_MACRO_DOMELEMENT => array(
+		"label"         => __( "DOM element Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_CUSTOMJS   => array(
+		"label"         => __( "Custom JavaScript Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_CONSTANT   => array(
+		"label"         => __( "Constant Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_1STCOOKIE  => array(
+		"label"         => __( "First Party Cookie Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_EVENTNAME  => array(
+		"label"         => __( "Event Name Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_JSVAR      => array(
+		"label"         => __( "JavaScript Variable Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_DLAYERVAR  => array(
+		"label"         => __( "DataLayer Variable Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "It is not recommended to blacklist this type of macro since most features of this plugin depend on dataLayer macros.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_RANDOMNUM  => array(
+		"label"         => __( "Random Number Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_REFERRER   => array(
+		"label"         => __( "Referrer Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_URL        => array(
+		"label"         => __( "URL Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT  => array(
+		"label"         => __( "Auto-Event Variable Macro", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "", GTM4WP_TEXTDOMAIN )
+	)
+);
+
 $GLOBALS["gtm4wp_integratefieldtexts"] = array(
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => array(
 		"label"         => __( "Contact Form 7", GTM4WP_TEXTDOMAIN ),
@@ -176,6 +308,24 @@ function gtm4wp_admin_output_section( $args ) {
 			break;        
 		}
 		
+		case GTM4WP_ADMIN_GROUP_BLACKLIST: {
+			_e( "Here you can control which types of tags can be executed on your site regardless of what tags are included in your container on the Google Tag Manager site. Use this to increase security!", GTM4WP_TEXTDOMAIN );
+
+			break;        
+		}
+		
+		case GTM4WP_ADMIN_GROUP_BLACKLISTM: {
+			_e( "Here you can control which types of macros can work from your Google Tag Manager setup.", GTM4WP_TEXTDOMAIN );
+			echo '<br />';
+			_e( "Do not modify if you do not know what to do since it can cause issues in your tag deployment!", GTM4WP_TEXTDOMAIN );
+			echo '<br />';
+			_e( "Blacklisting of macros only work if you enable blacklist or whilelist of tags on the previous tab.", GTM4WP_TEXTDOMAIN );
+			echo '<br />';
+			_e( "Uncheck a row to blacklist a macro type.", GTM4WP_TEXTDOMAIN );
+
+			break;        
+		}
+		
 		case GTM4WP_ADMIN_GROUP_INTEGRATION: {
 			_e( "Google Tag Manager for WordPress can integrate with several popular plugins. Please check the plugins you would like to integrate with:", GTM4WP_TEXTDOMAIN );
 
@@ -220,6 +370,14 @@ function gtm4wp_admin_output_field( $args ) {
 			echo '<input type="text" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_DATALAYER_NAME . ']" value="' . $gtm4wp_options[GTM4WP_OPTION_DATALAYER_NAME] . '" /><br />' . $args["description"];
 			echo '<br /><span class="datalayername_validation_error">' . __( "This does not seems to be a valid JavaScript variable name! Please check and try again", GTM4WP_TEXTDOMAIN ) . '</span>';
 			
+			break;
+		}
+		
+		case GTM4WP_OPTIONS . "[" . GTM4WP_OPTION_BLACKLIST_ENABLE . "]": {
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_0" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="0" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 0 ? 'checked="checked"' : '' ) . '/> ' . __( "Disable feature: control everything on Google Tag Manager interface", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_1" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="1" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 1 ? 'checked="checked"' : '' ) . '/> ' . __( "Allow all, except the checked items below (blacklist)", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_2" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="2" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 2 ? 'checked="checked"' : '' ) . '/> ' . __( "Block all, except the checked items below (whitelist)", GTM4WP_TEXTDOMAIN ) . '<br />';
+		
 			break;
 		}
 
@@ -350,7 +508,8 @@ function gtm4wp_sanitize_options($options) {
 }
 
 function gtm4wp_admin_init() {
-	global $gtm4wp_includefieldtexts, $gtm4wp_eventfieldtexts, $gtm4wp_integratefieldtexts, $gtm4wp_scrollerfieldtexts;
+	global $gtm4wp_includefieldtexts, $gtm4wp_eventfieldtexts, $gtm4wp_integratefieldtexts, $gtm4wp_scrollerfieldtexts,
+		$gtm4wp_blacklistfieldtexts, $gtm4wp_blacklistmfieldtexts;
 	
 	register_setting( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS, "gtm4wp_sanitize_options" );
 	
@@ -443,6 +602,50 @@ function gtm4wp_admin_init() {
 			'gtm4wp_admin_output_field',
 			GTM4WP_ADMINSLUG,
 			GTM4WP_ADMIN_GROUP_SCROLLER,
+			array(
+				"label_for" => "gtm4wp-options[" . $fieldid . "]",
+				"description" => $fielddata["description"],
+				"optionfieldid" => $fieldid
+			)
+		);
+	}
+
+	add_settings_section(
+		GTM4WP_ADMIN_GROUP_BLACKLIST,
+		__( 'Blacklist tags', GTM4WP_TEXTDOMAIN ),
+		'gtm4wp_admin_output_section',
+		GTM4WP_ADMINSLUG
+	);
+	
+	foreach($gtm4wp_blacklistfieldtexts as $fieldid => $fielddata) {
+		add_settings_field(
+			"gtm4wp-admin-" . $fieldid . "-id",
+			$fielddata["label"],
+			'gtm4wp_admin_output_field',
+			GTM4WP_ADMINSLUG,
+			GTM4WP_ADMIN_GROUP_BLACKLIST,
+			array(
+				"label_for" => "gtm4wp-options[" . $fieldid . "]",
+				"description" => $fielddata["description"],
+				"optionfieldid" => $fieldid
+			)
+		);
+	}
+
+	add_settings_section(
+		GTM4WP_ADMIN_GROUP_BLACKLISTM,
+		__( 'Blacklist macros', GTM4WP_TEXTDOMAIN ),
+		'gtm4wp_admin_output_section',
+		GTM4WP_ADMINSLUG
+	);
+	
+	foreach($gtm4wp_blacklistmfieldtexts as $fieldid => $fielddata) {
+		add_settings_field(
+			"gtm4wp-admin-" . $fieldid . "-id",
+			$fielddata["label"],
+			'gtm4wp_admin_output_field',
+			GTM4WP_ADMINSLUG,
+			GTM4WP_ADMIN_GROUP_BLACKLISTM,
 			array(
 				"label_for" => "gtm4wp-options[" . $fieldid . "]",
 				"description" => $fielddata["description"],
