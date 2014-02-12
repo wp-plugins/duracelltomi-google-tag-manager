@@ -4,7 +4,7 @@ Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 0.6
+Stable tag: 0.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -79,6 +79,18 @@ http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analyti
 Google Tag Manager for WordPress can add every dataLayer variable as an AdWords remarketing custom parameter list.
 Using this you can create more sophisticated remarketing lists.
 
+= Blacklist & Whitelist Tag Manager tags and macros =
+
+To increase security on your website, you can whitelist and blacklist tags and macros.
+This means you can disable certain tags from being fired or prevent the use of certain macro types
+from being used regardless of your current Tag Manager setup.
+
+If your Google account is being hacked that is associated with your Google Tag Manager account,
+an attacker could easily execute malware on your website without accessing its code on your hosting server.
+
+By blacklisting custom HTML tags and/or custom JavaScript macros for example you can have a more secure Tag Manager container
+if you do not use those kind of elements.
+
 = Integration =
 
 Google Tag Manager for WordPress can integrate with several popular plugins.
@@ -98,6 +110,15 @@ More integration to come!
 1. Go to Settings / Google Tag Manager and enter your Google Tag Manager container ID and setup additional options
 
 == Frequently Asked Questions ==
+
+= Why isn't there an option do blacklist tag/macro classes =
+
+Although Google recommends to blacklist tags and macros using classes, I found it complicated for people to understand
+what tags and macros are being blacklisted/whitelisted automatically using classses. Therefore I decided to include
+individual tags and macros on the blacklist tabs.
+
+Please remember that tags are useless without macros so only blacklist macros if you are certain that you do not use them
+with any macro in your container.
 
 = How can I track add-to-cart events in WooCommerce =
 
@@ -180,6 +201,11 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.7 =
+
+* Updated/Fixed: dataLayer variables are now populated at the end of the head section. Using this the container code can appear just after the opening body tag, thus Webmaster Tools verification using Tag Manager option will work
+* Added: blacklist or whitelist tags and macros to increase security of your Tag Manager setup
+
 = 0.6 =
 
 * Updated: better add-to-cart events for WooCommerce, it includes now product name, SKU and ID
@@ -226,6 +252,11 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.7 =
+
+Improved code so that Webmaster Tools verification can work using your GTM container tag.
+Blacklist or whitelist tags and macros to increase security of your Tag Manager setup.
 
 = 0.6 =
 
