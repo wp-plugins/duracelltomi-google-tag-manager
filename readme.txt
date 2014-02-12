@@ -206,6 +206,7 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * Updated/Fixed: dataLayer variables are now populated at the end of the head section. Using this the container code can appear just after the opening body tag, thus Webmaster Tools verification using Tag Manager option will work
 * Added: blacklist or whitelist tags and macros to increase security of your Tag Manager setup
 
+
 = 0.6 =
 
 * Updated: better add-to-cart events for WooCommerce, it includes now product name, SKU and ID
@@ -257,6 +258,7 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 Improved code so that Webmaster Tools verification can work using your GTM container tag.
 Blacklist or whitelist tags and macros to increase security of your Tag Manager setup.
+Fixed: WhichBroswer library was missing from 0.6
 
 = 0.6 =
 
