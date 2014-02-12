@@ -444,3 +444,144 @@ msgid ""
 "Check this option to include the count of the posts currently shown on the "
 "page and the total number of posts in the category/tag/any taxonomy."
 msgstr ""
+
+msgid "Enable blacklist/whitelist"
+msgstr ""
+
+msgid ""
+"Disable feature or select whether you want to whitelist or blacklist tags"
+msgstr ""
+
+msgid "AdWords Conversion Tracking Tag"
+msgstr ""
+
+msgid "AdWords Remarketing Tag"
+msgstr ""
+
+msgid "Google Analytics Tag"
+msgstr ""
+
+msgid "Universal Analytics Tag"
+msgstr ""
+
+msgid "AdAdvisor Tag"
+msgstr ""
+
+msgid "AdRoll Smart Pixel Tag"
+msgstr ""
+
+msgid "Bizo Insight Tag"
+msgstr ""
+
+msgid "ClickTale Standard Tracking Tag"
+msgstr ""
+
+msgid "comScore Unified Digital Measurement Tag"
+msgstr ""
+
+msgid "Custom HTML Tag"
+msgstr ""
+
+msgid "Custom Image Tag"
+msgstr ""
+
+msgid "DoubleClick Floodlight Counter Tag"
+msgstr ""
+
+msgid "DoubleClick Floodlight Sales Tag"
+msgstr ""
+
+msgid "Marin Software Tag"
+msgstr ""
+
+msgid "Mediaplex - IFRAME MCT Tag"
+msgstr ""
+
+msgid "Mediaplex - Standard IMG ROI Tag"
+msgstr ""
+
+msgid "Media6Degrees Universal Pixel Tag"
+msgstr ""
+
+msgid "Turn Conversion Tracking Tag"
+msgstr ""
+
+msgid "Turn Data Collection Tag"
+msgstr ""
+
+msgid "DOM element Macro"
+msgstr ""
+
+msgid "Custom JavaScript Macro"
+msgstr ""
+
+msgid "Constant Macro"
+msgstr ""
+
+msgid "First Party Cookie Macro"
+msgstr ""
+
+msgid "Event Name Macro"
+msgstr ""
+
+msgid "JavaScript Variable Macro"
+msgstr ""
+
+msgid "DataLayer Variable Macro"
+msgstr ""
+
+msgid ""
+"It is not recommended to blacklist this type of macro since most features of "
+"this plugin depend on dataLayer macros."
+msgstr ""
+
+msgid "Random Number Macro"
+msgstr ""
+
+msgid "Referrer Macro"
+msgstr ""
+
+msgid "URL Macro"
+msgstr ""
+
+msgid "Auto-Event Variable Macro"
+msgstr ""
+
+msgid ""
+"Here you can control which types of tags can be executed on your site "
+"regardless of what tags are included in your container on the Google Tag "
+"Manager site. Use this to increase security!"
+msgstr ""
+
+msgid ""
+"Here you can control which types of macros can work from your Google Tag "
+"Manager setup."
+msgstr ""
+
+msgid ""
+"Do not modify if you do not know what to do since it can cause issues in "
+"your tag deployment!"
+msgstr ""
+
+msgid ""
+"Blacklisting of macros only work if you enable blacklist or whilelist of "
+"tags on the previous tab."
+msgstr ""
+
+msgid "Uncheck a row to blacklist a macro type."
+msgstr ""
+
+msgid "Blacklist tags"
+msgstr ""
+
+msgid "Blacklist macros"
+msgstr ""
+
+msgid "Disable feature: control everything on Google Tag Manager interface"
+msgstr ""
+
+msgid "Allow all, except the checked items below (blacklist)"
+msgstr ""
+
+msgid "Block all, except the checked items below (whitelist)"
+msgstr ""

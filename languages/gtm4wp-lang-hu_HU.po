@@ -1,19 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Tag Manager for WordPress\n"
-"POT-Creation-Date: 2013-09-19 11:27+0100\n"
-"PO-Revision-Date: 2014-01-11 13:11+0100\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Thomas Geiger <duracelltomi@gmail.com>\n"
 "Language-Team: JabJab Online Marketing\n"
-"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: ..\n"
 
 #: ../admin/admin.php:18
 msgid "Remarketing variable"
@@ -555,3 +550,157 @@ msgstr ""
 "Kapcsolja be ezt a beállítást, ha szeretné látni a bejegyzések számát az "
 "aktuális oldalon és az összes bejegyzés számát az aktuális kategóriában/"
 "címkénél/taxanómián."
+
+msgid "Enable blacklist/whitelist"
+msgstr "Feketelista engedélyezése"
+
+msgid ""
+"Disable feature or select whether you want to whitelist or blacklist tags"
+msgstr ""
+"Kapcsolja ki a funkciót vagy válassza ki, tiltani vagy engedélyezni szeretné "
+"a címkéket"
+
+msgid "AdWords Conversion Tracking Tag"
+msgstr "AdWords konverziós címke"
+
+msgid "AdWords Remarketing Tag"
+msgstr "AdWords remarketing címke"
+
+msgid "Google Analytics Tag"
+msgstr "Google Analytics címke"
+
+msgid "Universal Analytics Tag"
+msgstr "Universal Analytics címke"
+
+msgid "AdAdvisor Tag"
+msgstr "AdAdvisor címke"
+
+msgid "AdRoll Smart Pixel Tag"
+msgstr "AdRoll Smart Pixel címke"
+
+msgid "Bizo Insight Tag"
+msgstr "Bizo Insight címke"
+
+msgid "ClickTale Standard Tracking Tag"
+msgstr "ClickTale Standard Tracking címke"
+
+msgid "comScore Unified Digital Measurement Tag"
+msgstr "comScore Unified Digital Measurement címke"
+
+msgid "Custom HTML Tag"
+msgstr "Egyéni HTML címke"
+
+msgid "Custom Image Tag"
+msgstr "Enyéni kép címke"
+
+msgid "DoubleClick Floodlight Counter Tag"
+msgstr "DoubleClick Floodlight Counter címke"
+
+msgid "DoubleClick Floodlight Sales Tag"
+msgstr "DoubleClick Floodlight Sales címke"
+
+msgid "Marin Software Tag"
+msgstr "Marin Software címke"
+
+msgid "Mediaplex - IFRAME MCT Tag"
+msgstr "Mediaplex - IFRAME MCT címke"
+
+msgid "Mediaplex - Standard IMG ROI Tag"
+msgstr "Mediaplex - Standard IMG ROI címke"
+
+msgid "Media6Degrees Universal Pixel Tag"
+msgstr "Media6Degrees Universal Pixel címke"
+
+msgid "Turn Conversion Tracking Tag"
+msgstr "Turn Conversion Tracking címke"
+
+msgid "Turn Data Collection Tag"
+msgstr "Turn adatgyűjtő címke"
+
+msgid "DOM element Macro"
+msgstr "DOM elem makró"
+
+msgid "Custom JavaScript Macro"
+msgstr "Egyéni JavaScript makró"
+
+msgid "Constant Macro"
+msgstr "Állandó karakterlánc makró"
+
+msgid "First Party Cookie Macro"
+msgstr "First Party cookie makró"
+
+msgid "Event Name Macro"
+msgstr "Esemény név makró"
+
+msgid "JavaScript Variable Macro"
+msgstr "JavaScript változó makró"
+
+msgid "DataLayer Variable Macro"
+msgstr "DataLayer változó makró"
+
+msgid ""
+"It is not recommended to blacklist this type of macro since most features of "
+"this plugin depend on dataLayer macros."
+msgstr ""
+"Nem javasolt ezt a makrót letiltani, mert ennek használata ezen plugin "
+"működéséhez nélkülözhetetlen."
+
+msgid "Random Number Macro"
+msgstr "Véletlenszám makró"
+
+msgid "Referrer Macro"
+msgstr "Hivatkozó URL makró"
+
+msgid "URL Macro"
+msgstr "URL makró"
+
+msgid "Auto-Event Variable Macro"
+msgstr "Automatikus esemény változó makró"
+
+msgid ""
+"Here you can control which types of tags can be executed on your site "
+"regardless of what tags are included in your container on the Google Tag "
+"Manager site. Use this to increase security!"
+msgstr ""
+"Itt kezelheti, milyen típusú címkék jelenhetnek meg az oldalához rendelt "
+"tárolóból függetlenül attól, hogy mi lett létrehozva a Google Tag Manager "
+"oldalán. Használja a biztonság fokozására!"
+
+msgid ""
+"Here you can control which types of macros can work from your Google Tag "
+"Manager setup."
+msgstr ""
+"Itt beállíthatja, milyen makrók működhetnek a Google Tag Manager "
+"összeállításából."
+
+msgid ""
+"Do not modify if you do not know what to do since it can cause issues in "
+"your tag deployment!"
+msgstr ""
+"Ne módosítása ha nem tudja, mit kell tennie, mivel ez problémákat okozhat a "
+"címkék megjelenésében."
+
+msgid ""
+"Blacklisting of macros only work if you enable blacklist or whilelist of "
+"tags on the previous tab."
+msgstr ""
+"A makrók tiltása csak akkor működik, ha engedélyezi a címkék tiltását/"
+"engedélyezését az előző fülön."
+
+msgid "Uncheck a row to blacklist a macro type."
+msgstr "Vegye ki a pipát egy sornál a makró tiltásához."
+
+msgid "Blacklist tags"
+msgstr "Címkék tiltása"
+
+msgid "Blacklist macros"
+msgstr "Makrók tiltása"
+
+msgid "Disable feature: control everything on Google Tag Manager interface"
+msgstr "Funkció tiltása: mindent a Google Tag Manager felületén kezel"
+
+msgid "Allow all, except the checked items below (blacklist)"
+msgstr "Minden engedélyezése, kivéve az alábbiakat (blacklist)"
+
+msgid "Block all, except the checked items below (whitelist)"
+msgstr "Minden tiltása, kivéve az alábbiakat (whitelist)"
