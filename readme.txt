@@ -1,10 +1,10 @@
 === DuracellTomi's Google Tag Manager for WordPress ===
 Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
-Tags: google tag manager, tag manager, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
+Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 3.8
-Stable tag: 0.7
+Stable tag: 0.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -12,14 +12,14 @@ The first Google Tag Manager plugin for WordPress with business goals in mind.
 
 == Description ==
 
-Google Tag Manager is Google's free tool to everyone to be able to manage your analyitcs, PPC and other code snipetts
+Google Tag Manager (GTM) is Google's free tool to everyone to be able to manage your analyitcs, PPC and other code snipetts
 using an intuitive web UI.
 
 This plugin can place the necessary container code snippet into your website so that you do not need to edit your theme files.
 
 = Basic data included =
 
-Google Tag Manager for WordPress builds a so called dataLayer variable for you. Using this you can manage your tags
+Google Tag Manager for WordPress (aka GTM4WP or GTM 4 WP) builds a so called dataLayer variable for you. Using this you can manage your tags
 very easily since you can fire them using rules that include
 
 * post/page titles
@@ -201,6 +201,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.7.1 =
+
+* Fixed: WooCommerce 2.1.x compatibility.
+
 = 0.7 =
 
 * Updated/Fixed: dataLayer variables are now populated at the end of the head section. Using this the container code can appear just after the opening body tag, thus Webmaster Tools verification using Tag Manager option will work
@@ -253,6 +257,11 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.7.1 =
+
+If you are using WooCommerce and updated to 2.1.x you SHOULD update immediatelly.
+This release includes a fix so that transaction data can be passed to GTM.
 
 = 0.7 =
 
