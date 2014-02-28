@@ -37,7 +37,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 		$dataLayer["ecomm_pagetype"] = "cart";
 		$dataLayer["ecomm_totalvalue"] = $woocommerce->cart->cart_contents_total;
 	} else if ( is_order_received_page() ) {
-		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? 0 : absint( $_GET['order'] ) );
+		$order_id  = apply_filters( 'woocommerce_thankyou_order_id', empty( $_GET['order'] ) ? ($GLOBALS["wp"]->query_vars["order-received"] ? $GLOBALS["wp"]->query_vars["order-received"] : 0) : absint( $_GET['order'] ) );
 		$order_key = apply_filters( 'woocommerce_thankyou_order_key', empty( $_GET['key'] ) ? '' : woocommerce_clean( $_GET['key'] ) );
 
 		if ( $order_id > 0 ) {
@@ -47,7 +47,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 		}
 
 		if ( 1 == get_post_meta( $order_id, '_ga_tracked', true ) ) {
-			unset( $order );
+//			unset( $order );
 		}
 
 		if ( isset( $order ) ) {
@@ -110,7 +110,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			$dataLayer["ecomm_pagetype"] = "purchase";
 			$dataLayer["ecomm_totalvalue"] = $_sumprice;
 
-			update_post_meta( $order_id, '_ga_tracked', 1 );
+//			update_post_meta( $order_id, '_ga_tracked', 1 );
 		}
 	} else {
 		$dataLayer["ecomm_pagetype"] = "siteview";
