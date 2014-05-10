@@ -3,7 +3,7 @@ Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: 0.7.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
