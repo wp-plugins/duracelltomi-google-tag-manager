@@ -12,24 +12,12 @@ define( 'GTM4WP_ADMIN_GROUP_INCLUDES',    'gtm4wp-admin-group-includes' );
 define( 'GTM4WP_ADMIN_GROUP_EVENTS',      'gtm4wp-admin-group-events' );
 define( 'GTM4WP_ADMIN_GROUP_SCROLLER',    'gtm4wp-admin-group-scroller' );
 define( 'GTM4WP_ADMIN_GROUP_BLACKLIST',   'gtm4wp-admin-group-blacklist-tags' );
-define( 'GTM4WP_ADMIN_GROUP_BLACKLISTM',  'gtm4wp-admin-group-blacklist-macro' );
+//define( 'GTM4WP_ADMIN_GROUP_BLACKLISTM',  'gtm4wp-admin-group-blacklist-macro' );
 define( 'GTM4WP_ADMIN_GROUP_INTEGRATION', 'gtm4wp-admin-group-integration' );
 define( 'GTM4WP_ADMIN_GROUP_ADVANCED',    'gtm4wp-admin-group-advanced' );
 define( 'GTM4WP_ADMIN_GROUP_CREDITS',     'gtm4wp-admin-group-credits' );
 
 $GLOBALS["gtm4wp_includefieldtexts"] = array(
-	GTM4WP_OPTION_INCLUDE_REMARKETING => array(
-		"label"       => __( "Remarketing variable", GTM4WP_TEXTDOMAIN ),
-		"description" => __( "Check this option to include a dataLayer variable where all dataLayer values are stored to be included in your AdWords remarketing tag as a custom variable field", GTM4WP_TEXTDOMAIN )
-	),
-	GTM4WP_OPTION_INCLUDE_LOGGEDIN    => array(
-		"label"       => __( "Logged in status", GTM4WP_TEXTDOMAIN ),
-		"description" => __( "Check this option to include whether there is a logged in user on your website.", GTM4WP_TEXTDOMAIN )
-	),
-	GTM4WP_OPTION_INCLUDE_USERROLE    => array(
-		"label"       => __( "Logged in user role", GTM4WP_TEXTDOMAIN ),
-		"description" => __( "Check this option to include the role of the logged in user.", GTM4WP_TEXTDOMAIN )
-	),
 	GTM4WP_OPTION_INCLUDE_POSTTYPE    => array(
 		"label"       => __( "Posttype of current post/archive", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the type of the current post or archive page (post, page or any custom post type).", GTM4WP_TEXTDOMAIN )
@@ -61,6 +49,18 @@ $GLOBALS["gtm4wp_includefieldtexts"] = array(
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => array(
 		"label"       => __( "Search data", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the search term, referring page URL and number of results on the search page.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_LOGGEDIN    => array(
+		"label"       => __( "Logged in status", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include whether there is a logged in user on your website.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_USERROLE    => array(
+		"label"       => __( "Logged in user role", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include the role of the logged in user.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_REMARKETING => array(
+		"label"       => __( "Remarketing variable", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a dataLayer variable where all dataLayer values are stored to be included in your AdWords remarketing tag as a custom variable field", GTM4WP_TEXTDOMAIN )
 	),
 	GTM4WP_OPTION_INCLUDE_BROWSERDATA => array(
 		"label"       => __( "Browser data *", GTM4WP_TEXTDOMAIN ),
@@ -309,13 +309,7 @@ function gtm4wp_admin_output_section( $args ) {
 		}
 		
 		case GTM4WP_ADMIN_GROUP_BLACKLIST: {
-			_e( "Here you can control which types of tags can be executed on your site regardless of what tags are included in your container on the Google Tag Manager site. Use this to increase security!", GTM4WP_TEXTDOMAIN );
-
-			break;        
-		}
-		
-		case GTM4WP_ADMIN_GROUP_BLACKLISTM: {
-			_e( "Here you can control which types of macros can work from your Google Tag Manager setup.", GTM4WP_TEXTDOMAIN );
+			_e( "Here you can control which types of tags and macros can be executed on your site regardless of what tags are included in your container on the Google Tag Manager site. Use this to increase security!", GTM4WP_TEXTDOMAIN );
 			echo '<br />';
 			_e( "Do not modify if you do not know what to do since it can cause issues in your tag deployment!", GTM4WP_TEXTDOMAIN );
 			echo '<br />';
@@ -632,20 +626,13 @@ function gtm4wp_admin_init() {
 		);
 	}
 
-	add_settings_section(
-		GTM4WP_ADMIN_GROUP_BLACKLISTM,
-		__( 'Blacklist macros', GTM4WP_TEXTDOMAIN ),
-		'gtm4wp_admin_output_section',
-		GTM4WP_ADMINSLUG
-	);
-	
 	foreach($gtm4wp_blacklistmfieldtexts as $fieldid => $fielddata) {
 		add_settings_field(
 			"gtm4wp-admin-" . $fieldid . "-id",
 			$fielddata["label"],
 			'gtm4wp_admin_output_field',
 			GTM4WP_ADMINSLUG,
-			GTM4WP_ADMIN_GROUP_BLACKLISTM,
+			GTM4WP_ADMIN_GROUP_BLACKLIST,
 			array(
 				"label_for" => "gtm4wp-options[" . $fieldid . "]",
 				"description" => $fielddata["description"],
@@ -750,6 +737,22 @@ function gtm4wp_add_admin_js($hook) {
 	global $gtp4wp_plugin_url;
 	
 	if ( $hook == "settings_page_" . GTM4WP_ADMINSLUG ) {
+		wp_register_script( "admin-subtabs", $gtp4wp_plugin_url . "js/admin-subtabs.js" );
+
+		$subtabtexts = array(
+			"posttabtitle" => __( "Posts" , GTM4WP_TEXTDOMAIN ),
+			"searchtabtitle" => __( "Search" , GTM4WP_TEXTDOMAIN ),
+			"visitortabtitle" => __( "Visitors" , GTM4WP_TEXTDOMAIN ),
+			"adwordstabtitle" => __( "AdWords" , GTM4WP_TEXTDOMAIN ),
+			"browsertabtitle" => __( "Browser/OS/Device" , GTM4WP_TEXTDOMAIN ),
+			"blocktagstabtitle" => __( "Blacklist tags" , GTM4WP_TEXTDOMAIN ),
+			"blockmacrostabtitle" => __( "Blacklist macros" , GTM4WP_TEXTDOMAIN ),
+			"wpcf7tabtitle" => __( "Contact Form 7" , GTM4WP_TEXTDOMAIN ),
+			"wctabtitle" => __( "WooCommerce" , GTM4WP_TEXTDOMAIN )
+		);
+		wp_localize_script( "admin-subtabs", 'gtm4wp', $subtabtexts );
+		wp_enqueue_script( "admin-subtabs" );
+
 		wp_enqueue_script( "admin-tabcreator", $gtp4wp_plugin_url . "js/admin-tabcreator.js", array( "jquery-core" ), "1.0" );
 
 		wp_enqueue_style( "gtm4wp-validate", $gtp4wp_plugin_url . "css/admin-gtm4wp.css", array(), "1.0" );
