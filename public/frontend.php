@@ -1,11 +1,11 @@
 <?php
-define( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtp4wp_compile_datalayer");
-define( GTM4WP_WPFILTER_COMPILE_REMARKTING, "gtp4wp_compile_remarkering");
+define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtp4wp_compile_datalayer');
+define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtp4wp_compile_remarkering');
 
-if ( $GLOBALS["gtm4wp_options"][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
-	$GLOBALS["gtm4wp_datalayer_name"] = "dataLayer";
+if ( $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
+	$GLOBALS[ "gtm4wp_datalayer_name" ] = "dataLayer";
 } else {
-	$GLOBALS["gtm4wp_datalayer_name"] = $GLOBALS["gtm4wp_options"][ GTM4WP_OPTION_DATALAYER_NAME ];
+	$GLOBALS[ "gtm4wp_datalayer_name" ] = $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ];
 }
 
 function gtm4wp_is_assoc($arr) {
