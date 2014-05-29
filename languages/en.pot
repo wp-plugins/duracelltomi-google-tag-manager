@@ -548,9 +548,9 @@ msgid "Auto-Event Variable Macro"
 msgstr ""
 
 msgid ""
-"Here you can control which types of tags can be executed on your site "
-"regardless of what tags are included in your container on the Google Tag "
-"Manager site. Use this to increase security!"
+"Here you can control which types of tags and macros can be executed on your "
+"site regardless of what tags are included in your container on the Google "
+"Tag Manager site. Use this to increase security!"
 msgstr ""
 
 msgid ""
