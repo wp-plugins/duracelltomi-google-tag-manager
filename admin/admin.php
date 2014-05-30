@@ -17,6 +17,13 @@ define( 'GTM4WP_ADMIN_GROUP_INTEGRATION', 'gtm4wp-admin-group-integration' );
 define( 'GTM4WP_ADMIN_GROUP_ADVANCED',    'gtm4wp-admin-group-advanced' );
 define( 'GTM4WP_ADMIN_GROUP_CREDITS',     'gtm4wp-admin-group-credits' );
 
+define( 'GTM4WP_USER_NOTICES_KEY', 'gtm4wp_user_notices_dismisses' );
+
+$GLOBALS["gtm4wp_def_user_notices_dismisses"] = array(
+	"enter-gtm-code" => false,
+	"wc-ga-plugin-warning" => false
+);
+
 $GLOBALS["gtm4wp_includefieldtexts"] = array(
 	GTM4WP_OPTION_INCLUDE_POSTTYPE    => array(
 		"label"       => __( "Posttype of current post/archive", GTM4WP_TEXTDOMAIN ),
@@ -266,9 +273,26 @@ $GLOBALS["gtm4wp_integratefieldtexts"] = array(
 		"description"   => __( "Check this to include a dataLayer event after a successfull form submission.", GTM4WP_TEXTDOMAIN ),
 		"plugintocheck" => "contact-form-7/wp-contact-form-7.php"
 	),
+/*
 	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => array(
 		"label"         => __( "WooCommerce", GTM4WP_TEXTDOMAIN ),
 		"description"   => __( "Enable this and you will get:<br /> - Add-to-cart events<br /> - E-commerce transaction data ready to be used with Google Analytics and Universal Analytics tags<br /> - Google AdWords dynamic remarketing tags", GTM4WP_TEXTDOMAIN ),
+		"plugintocheck" => "woocommerce/woocommerce.php"
+	)
+*/
+	GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS => array(
+		"label"         => __( "Classic transactions", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( sprintf( 'Enable this to add <a href="%s" target="_blank">classic transaction</a> data to the dataLayer after a successful order.' , 'https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce'), GTM4WP_TEXTDOMAIN ),
+		"plugintocheck" => "woocommerce/woocommerce.php"
+	),
+	GTM4WP_OPTION_INTEGRATE_WCADDTOCART    => array(
+		"label"         => __( "Add-to-cart events", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "Enable this to fire a dataLayer event (gtm4wp.addProductToCart) when the visitors adds a product to your cart.", GTM4WP_TEXTDOMAIN ),
+		"plugintocheck" => "woocommerce/woocommerce.php"
+	),
+	GTM4WP_OPTION_INTEGRATE_WCREMARKETING  => array(
+		"label"         => __( "AdWords Remarketing", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "Enable this to add Google AdWords dynamic remarketing variables to the dataLayer", GTM4WP_TEXTDOMAIN ),
 		"plugintocheck" => "woocommerce/woocommerce.php"
 	)
 );
@@ -799,26 +823,85 @@ function gtm4wp_admin_head() {
 					}
 				}
 			});
+
+		jQuery( ".dismiss-notice" )
+			.bind( "click", function( e ) {
+				e.preventDefault();
+
+				jQuery.post(ajaxurl, {
+					action: "gtm4wp_dismiss_notice",
+					noticeid: jQuery( this )
+						.attr( "href" )
+						.substring( 1 )
+				}, function ( response ) {
+					jQuery( ".dismiss-notice" )
+						.parent()
+						.parent()
+						.fadeOut( "slow" );
+				});
+			});
 	});
 </script>';
 }
 
 function gtm4wp_show_warning() {
-	global $gtm4wp_options, $gtp4wp_plugin_url, $gtm4wp_integratefieldtexts;
+	global $gtm4wp_options, $gtp4wp_plugin_url, $gtm4wp_integratefieldtexts, $woocommerce, $current_user,
+		$gtm4wp_def_user_notices_dismisses;
 
-	if ( trim( $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] ) == "" ) {
-		echo '<div id="message" class="error"><p><strong>' . sprintf( __( 'To start using Google Tag Manager for WordPress, please <a href="%s">enter your GTM ID</a>', GTM4WP_TEXTDOMAIN ), "options-general.php?page=" . GTM4WP_ADMINSLUG ) . '</strong></p></div>';
-	}
-
-	if ( $gtm4wp_options[GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE] && is_plugin_active( $gtm4wp_integratefieldtexts[GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE]["plugintocheck"] ) ) {
-		$woo_ga_options = get_option( "woocommerce_google_analytics_settings" );
-		if ( $woo_ga_options ) {
-			if ( "" != $woo_ga_options["ga_id"] ) {
-				echo '<div id="message" class="error"><p><strong>' . __( 'Possible duplacate tag issue: you should disable Google Analytics tracking <a href="admin.php?page=woocommerce_settings&tab=integration&section=google_analytics">in WooCommerce settings</a> by leaving Google Analytics ID field empty to prevent any duplicate tags being used on the frontend!', GTM4WP_TEXTDOMAIN ) . '</strong></p></div>';
-			}
+	$gtm4wp_user_notices_dismisses = get_user_meta( $current_user->ID, GTM4WP_USER_NOTICES_KEY, true );
+	if ( $gtm4wp_user_notices_dismisses === "" ) {
+		$gtm4wp_user_notices_dismisses = $gtm4wp_def_user_notices_dismisses;
+	} else {
+		$gtm4wp_user_notices_dismisses = @unserialize( $gtm4wp_user_notices_dismisses );
+		if ( false === $gtm4wp_user_notices_dismisses ) {
+			$gtm4wp_user_notices_dismisses = array();
 		}
 	}
+	$gtm4wp_user_notices_dismisses = array_merge( $gtm4wp_def_user_notices_dismisses, $gtm4wp_user_notices_dismisses );
 	
+	if ( ( trim( $gtm4wp_options[GTM4WP_OPTION_GTM_CODE] ) == "" ) && ( false === $gtm4wp_user_notices_dismisses["enter-gtm-code"] ) ) {
+		echo '<div id="message" class="error"><p><strong>' . sprintf( __( 'To start using Google Tag Manager for WordPress, please <a href="%s">enter your GTM ID</a>', GTM4WP_TEXTDOMAIN ), "options-general.php?page=" . GTM4WP_ADMINSLUG ) . '</strong> | <a href="?enter-gtm-code" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
+	}
+
+	if ( false === $gtm4wp_user_notices_dismisses["wc-ga-plugin-warning"] ) {
+		$is_wc_active = $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] ||
+				$gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ] ||
+				$gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ];
+
+		if ( $is_wc_active && is_plugin_active( $gtm4wp_integratefieldtexts[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ][ "plugintocheck" ] ) && ( version_compare( $woocommerce->version, "2.1" ) < 0 ) ) {
+			$woo_ga_options = get_option( "woocommerce_google_analytics_settings" );
+			if ( $woo_ga_options ) {
+				if ( "" != $woo_ga_options["ga_id"] ) {
+					echo '<div id="message" class="error"><p><strong>' . __( 'Notice: you should disable Google Analytics tracking <a href="admin.php?page=woocommerce_settings&tab=integration&section=google_analytics">in WooCommerce settings</a> by leaving Google Analytics ID field empty if you are using Google Analytics tags inside Google Tag Manager!', GTM4WP_TEXTDOMAIN ) . '</strong> | <a href="?wc-ga-plugin-warning" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
+				}
+			}
+		}       	
+	
+		if ( $is_wc_active && is_plugin_active( "woocommerce-google-analytics-integration/woocommerce-google-analytics-integration.php" ) ) {
+			echo '<div id="message" class="error"><p><strong>' . __( 'Notice: you should deactivate the plugin "WooCommerce Google Analytics Integration" if you are using Google Analytics tags inside Google Tag Manager!', GTM4WP_TEXTDOMAIN ) . '</strong> | <a href="?wc-ga-plugin-warning" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
+		}
+	}
+}
+
+function gtm4wp_dismiss_notice() {
+	global $gtm4wp_def_user_notices_dismisses, $current_user;
+
+	$gtm4wp_user_notices_dismisses = get_user_meta( $current_user->ID, GTM4WP_USER_NOTICES_KEY, true );
+	if ( $gtm4wp_user_notices_dismisses === "" ) {
+		$gtm4wp_user_notices_dismisses = $gtm4wp_def_user_notices_dismisses;
+	} else {
+		$gtm4wp_user_notices_dismisses = @unserialize( $gtm4wp_user_notices_dismisses );
+		if ( false === $gtm4wp_user_notices_dismisses ) {
+			$gtm4wp_user_notices_dismisses = array();
+		}
+	}
+	$gtm4wp_user_notices_dismisses = array_merge( $gtm4wp_def_user_notices_dismisses, $gtm4wp_user_notices_dismisses );
+
+	$noticeid = trim( basename( $_POST["noticeid"] ) );
+	if ( array_key_exists( $noticeid, $gtm4wp_user_notices_dismisses ) ) {
+		$gtm4wp_user_notices_dismisses[ $noticeid ] = true;
+		update_user_meta( $current_user->ID, GTM4WP_USER_NOTICES_KEY, serialize( $gtm4wp_user_notices_dismisses ) );
+	}
 }
 
 function gtm4wp_add_plugin_action_links( $links, $file ) {
@@ -840,3 +923,4 @@ add_action( 'admin_enqueue_scripts', 'gtm4wp_add_admin_js' );
 add_action( 'admin_notices', 'gtm4wp_show_warning' );
 add_action( 'admin_head', 'gtm4wp_admin_head' );
 add_filter( 'plugin_action_links', 'gtm4wp_add_plugin_action_links', 10, 2 );
+add_action( 'wp_ajax_gtm4wp_dismiss_notice', 'gtm4wp_dismiss_notice' );
