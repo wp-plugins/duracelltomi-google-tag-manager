@@ -585,3 +585,18 @@ msgstr ""
 
 msgid "Block all, except the checked items below (whitelist)"
 msgstr ""
+
+msgid ""
+"Enable this to add <a href=\"%s\" target=\"_blank\">classic transaction</a> "
+"data to the dataLayer after a successful order."
+msgstr ""
+
+msgid ""
+"Enable this to fire a dataLayer event (gtm4wp.addProductToCart) when the "
+"visitors adds a product to your cart."
+msgstr ""
+
+msgid ""
+"Enable this to add Google AdWords dynamic remarketing variables to the "
+"dataLayer"
+msgstr ""

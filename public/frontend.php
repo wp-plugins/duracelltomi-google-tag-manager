@@ -362,9 +362,8 @@ function gtm4wp_enqueue_scripts() {
 		wp_enqueue_script( "gtm4wp-social-actions", $gtp4wp_plugin_url . "js/gtm4wp-social-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) {
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] || $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ] || $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
-//		wp_enqueue_script( "gtm4wp-woocommerce-tracker", $gtp4wp_plugin_url . "js/gtm4wp-woocommerce-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {

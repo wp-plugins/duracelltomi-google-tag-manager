@@ -66,9 +66,14 @@ define( 'GTM4WP_OPTION_BLACKLIST_MACRO_REFERRER',    'blacklist-macro-referrer' 
 define( 'GTM4WP_OPTION_BLACKLIST_MACRO_URL',         'blacklist-macro-url' );
 define( 'GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT',   'blacklist-macro-autoevent-variable' );
 
-define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',       'integrate-wpcf7' );
-define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE', 'integrate-woocommerce' );
-define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE', 'integrate-wp-e-commerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',          'integrate-wpcf7' );
+
+define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE',    'integrate-woocommerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS', 'integrate-woocommerce-classic-transactions' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCADDTOCART',    'integrate-woocommerce-add-to-cart-event' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCREMARKETING',  'integrate-woocommerce-remarketing' );
+
+define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE',    'integrate-wp-e-commerce' );
 
 define( 'GTM4WP_PLACEMENT_FOOTER',             0 );
 define( 'GTM4WP_PLACEMENT_BODYOPEN',           1 );
@@ -143,7 +148,12 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT  => true,
 
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => false,
-	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,
+
+//	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,
+	GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS => false,
+	GTM4WP_OPTION_INTEGRATE_WCADDTOCART    => false,
+	GTM4WP_OPTION_INTEGRATE_WCREMARKETING  => false,
+
 	GTM4WP_OPTION_INTEGRATE_WPECOMMERCE => false
 );
 
@@ -153,6 +163,15 @@ function gtm4wp_reload_options() {
 	$storedoptions = (array) get_option( GTM4WP_OPTIONS );
 	if ( ! is_array( $gtm4wp_defaultoptions ) ) {
 		$gtm4wp_defaultoptions = array();
+	}
+
+	// update WooCommerce settings from 0.7.x to 0.8
+	if ( isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) && ! isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] ) ) {
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ]    = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ]  = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
+
+		unset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] );
 	}
 	
 	return array_merge( $gtm4wp_defaultoptions, $storedoptions );
