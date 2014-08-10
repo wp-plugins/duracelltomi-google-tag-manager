@@ -21,7 +21,8 @@ define( 'GTM4WP_USER_NOTICES_KEY', 'gtm4wp_user_notices_dismisses' );
 
 $GLOBALS["gtm4wp_def_user_notices_dismisses"] = array(
 	"enter-gtm-code" => false,
-	"wc-ga-plugin-warning" => false
+	"wc-ga-plugin-warning" => false,
+	"wc-gayoast-plugin-warning" => false
 );
 
 $GLOBALS["gtm4wp_includefieldtexts"] = array(
@@ -80,6 +81,14 @@ $GLOBALS["gtm4wp_includefieldtexts"] = array(
 	GTM4WP_OPTION_INCLUDE_DEVICEDATA  => array(
 		"label"       => __( "Device data *", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include the type of device the user is currently using (desktop, tablet or mobile) including manufacturer and model data.", GTM4WP_TEXTDOMAIN )
+	),
+	GTM4WP_OPTION_INCLUDE_WEATHER => array(
+		"label"       => __( "Weather data", GTM4WP_TEXTDOMAIN ),
+		"description" => sprintf( __( "Check this option to include the current weather conditions around the current visitor.<br /><strong>Attention!</strong> This feature uses <a href=\"%s\" target=\"_blank\">geoplugin.com</a> and <a href=\"%s\" target=\"_blank\">openweathermap.org</a> to collect data.<br />Depending on your website's traffic, additional fees may apply!<br />This plugin caches weather data for 1 hour to lower the need to access those services.", GTM4WP_TEXTDOMAIN ), "http://www.geoplugin.com/premium?utm_source=gtm4wp&utm_medium=link&utm_campaign=duracelltomi-google-tag-manager-for-wordpress", "http://openweathermap.org/price?utm_source=gtm4wp&utm_medium=link&utm_campaign=duracelltomi-google-tag-manager-for-wordpress" )
+	),
+	GTM4WP_OPTION_INCLUDE_WEATHERUNITS => array(
+		"label"       => __( "Weather data units", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Select which temperature units you would like to use.", GTM4WP_TEXTDOMAIN )
 	)
 );
 
@@ -280,14 +289,15 @@ $GLOBALS["gtm4wp_integratefieldtexts"] = array(
 		"plugintocheck" => "woocommerce/woocommerce.php"
 	)
 */
-	GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS => array(
-		"label"         => __( "Classic transactions", GTM4WP_TEXTDOMAIN ),
-		"description"   => __( sprintf( 'Enable this to add <a href="%s" target="_blank">classic transaction</a> data to the dataLayer after a successful order.' , 'https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce'), GTM4WP_TEXTDOMAIN ),
+	GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC => array(
+		"label"         => __( "Track classic e-commerce", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( sprintf( __( "Choose this option if you would like to track e-commerce data using <a href=\"%s\" target=\"_blank\">classic transaction data</a>.", GTM4WP_TEXTDOMAIN  ) , 'https://developers.google.com/analytics/devguides/collection/analyticsjs/ecommerce'), GTM4WP_TEXTDOMAIN ),
 		"plugintocheck" => "woocommerce/woocommerce.php"
 	),
-	GTM4WP_OPTION_INTEGRATE_WCADDTOCART    => array(
-		"label"         => __( "Add-to-cart events", GTM4WP_TEXTDOMAIN ),
-		"description"   => __( "Enable this to fire a dataLayer event (gtm4wp.addProductToCart) when the visitors adds a product to your cart.", GTM4WP_TEXTDOMAIN ),
+	GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC => array(
+		"label"         => __( "Track enhanced e-commerce", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( sprintf( __( "Choose this option if you would like to track e-commerce data using <a href=\"%s\" target=\"_blank\">enhanced ecommerce tracking</a>.", GTM4WP_TEXTDOMAIN  ) , 'https://developers.google.com/analytics/devguides/collection/analyticsjs/enhanced-ecommerce'), GTM4WP_TEXTDOMAIN ) .
+		  __( '<br/>This feature is <strong>experimental</strong>. Currently it is not recommended to be used in live environments!', GTM4WP_TEXTDOMAIN ),
 		"plugintocheck" => "woocommerce/woocommerce.php"
 	),
 	GTM4WP_OPTION_INTEGRATE_WCREMARKETING  => array(
@@ -395,6 +405,15 @@ function gtm4wp_admin_output_field( $args ) {
 			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_0" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="0" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 0 ? 'checked="checked"' : '' ) . '/> ' . __( "Disable feature: control everything on Google Tag Manager interface", GTM4WP_TEXTDOMAIN ) . '<br />';
 			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_1" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="1" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 1 ? 'checked="checked"' : '' ) . '/> ' . __( "Allow all, except the checked items below (blacklist)", GTM4WP_TEXTDOMAIN ) . '<br />';
 			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']_2" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_BLACKLIST_ENABLE . ']" value="2" ' . ( $gtm4wp_options[GTM4WP_OPTION_BLACKLIST_ENABLE] == 2 ? 'checked="checked"' : '' ) . '/> ' . __( "Block all, except the checked items below (whitelist)", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo $args["description"];
+		
+			break;
+		}
+		
+		case GTM4WP_OPTIONS . "[" . GTM4WP_OPTION_INCLUDE_WEATHERUNITS . "]": {
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INCLUDE_WEATHERUNITS . ']_0" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INCLUDE_WEATHERUNITS . ']" value="0" ' . ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_WEATHERUNITS] == 0 ? 'checked="checked"' : '' ) . '/> ' . __( "Celsius", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INCLUDE_WEATHERUNITS . ']_1" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INCLUDE_WEATHERUNITS . ']" value="1" ' . ( $gtm4wp_options[GTM4WP_OPTION_INCLUDE_WEATHERUNITS] == 1 ? 'checked="checked"' : '' ) . '/> ' . __( "Fahrenheit", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo $args["description"];
 		
 			break;
 		}
@@ -772,7 +791,8 @@ function gtm4wp_add_admin_js($hook) {
 			"blocktagstabtitle" => __( "Blacklist tags" , GTM4WP_TEXTDOMAIN ),
 			"blockmacrostabtitle" => __( "Blacklist macros" , GTM4WP_TEXTDOMAIN ),
 			"wpcf7tabtitle" => __( "Contact Form 7" , GTM4WP_TEXTDOMAIN ),
-			"wctabtitle" => __( "WooCommerce" , GTM4WP_TEXTDOMAIN )
+			"wctabtitle" => __( "WooCommerce" , GTM4WP_TEXTDOMAIN ),
+			"weathertabtitle" => __( "Weather data" , GTM4WP_TEXTDOMAIN )
 		);
 		wp_localize_script( "admin-subtabs", 'gtm4wp', $subtabtexts );
 		wp_enqueue_script( "admin-subtabs" );
@@ -863,12 +883,12 @@ function gtm4wp_show_warning() {
 		echo '<div id="message" class="error"><p><strong>' . sprintf( __( 'To start using Google Tag Manager for WordPress, please <a href="%s">enter your GTM ID</a>', GTM4WP_TEXTDOMAIN ), "options-general.php?page=" . GTM4WP_ADMINSLUG ) . '</strong> | <a href="?enter-gtm-code" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
 	}
 
-	if ( false === $gtm4wp_user_notices_dismisses["wc-ga-plugin-warning"] ) {
-		$is_wc_active = $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] ||
-				$gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ] ||
+	if ( ( false === $gtm4wp_user_notices_dismisses["wc-ga-plugin-warning"] ) || ( false === $gtm4wp_user_notices_dismisses["wc-gayoast-plugin-warning"] ) ) {
+		$is_wc_active = $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC ] ||
+				$gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ||
 				$gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ];
 
-		if ( $is_wc_active && is_plugin_active( $gtm4wp_integratefieldtexts[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ][ "plugintocheck" ] ) && ( version_compare( $woocommerce->version, "2.1" ) < 0 ) ) {
+		if ( ( false === $gtm4wp_user_notices_dismisses["wc-ga-plugin-warning"] ) && $is_wc_active && is_plugin_active( $gtm4wp_integratefieldtexts[ GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC ][ "plugintocheck" ] ) && ( version_compare( $woocommerce->version, "2.1" ) < 0 ) ) {
 			$woo_ga_options = get_option( "woocommerce_google_analytics_settings" );
 			if ( $woo_ga_options ) {
 				if ( "" != $woo_ga_options["ga_id"] ) {
@@ -877,8 +897,12 @@ function gtm4wp_show_warning() {
 			}
 		}       	
 	
-		if ( $is_wc_active && is_plugin_active( "woocommerce-google-analytics-integration/woocommerce-google-analytics-integration.php" ) ) {
+		if ( ( false === $gtm4wp_user_notices_dismisses["wc-ga-plugin-warning"] ) && $is_wc_active && is_plugin_active( "woocommerce-google-analytics-integration/woocommerce-google-analytics-integration.php" ) ) {
 			echo '<div id="message" class="error"><p><strong>' . __( 'Notice: you should deactivate the plugin "WooCommerce Google Analytics Integration" if you are using Google Analytics tags inside Google Tag Manager!', GTM4WP_TEXTDOMAIN ) . '</strong> | <a href="?wc-ga-plugin-warning" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
+		}
+
+		if ( ( false === $gtm4wp_user_notices_dismisses["wc-gayoast-plugin-warning"] ) && $is_wc_active && is_plugin_active( "google-analytics-for-wordpress/googleanalytics.php" ) ) {
+			echo '<div id="message" class="error"><p><strong>' . __( 'Notice: you should deactivate the plugin "Google Analytics for WordPress by Yoast" if you are using Google Analytics tags inside Google Tag Manager!', GTM4WP_TEXTDOMAIN ) . '</strong> | <a href="?wc-gayoast-plugin-warning" class="dismiss-notice">' . __( 'Dismiss', GTM4WP_TEXTDOMAIN ) . '</a></p></div>';
 		}
 	}
 }

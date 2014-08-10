@@ -20,7 +20,11 @@ var adminsubtabs = {
     },
     "whichbrowser": {
       tabtext: gtm4wp.browsertabtitle,
-      numitems: 4
+      numitems: 3
+    },
+    "weather": {
+      tabtext: gtm4wp.weathertabtitle,
+      numitems: 2
     }
   },
   2: {},

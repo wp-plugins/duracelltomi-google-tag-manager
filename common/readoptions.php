@@ -18,6 +18,8 @@ define( 'GTM4WP_OPTION_INCLUDE_SEARCHDATA',    'include-searchdata' );
 define( 'GTM4WP_OPTION_INCLUDE_BROWSERDATA',   'include-browserdata' );
 define( 'GTM4WP_OPTION_INCLUDE_OSDATA',        'include-osdata' );
 define( 'GTM4WP_OPTION_INCLUDE_DEVICEDATA',    'include-devicedata' );
+define( 'GTM4WP_OPTION_INCLUDE_WEATHER',       'include-weather' );
+define( 'GTM4WP_OPTION_INCLUDE_WEATHERUNITS',  'include-weatherunits' );
 
 define( 'GTM4WP_OPTION_EVENTS_OUTBOUND',       'event-outbound' );
 define( 'GTM4WP_OPTION_EVENTS_DOWNLOADS',      'event-downloads' );
@@ -66,14 +68,14 @@ define( 'GTM4WP_OPTION_BLACKLIST_MACRO_REFERRER',    'blacklist-macro-referrer' 
 define( 'GTM4WP_OPTION_BLACKLIST_MACRO_URL',         'blacklist-macro-url' );
 define( 'GTM4WP_OPTION_BLACKLIST_MACRO_AUTOEVENT',   'blacklist-macro-autoevent-variable' );
 
-define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',          'integrate-wpcf7' );
+define( 'GTM4WP_OPTION_INTEGRATE_WPCF7',         'integrate-wpcf7' );
 
-define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE',    'integrate-woocommerce' );
-define( 'GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS', 'integrate-woocommerce-classic-transactions' );
-define( 'GTM4WP_OPTION_INTEGRATE_WCADDTOCART',    'integrate-woocommerce-add-to-cart-event' );
-define( 'GTM4WP_OPTION_INTEGRATE_WCREMARKETING',  'integrate-woocommerce-remarketing' );
+define( 'GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE',       'integrate-woocommerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC',  'integrate-woocommerce-track-classic-ecommerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC', 'integrate-woocommerce-track-enhanced-ecommerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WCREMARKETING',     'integrate-woocommerce-remarketing' );
 
-define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE',    'integrate-wp-e-commerce' );
+define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE',   'integrate-wp-e-commerce' );
 
 define( 'GTM4WP_PLACEMENT_FOOTER',             0 );
 define( 'GTM4WP_PLACEMENT_BODYOPEN',           1 );
@@ -85,20 +87,22 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_DATALAYER_NAME      => "",
 	GTM4WP_OPTION_GTM_PLACEMENT       => GTM4WP_PLACEMENT_FOOTER,
 
-	GTM4WP_OPTION_INCLUDE_REMARKETING => false,
-	GTM4WP_OPTION_INCLUDE_LOGGEDIN    => false,
-	GTM4WP_OPTION_INCLUDE_USERROLE    => false,
-	GTM4WP_OPTION_INCLUDE_POSTTYPE    => true,
-	GTM4WP_OPTION_INCLUDE_CATEGORIES  => true,
-	GTM4WP_OPTION_INCLUDE_TAGS        => true,
-	GTM4WP_OPTION_INCLUDE_AUTHOR      => true,
-	GTM4WP_OPTION_INCLUDE_POSTDATE    => false,
-	GTM4WP_OPTION_INCLUDE_POSTTITLE   => false,
-	GTM4WP_OPTION_INCLUDE_POSTCOUNT   => false,
-	GTM4WP_OPTION_INCLUDE_SEARCHDATA  => false,
-	GTM4WP_OPTION_INCLUDE_BROWSERDATA => false,
-	GTM4WP_OPTION_INCLUDE_OSDATA      => false,
-	GTM4WP_OPTION_INCLUDE_DEVICEDATA  => false,
+	GTM4WP_OPTION_INCLUDE_REMARKETING  => false,
+	GTM4WP_OPTION_INCLUDE_LOGGEDIN     => false,
+	GTM4WP_OPTION_INCLUDE_USERROLE     => false,
+	GTM4WP_OPTION_INCLUDE_POSTTYPE     => true,
+	GTM4WP_OPTION_INCLUDE_CATEGORIES   => true,
+	GTM4WP_OPTION_INCLUDE_TAGS         => true,
+	GTM4WP_OPTION_INCLUDE_AUTHOR       => true,
+	GTM4WP_OPTION_INCLUDE_POSTDATE     => false,
+	GTM4WP_OPTION_INCLUDE_POSTTITLE    => false,
+	GTM4WP_OPTION_INCLUDE_POSTCOUNT    => false,
+	GTM4WP_OPTION_INCLUDE_SEARCHDATA   => false,
+	GTM4WP_OPTION_INCLUDE_BROWSERDATA  => false,
+	GTM4WP_OPTION_INCLUDE_OSDATA       => false,
+	GTM4WP_OPTION_INCLUDE_DEVICEDATA   => false,
+	GTM4WP_OPTION_INCLUDE_WEATHER      => false,
+	GTM4WP_OPTION_INCLUDE_WEATHERUNITS => 0,
 	
 	GTM4WP_OPTION_EVENTS_OUTBOUND    => false,
 	GTM4WP_OPTION_EVENTS_DOWNLOADS   => false,
@@ -149,10 +153,10 @@ $gtm4wp_defaultoptions = array(
 
 	GTM4WP_OPTION_INTEGRATE_WPCF7       => false,
 
-//	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE => false,
-	GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS => false,
-	GTM4WP_OPTION_INTEGRATE_WCADDTOCART    => false,
-	GTM4WP_OPTION_INTEGRATE_WCREMARKETING  => false,
+//	GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE       => false,
+	GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC  => false,
+	GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC => false,
+	GTM4WP_OPTION_INTEGRATE_WCREMARKETING     => false,
 
 	GTM4WP_OPTION_INTEGRATE_WPECOMMERCE => false
 );
@@ -166,10 +170,10 @@ function gtm4wp_reload_options() {
 	}
 
 	// update WooCommerce settings from 0.7.x to 0.8
-	if ( isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) && ! isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] ) ) {
-		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
-		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ]    = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
-		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ]  = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
+	if ( isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] ) && ! isset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC ] ) ) {
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCTRACKCLASSICEC ]  = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] = false;
+		$storedoptions[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ]     = $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ];
 
 		unset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] );
 	}

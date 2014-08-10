@@ -600,3 +600,63 @@ msgid ""
 "Enable this to add Google AdWords dynamic remarketing variables to the "
 "dataLayer"
 msgstr ""
+
+msgid "Weather data"
+msgstr ""
+
+msgid ""
+"Check this option to include the current weather conditions around the "
+"current visitor.<br /><strong>Attention!</strong> This feature uses <a href="
+"\"%s\" target=\"_blank\">geoplugin.com</a> and <a href=\"%s\" target=\"_blank"
+"\">openweathermap.org</a> to collect data.<br />Depending on your website's "
+"traffic, additional fees may apply!<br />This plugin caches weather data for "
+"1 hour to lower the need to access those services."
+msgstr ""
+
+msgid "Weather data units"
+msgstr ""
+
+msgid "Track classic e-commerce"
+msgstr ""
+
+msgid ""
+"Choose this option if you would like to track e-commerce data using <a href="
+"\"%s\" target=\"_blank\">classic transaction data</a>."
+msgstr ""
+
+msgid "Track enhanced e-commerce"
+msgstr ""
+
+msgid ""
+"Choose this option if you would like to track e-commerce data using <a href="
+"\"%s\" target=\"_blank\">enhanced ecommerce tracking</a>."
+msgstr ""
+
+msgid ""
+"<br/>This feature is <strong>experimental</strong>. Currently it is not "
+"recommended to be used in live environments!"
+msgstr ""
+
+msgid "Dismiss"
+msgstr ""
+
+msgid ""
+"Notice: you should disable Google Analytics tracking <a href=\"admin.php?"
+"page=woocommerce_settings&tab=integration&section=google_analytics\">in "
+"WooCommerce settings</a> by leaving Google Analytics ID field empty if you "
+"are using Google Analytics tags inside Google Tag Manager!"
+msgstr ""
+
+msgid ""
+"Notice: you should deactivate the plugin \"WooCommerce Google Analytics "
+"Integration\" if you are using Google Analytics tags inside Google Tag "
+"Manager!"
+msgstr ""
+
+msgid ""
+"Notice: you should deactivate the plugin \"Google Analytics for WordPress by "
+"Yoast\" if you are using Google Analytics tags inside Google Tag Manager!"
+msgstr ""
+
+msgid "Select which temperature units you would like to use."
+msgstr ""

@@ -44,7 +44,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTITLE ] ) {
-		$dataLayer["pageTitle"] = wp_title( "|", false, "right" );
+		$dataLayer["pageTitle"] = strip_tags( wp_title( "|", false, "right" ) );
 	}
 
 	if ( is_singular() ) {
@@ -74,7 +74,10 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		}
 
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_AUTHOR ] ) {
-			$dataLayer["pagePostAuthor"] = get_the_author();
+			$postuser = get_userdata( $GLOBALS["post"]->post_author );
+			if ( false !== $postuser ) {
+				$dataLayer["pagePostAuthor"] = $postuser->display_name;
+			}
 		}
 
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTDATE ] ) {
@@ -252,8 +255,8 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 			$_gtmrestrictlistitems[] = "ua";
 		}
 		
-    $_gtmwhitelist = array();
-    $_gtmblacklist = array();
+		$_gtmwhitelist = array();
+		$_gtmblacklist = array();
 		if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_ENABLE ] == 1 ) {
 			$_gtmblacklist = array_merge($_gtmblacklist, $_gtmrestrictlistitems);
 		} else {
@@ -307,8 +310,67 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		$dataLayer[ "gtm.whitelist" ] = $_gtmwhitelist;
 		$dataLayer[ "gtm.blacklist" ] = $_gtmblacklist;
 	}
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] ) {
+		$dataLayer[ "weatherCategory" ] = __( "(no wheather data available)", GTM4WP_TEXTDOMAIN );
+		$dataLayer[ "weatherDescription" ] = __( "(no wheather data available)", GTM4WP_TEXTDOMAIN );
+		$dataLayer[ "weatherTemp" ] = 0;
+		$dataLayer[ "weatherPressure" ] = 0;
+		$dataLayer[ "weatherWindSpeed" ] = 0;
+		$dataLayer[ "weatherWindDeg" ] = 0;
+
+		$gtm4wp_sessionid = array_key_exists( "gtm4wp_sessoionid", $_COOKIE ) ? $_COOKIE[ "gtm4wp_sessoionid" ] : "";
+		// this is needed so that nobody can do a hack by editing our cookie
+		$gtm4wp_sessionid = str_replace( "'", "", trim( basename( $gtm4wp_sessionid ) ) );
+
+		if ( "" !== $gtm4wp_sessionid ) {
+			$weatherdata = get_transient( 'gtm4wp-weatherdata-'.$gtm4wp_sessionid );
+
+			if ( false !== $weatherdata ) {
+				$dataLayer[ "weatherCategory" ] = $weatherdata->weather[0]->main;
+				$dataLayer[ "weatherDescription" ] = $weatherdata->weather[0]->description;
+				$dataLayer[ "weatherTemp" ] = $weatherdata->main->temp;
+				$dataLayer[ "weatherPressure" ] = $weatherdata->main->pressure;
+				$dataLayer[ "weatherWindSpeed" ] = $weatherdata->wind->speed;
+				$dataLayer[ "weatherWindDeg" ] = $weatherdata->wind->deg;
+			}
+		}
+	}
 	
 	return $dataLayer;
+}
+
+function gtm4wp_wp_loaded() {
+        global $gtm4wp_options;
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] ) {
+		$gtm4wp_sessionid = array_key_exists( "gtm4wp_sessoionid", $_COOKIE ) ? $_COOKIE[ "gtm4wp_sessoionid" ] : "";
+		// this is needed so that nobody can do a hack by editing our cookie
+		$gtm4wp_sessionid = str_replace( "'", "", trim( basename( $gtm4wp_sessionid ) ) );
+
+		if ( "" === $gtm4wp_sessionid ) {
+			$gtm4wp_sessionid = substr( md5( date("Ymd_His").rand() ), 0, 20 );
+			setcookie( "gtm4wp_sessoionid", $gtm4wp_sessionid, time()+(60*60*24*365*2) );
+		}
+
+		$weatherdata = get_transient( 'gtm4wp-weatherdata-'.$gtm4wp_sessionid );
+
+		if ( false === $weatherdata ) {
+			$gtm4wp_geodata = @file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']);
+			if ( $gtm4wp_geodata ) {
+				$gtm4wp_geodata = unserialize( $gtm4wp_geodata );
+				if ( array_key_exists( 'geoplugin_latitude', $gtm4wp_geodata ) && array_key_exists( 'geoplugin_longitude', $gtm4wp_geodata ) ) {
+					$weatherdata = @file_get_contents('http://api.openweathermap.org/data/2.5/weather?lat=' . $gtm4wp_geodata[ "geoplugin_latitude" ] . '&lon=' . $gtm4wp_geodata[ "geoplugin_longitude" ] . '&units=' . ($gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHERUNITS ] == 0 ? 'metric' : 'imperial'));
+					if ( $weatherdata ) {
+						$weatherdata = @json_decode( $weatherdata );
+						if ( is_object( $weatherdata ) ) {
+							set_transient( 'gtm4wp-weatherdata-'.$gtm4wp_sessionid, $weatherdata, 60 * 60 );
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 function gtm4wp_get_the_gtm_tag() {
@@ -362,7 +424,7 @@ function gtm4wp_enqueue_scripts() {
 		wp_enqueue_script( "gtm4wp-social-actions", $gtp4wp_plugin_url . "js/gtm4wp-social-tracker.js", array( "jquery" ), "1.0", false );
 	}
 
-	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCCLASSICTRANS ] || $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCADDTOCART ] || $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
+	if ( isset ( $GLOBALS["woocommerce"] ) ) {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
 	}
 
@@ -464,6 +526,7 @@ add_action( "wp_enqueue_scripts", "gtm4wp_enqueue_scripts" );
 add_action( "wp_head", "gtm4wp_wp_header_begin", 1 );
 add_action( "wp_head", "gtm4wp_wp_header_end", 100 );
 add_action( "wp_footer", "gtm4wp_wp_footer" );
+add_action( "wp_loaded", "gtm4wp_wp_loaded" );
 add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_add_basic_datalayer_data" );
 
 // to be able to easily migrate from other Google Tag Manager plugins
