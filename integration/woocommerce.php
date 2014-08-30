@@ -1,6 +1,8 @@
 <?php
+$gtm4wp_product_counter = 0;
+
 function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
-	global $woocommerce, $gtm4wp_options, $wp_query, $gtm4wp_datalayer_name;
+	global $woocommerce, $gtm4wp_options, $wp_query, $gtm4wp_datalayer_name, $gtm4wp_product_counter;
 
 	if ( is_product_category() || is_product_tag() || is_front_page() ) {
 		if ( ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) || ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) ) {
@@ -10,6 +12,8 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			$total    = $wp_query->found_posts;
 			$first    = ( $per_page * $paged ) - $per_page + 1;
 			$last     = min( $total, $wp_query->get( 'posts_per_page' ) * $paged );
+
+			$gtm4wp_product_counter = $first;
 
 			$sumprice = 0;
 			$product_ids = array();
@@ -326,7 +330,8 @@ function gtm4wp_woocommerce_enhanced_ecom_product_click() {
 							'name':     productdata.data( 'product_name' ),
 							'id':       productdata.data( 'product_id' ),
 							'price':    productdata.data( 'product_price' ),
-							'category': productdata.data( 'product_cat' )
+							'category': productdata.data( 'product_cat' ),
+							'position': productdata.data( 'product_listposition' )
 					         }]
 					}
 				},
@@ -340,7 +345,7 @@ function gtm4wp_woocommerce_enhanced_ecom_product_click() {
 }
 
 function gtm4wp_woocommerce_enhanced_ecom_add_prod_data() {
-	global $product;
+	global $product, $gtm4wp_product_counter;
 	
 	$product_price = $product->get_price();
 	$_product_cats = get_the_terms($product->id, 'product_cat');
@@ -351,7 +356,8 @@ function gtm4wp_woocommerce_enhanced_ecom_add_prod_data() {
 		$product_cat = "";
 	}
 
-	echo '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_the_permalink() . '"></span>';
+	echo '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_the_permalink() . '" data-product_listposition="' . $gtm4wp_product_counter . '"></span>';
+	$gtm4wp_product_counter++;
 }
 
 $GLOBALS["gtm4wp_cart_item_proddata"] = '';
