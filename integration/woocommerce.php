@@ -4,46 +4,48 @@ $gtm4wp_product_counter = 0;
 function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 	global $woocommerce, $gtm4wp_options, $wp_query, $gtm4wp_datalayer_name, $gtm4wp_product_counter;
 
-	if ( is_product_category() || is_product_tag() || is_front_page() ) {
+	if ( is_product_category() || is_product_tag() || is_front_page() || is_shop() ) {
 		if ( ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) || ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) ) {
-			// The following 5 lines are being borrowed from WC source
-			$paged    = max( 1, $wp_query->get( 'paged' ) );
-			$per_page = $wp_query->get( 'posts_per_page' );
-			$total    = $wp_query->found_posts;
-			$first    = ( $per_page * $paged ) - $per_page + 1;
-			$last     = min( $total, $wp_query->get( 'posts_per_page' ) * $paged );
+			if ( count( $woocommerce->query->filtered_product_ids ) > 0 ) {
+				// The following 5 lines are being borrowed from WC source
+				$paged    = max( 1, $wp_query->get( 'paged' ) );
+				$per_page = $wp_query->get( 'posts_per_page' );
+				$total    = $wp_query->found_posts;
+				$first    = ( $per_page * $paged ) - $per_page + 1;
+				$last     = min( $total, $wp_query->get( 'posts_per_page' ) * $paged );
 
-			$gtm4wp_product_counter = $first;
+				$gtm4wp_product_counter = $first;
 
-			$sumprice = 0;
-			$product_ids = array();
-			$product_impressions = array();
-			for ( $i=($first-1); $i<$last; $i++ ) {
-				$oneproductid = $woocommerce->query->filtered_product_ids[ $i ];
-				$product = get_product( $oneproductid );
+				$sumprice = 0;
+				$product_ids = array();
+				$product_impressions = array();
+				for ( $i=($first-1); $i<$last; $i++ ) {
+					$oneproductid = $woocommerce->query->filtered_product_ids[ $i ];
+					$product = get_product( $oneproductid );
 
-				$product_price = $product->get_price();
-				$_product_cats = get_the_terms($product->id, 'product_cat');
-				if ( count( $_product_cats ) > 0 ) {
-					$product_cat = array_pop( $_product_cats );
-					$product_cat = $product_cat->name;
-				} else {
-					$product_cat = "";
+					$product_price = $product->get_price();
+					$_product_cats = get_the_terms($product->id, 'product_cat');
+					if ( count( $_product_cats ) > 0 ) {
+						$product_cat = array_pop( $_product_cats );
+						$product_cat = $product_cat->name;
+					} else {
+						$product_cat = "";
+					}
+					$sumprice += $product_price;
+					$product_ids[] = "'" . $oneproductid . "'";
+
+					$product_impressions[] = "{'name': '" . str_replace( "'", "\\'", $product->get_title() ) . "', 'id': '" . $oneproductid . "', 'price': '" . $product_price . "', 'category': '" . str_replace( "'", "\\'", $product_cat ) . "', 'position': " . ($i+1) . " }";
 				}
-				$sumprice += $product_price;
-				$product_ids[] = "'" . $oneproductid . "'";
 
-				$product_impressions[] = "{'name': '" . str_replace( "'", "\\'", $product->get_title() ) . "', 'id': '" . $oneproductid . "', 'price': '" . $product_price . "', 'category': '" . str_replace( "'", "\\'", $product_cat ) . "', 'position': " . ($i+1) . " }";
-			}
+				if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
+					$dataLayer["ecomm_prodid"] = '-~-[' . implode( ", ", $product_ids ) . ']-~-';
+					$dataLayer["ecomm_pagetype"] = ( is_front_page() ? "home" : "category" );
+					$dataLayer["ecomm_totalvalue"] = $sumprice;
+				}
 
-			if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
-				$dataLayer["ecomm_prodid"] = '-~-[' . implode( ", ", $product_ids ) . ']-~-';
-				$dataLayer["ecomm_pagetype"] = ( is_front_page() ? "home" : "category" );
-				$dataLayer["ecomm_totalvalue"] = $sumprice;
-			}
-
-			if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-				$dataLayer["ecommerce"] = "-~-{'impressions': [".implode(", ", $product_impressions)."]}-~-";
+				if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
+					$dataLayer["ecommerce"] = "-~-{'impressions': [".implode(", ", $product_impressions)."]}-~-";
+				}
 			}
 		}
 	} else if ( is_product() ) {
