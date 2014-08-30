@@ -46,7 +46,7 @@ var adminsubtabs = {
     },
     "int-wc": {
       tabtext: gtm4wp.wctabtitle,
-      numitems: 1
+      numitems: 6
     }
   }
 };
