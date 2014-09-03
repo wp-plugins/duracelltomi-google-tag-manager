@@ -3,8 +3,8 @@ Contributors: duracelltomi
 Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
-Tested up to: 3.9
-Stable tag: 0.7.1
+Tested up to: 4.0
+Stable tag: 0.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -32,11 +32,6 @@ very easily since you can fire them using rules that include
 * logged in status
 * logged in user role
 * search data
-* browser data (name, version, engine) (!)
-* OS data (name, version) (!)
-* device data (type, manufacturer, model) (!)
-
-(!) Data is provided using the WhichBrowser library: http://whichbrowser.net/
 
 Use search data to generate Analytics events when an empty search result is being shown.
 This is useful to see what people are searching for that is not available on your site (for example a product).
@@ -44,9 +39,37 @@ This is useful to see what people are searching for that is not available on you
 Use post count to generate Analytics events when an empty result is being shown.
 This can be useful to catch empty (product) categories.
 
+= Browser / OS / Device data =
+
+* browser data (name, version, engine)
+* OS data (name, version)
+* device data (type, manufacturer, model)
+
+Data is provided using the WhichBrowser library: http://whichbrowser.net/
+
+= Weather data =
+
+Add the current weather conditions into the dataLayer so that you can use this information to generate special
+remarketing lists and additional segmentation in your web analytics solution:
+
+* weather category like clouds, rain, snow, etc.
+* weather description: more detailed data
+* temperature in Celsius or Fahrenheit
+* air pressure
+* wind speed and degrees
+
+Weather data is queried from Open Weather Map. Depending on your websites traffic, additional fees may be applied:
+
+http://openweathermap.org/price
+
+To determine to current location of your visitor, this plugin uses geoplugin.net.
+Depending on your websites traffic, additional fees may be applied:
+
+http://www.geoplugin.com/premium
+
 = Tag Manager Events =
 
-This plugin can fire several Tag Manager events so that you can include special tags when
+This plugin can fire several Tag Manager event so that you can include special tags when
 
 * the visitor clicks on an outbound link
 * the visitor clicks on a download link
@@ -71,7 +94,7 @@ Scroll tracking is based on the solution originally created by
 * Eivind Savio
 * Justin Cutroni
 
-Oroginal script:
+Original script:
 http://cutroni.com/blog/2012/02/21/advanced-content-tracking-with-google-analytics-part-1/
 
 = Google AdWords remarketing =
@@ -97,9 +120,13 @@ Google Tag Manager for WordPress can integrate with several popular plugins.
 
 * Contact Form 7: fire an event after a successful form submission
 * WooCommerce:
-	* fire event when visitors ads a product to your cart
-	* include transaction data to be sent to Google/Universal Analytics
-	* include necessary remarketing tags for Google AdWords Dynamic Remarketing
+	* Classic e-commerce:
+		* fire event when visitors ads a product to your cart
+		* include transaction data to be sent to Google/Universal Analytics
+		* include necessary remarketing tags for Google AdWords Dynamic Remarketing
+	* Enhanced e-commerce (experimental!):
+		*	implementation of [Enhanced E-commerce](https://developers.google.com/tag-manager/enhanced-ecommerce)
+		* Does not include tracking of promotions since WooCommerce does not have such a feature (yet)
 
 More integration to come!
 
@@ -110,6 +137,22 @@ More integration to come!
 1. Go to Settings / Google Tag Manager and enter your Google Tag Manager container ID and setup additional options
 
 == Frequently Asked Questions ==
+
+= How can I implement enhanced e-commerce in Google Tag Manager =
+
+First of all please remember that this feature of this plugin is still experimental and the feature of Google Analytics
+is still in beta. Therefore it is recommended to create a separate web property to be used with enhanced e-commerce
+in paralel to you current "classic" e-commerce tracking.
+
+To be able to implement the necessary tags just follow the instructions shown on the official documentation of Google:
+https://developers.google.com/tag-manager/enhanced-ecommerce
+
+There is only one thing you have to change: event names:
+
+* productClick -> gtm4wp.productClick
+* addToCart -> gtm4wp.addProductToCart
+* removeFromCart -> gtm4wp.removeProductFromCart
+* promotionClick -> gtm4wp.promotionClick
 
 = Why isn't there an option do blacklist tag/macro classes =
 
@@ -122,9 +165,9 @@ with any macro in your container.
 
 = How can I track add-to-cart events in WooCommerce =
 
-To track add-to-cart events you have to catch the dataLayer event gtm4wp.addToCart
+To track add-to-cart events you have to catch the dataLayer event gtm4wp.addProductToCart
 
-There are 3 additional dataLayer variables that can be accessed during the event:
+There are 3 additional dataLayer variables that can be accessed during the event using classic ecommerce tracking:
 
 * productName: the name of the product where the cart button has been pressed
 * productSKU: the SKU you entered in your product settings
@@ -154,7 +197,7 @@ The ability to include a Google/Universal Analytics tag is only one feature you 
 
 Therefore there is no need to have an option to exclude the container code snippet on certain cases.
 
-If you want to exclude logged in users or certain user roles, use the corresponting dataLayer variable (visitorType)
+If you want to exclude logged in users or certain user roles, use the corresponding dataLayer variable (visitorType)
 and an exclude filter in Google Tag Manager.
 
 = How do I put the Google Tag Manager container code next to the opening body tag? =
@@ -171,7 +214,7 @@ If you can not find it, contact the author of the theme and ask for instructions
 In case you found the opening `<body>` tag, open a new line just after it and insert this line of code:
 `<?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?>`
 
-Be carefull not to include this line inside any `<div>`, `<p>`, `<header>`, `<article>` and so on.
+Be careful not to include this line inside any `<div>`, `<p>`, `<header>`, `<article>` and so on.
 It can break you theme.
 
 = Why can not this plugin insert the container snippet after the opening body tag automatically? =
@@ -201,9 +244,18 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.8 =
+
+* Updated: Added subtabs to the admin UI to make room for new features :-)
+* Updated: WhichBrowser library to the latest version
+* Added: You can now dismiss plugin notices permanently for each user
+* Added: weather data. See updated plugin description for details
+* Added: Enhanced E-commerce for WooCommerce (experimental!)
+* Fixed: PHP notice in frontend.php script. Credit to Daniel Sousa
+
 = 0.7.1 =
 
-* Fixed: WooCommerce 2.1.x compatibility.
+* Fixed: WooCommerce 2.1.x compatibility
 
 = 0.7 =
 
@@ -223,7 +275,7 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 = 0.5 =
 * Added: scroll tracking
-* Fixed: social tracking option on the admin panel was being shown as an edit box instead of a checbox
+* Fixed: social tracking option on the admin panel was being shown as an edit box instead of a checkbox
 * Fixed: WooCommerce transaction data was not included in the dataLayer if you selected "Custom" code placement
 * Fixed: do not do anything if you enabled WooCommerce integration but did not activate WooCommerce plugin itself
 * Updated: do not re-declare dataLayer variable if it already exists (because another script already created it before my plugin was run)
@@ -231,7 +283,7 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 = 0.4 =
 * Added: you can now select container code placement. This way you can insert the code snippet after the opening body tag. Please read FAQ for details
 * Added: initial support for social event tracking for Facebook and Twitter buttons. Please read FAQ for details
-* Updated: event name on successful WooCommerce transacion: OrderCompleted -> gtm4wp.orderCompleted
+* Updated: event name on successful WooCommerce transaction: OrderCompleted -> gtm4wp.orderCompleted
 * Fixed: frontend JS codes did not load on some WordPress installs
 
 = 0.3 =
@@ -257,6 +309,12 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.8 =
+
+This version instroduces Enhanced E-commerce implementation for WooCommerce. Please note that this
+feature of the plugin is still experimental and the feature of Google Analytics is still in beta.
+Read the plugin FAQ for details.
 
 = 0.7.1 =
 
@@ -285,10 +343,10 @@ Important change: Tag Manager event name of a WooCommerce successful order has b
 See changelog for details.
 
 = 0.3 =
-This is a minor release. If you are using WooCommerce you should update to include more accurate adwords dynamic remarketing feature.
+This is a minor release. If you are using WooCommerce you should update to include more accurate AdWords dynamic remarketing feature.
 
 = 0.2 =
-BACKWARD INCOMPATIBLE CHANGE: Names of Tag Manager click events has been changed to comply naming conventions.
+BACKWARD INCOMPATIBLE CHANGE: Names of Tag Manager click events has been changed to comply with naming conventions.
 See changelog for details. Do not forget to update your Tag Manager container setup after upgrading this plugin!
 
 = 0.1 =
