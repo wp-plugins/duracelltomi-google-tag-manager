@@ -19,8 +19,10 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 				$sumprice = 0;
 				$product_ids = array();
 				$product_impressions = array();
-				for ( $i=($first-1); $i<$last; $i++ ) {
-					$oneproductid = $woocommerce->query->filtered_product_ids[ $i ];
+				$_temp_product_id_list = $woocommerce->query->filtered_product_ids;
+
+				$i = ($first-1);
+				foreach( $_temp_product_id_list as $itemid => $oneproductid ) {
 					$product = get_product( $oneproductid );
 
 					$product_price = $product->get_price();
@@ -35,6 +37,11 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 					$product_ids[] = "'" . $oneproductid . "'";
 
 					$product_impressions[] = "{'name': '" . str_replace( "'", "\\'", $product->get_title() ) . "', 'id': '" . $oneproductid . "', 'price': '" . $product_price . "', 'category': '" . str_replace( "'", "\\'", $product_cat ) . "', 'position': " . ($i+1) . " }";
+
+					$i++;
+					if ( $i>$last ) {
+						break;
+					}
 				}
 
 				if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
