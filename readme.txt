@@ -4,7 +4,7 @@ Donate link: http://duracelltomi.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
 Tested up to: 4.0
-Stable tag: 0.8
+Stable tag: 0.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -244,6 +244,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.8.1 =
+
+* Fixed: PHP error in enhanced ecommerce implementation when using layered nav widget
+
 = 0.8 =
 
 * Updated: Added subtabs to the admin UI to make room for new features :-)
@@ -309,6 +313,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.8.1 =
+
+Bugfix release for WooCommerce users with Enhanced Ecommerce enabled
 
 = 0.8 =
 
