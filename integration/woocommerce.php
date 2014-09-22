@@ -365,7 +365,7 @@ function gtm4wp_woocommerce_enhanced_ecom_add_prod_data() {
 		$product_cat = "";
 	}
 
-	echo '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_the_permalink() . '" data-product_listposition="' . $gtm4wp_product_counter . '"></span>';
+	echo '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_permalink() . '" data-product_listposition="' . $gtm4wp_product_counter . '"></span>';
 	$gtm4wp_product_counter++;
 }
 
@@ -380,7 +380,7 @@ function gtm4wp_woocommerce_cart_item_product_filter($product) {
 		$product_cat = "";
 	}
 
-	$GLOBALS["gtm4wp_cart_item_proddata"] = '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_the_permalink() . '"></span>';
+	$GLOBALS["gtm4wp_cart_item_proddata"] = '<span class="gtm4wp_productdata" data-product_id="' . $product->id . '" data-product_name="' . str_replace( '"', '&quot;', $product->get_title() ) . '" data-product_price="' .$product_price . '" data-product_cat="' . str_replace( '"', '&quot;', $product_cat ) . '" data-product_url="' . get_permalink() . '"></span>';
 	return $product;
 }
 
