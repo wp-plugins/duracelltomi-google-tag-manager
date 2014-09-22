@@ -312,8 +312,8 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] ) {
-		$dataLayer[ "weatherCategory" ] = __( "(no wheather data available)", GTM4WP_TEXTDOMAIN );
-		$dataLayer[ "weatherDescription" ] = __( "(no wheather data available)", GTM4WP_TEXTDOMAIN );
+		$dataLayer[ "weatherCategory" ] = __( "(no weather data available)", GTM4WP_TEXTDOMAIN );
+		$dataLayer[ "weatherDescription" ] = __( "(no weather data available)", GTM4WP_TEXTDOMAIN );
 		$dataLayer[ "weatherTemp" ] = 0;
 		$dataLayer[ "weatherPressure" ] = 0;
 		$dataLayer[ "weatherWindSpeed" ] = 0;
