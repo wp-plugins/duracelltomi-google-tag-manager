@@ -330,6 +330,10 @@ function gtm4wp_woocommerce_enhanced_ecom_product_click() {
 	$woocommerce->add_inline_js("
 		$('.products li a:not(.add_to_cart_button)').click(function() {
 			var productdata = $( this ).find( '.gtm4wp_productdata' );
+
+			if ( 0 == productdata.length ) {
+				return true;
+			}
 			
 			". $gtm4wp_datalayer_name .".push({
 				'event': 'gtm4wp.productClick',
