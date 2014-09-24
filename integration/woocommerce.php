@@ -24,6 +24,9 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 				$i = ($first-1);
 				foreach( $_temp_product_id_list as $itemid => $oneproductid ) {
 					$product = get_product( $oneproductid );
+					if ( false === $product ) {
+						continue;
+					}
 
 					$product_price = $product->get_price();
 					$_product_cats = get_the_terms($product->id, 'product_cat');
