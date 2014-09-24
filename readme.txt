@@ -244,6 +244,12 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 
 == Changelog ==
 
+= 0.8.2 =
+
+* Fixed: broken links when listing subcategories instead of products (thanks Jon)
+* Fixed: wheather/weather typo (thanks John Hockaday)
+* Fixed: wrong usage of get_the_permalink() instead of get_permalink() (thanks Szepe Viktor)
+
 = 0.8.1 =
 
 * Fixed: PHP error in enhanced ecommerce implementation when using layered nav widget
@@ -313,6 +319,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 0.8.2 =
+
+Another bugfix release for WooCommerce users with Enhanced Ecommerce enabled
 
 = 0.8.1 =
 
