@@ -43,6 +43,10 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		$dataLayer["visitorType"] = ( $current_user->roles[0] == NULL ? "visitor-logged-out" : $current_user->roles[0] );
 	}
 
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_USERID ] ) {
+		$dataLayer["visitorId"] = get_current_user_id();
+	}
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTITLE ] ) {
 		$dataLayer["pageTitle"] = strip_tags( wp_title( "|", false, "right" ) );
 	}

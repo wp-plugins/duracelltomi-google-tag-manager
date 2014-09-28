@@ -660,3 +660,9 @@ msgstr ""
 
 msgid "Select which temperature units you would like to use."
 msgstr ""
+
+msgid "Logged in user ID"
+msgstr ""
+
+msgid "Check this option to include the ID of the logged in user."
+msgstr ""

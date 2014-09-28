@@ -817,3 +817,11 @@ msgstr ""
 
 msgid "Select which temperature units you would like to use."
 msgstr "Válassza ki, milyen hőmérsékleti egységet szeretne használni."
+
+msgid "Logged in user ID"
+msgstr "Felhasználó azonosítója"
+
+msgid "Check this option to include the ID of the logged in user."
+msgstr ""
+"Kapcsolja be ezt a beállítást, ha szeretné látni a bejelentkezett "
+"felhasználó egyedi azonosítóját."
