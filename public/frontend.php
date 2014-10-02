@@ -1,6 +1,7 @@
 <?php
-define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtp4wp_compile_datalayer');
-define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtp4wp_compile_remarkering');
+define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtp4wp_compile_datalayer' );
+define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtp4wp_compile_remarkering' );
+define( 'GTM4WP_WPFILTER_GETTHEGTMTAG', 'gtm4wp_get_the_gtm_tag' );
 
 if ( $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
 	$GLOBALS[ "gtm4wp_datalayer_name" ] = "dataLayer";
@@ -394,7 +395,7 @@ j=d.createElement(s),dl=l!=\'' . $gtm4wp_datalayer_name . '\'?\'&l=\'+l:\'\';j.a
 <!-- End Google Tag Manager -->';
 	}
 
-	return $_gtm_tag;
+	return apply_filters( GTM4WP_WPFILTER_GETTHEGTMTAG, $_gtm_tag );
 }
 
 function gtm4wp_the_gtm_tag() {
