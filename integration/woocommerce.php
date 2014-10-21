@@ -30,7 +30,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 
 					$product_price = $product->get_price();
 					$_product_cats = get_the_terms($product->id, 'product_cat');
-					if ( count( $_product_cats ) > 0 ) {
+					if ( ( is_array($_product_cats) ) && ( count( $_product_cats ) > 0 ) ) {
 						$product_cat = array_pop( $_product_cats );
 						$product_cat = $product_cat->name;
 					} else {
