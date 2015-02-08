@@ -1,6 +1,6 @@
 <?php
-define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtp4wp_compile_datalayer' );
-define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtp4wp_compile_remarkering' );
+define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtm4wp_compile_datalayer' );
+define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtm4wp_compile_remarkering' );
 define( 'GTM4WP_WPFILTER_GETTHEGTMTAG', 'gtm4wp_get_the_gtm_tag' );
 
 if ( $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
@@ -461,9 +461,7 @@ function gtm4wp_wp_header_begin() {
 <!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
 <script type="text/javascript">
 	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
-	if ( "undefined" == typeof '.$gtm4wp_datalayer_name.' ) {
-		' . $gtm4wp_datalayer_name . ' = new Array();
-	}';
+	' . $gtm4wp_datalayer_name . ' = ' . $gtm4wp_datalayer_name . ' || []';
 	
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
 		$_gtm_header_content .= '
