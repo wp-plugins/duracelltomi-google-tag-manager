@@ -393,7 +393,7 @@ msgid "Scroller time"
 msgstr ""
 
 msgid ""
-"Enter the number of milliseconds after the the scroller user is being "
+"Enter the number of seconds after the the scroller user is being "
 "treated as a reader, someone who really reads the content, not just scrolls "
 "through it."
 msgstr ""
