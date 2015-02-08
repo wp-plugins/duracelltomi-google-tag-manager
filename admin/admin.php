@@ -146,7 +146,7 @@ $GLOBALS["gtm4wp_scrollerfieldtexts"] = array(
 	),
 	GTM4WP_OPTION_SCROLLER_READERTIME   => array(
 		"label"       => __( "Scroller time", GTM4WP_TEXTDOMAIN ),
-		"description" => __( "Enter the number of milliseconds after the the scroller user is being treated as a reader, someone who really reads the content, not just scrolls through it.", GTM4WP_TEXTDOMAIN )
+		"description" => __( "Enter the number of seconds after the the scroller user is being treated as a reader, someone who really reads the content, not just scrolls through it.", GTM4WP_TEXTDOMAIN )
 	)
 );
 
