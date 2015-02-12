@@ -174,22 +174,22 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		$detected = new WhichBrowser( array( "headers" => getallheaders() ) );
 
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_BROWSERDATA ] ) {
-			$dataLayer["browserName"]         = $detected->browser->name;
-			$dataLayer["browserVersion"]      = $detected->browser->version->value;
+			$dataLayer["browserName"]         = isset( $detected->browser->name ) ? $detected->browser->name : "";
+			$dataLayer["browserVersion"]      = isset( $detected->browser->version->value ) ? $detected->browser->version->value : "";
 
-			$dataLayer["browserEngineName"]         = $detected->engine->name;
-			$dataLayer["browserEngineVersion"]      = $detected->engine->version->value;
+			$dataLayer["browserEngineName"]         = isset( $detected->engine->name ) ? $detected->engine->name : "";
+			$dataLayer["browserEngineVersion"]      = isset( $detected->engine->version->value ) ? $detected->engine->version->value : "";
 		}
 
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_OSDATA ] ) {
-			$dataLayer["osName"]         = $detected->os->name;
-			$dataLayer["osVersion"]      = $detected->os->version->value;
+			$dataLayer["osName"]         = isset( $detected->os->name ) ? $detected->os->name : "";
+			$dataLayer["osVersion"]      = isset( $detected->os->version->value ) ? $detected->os->version->value : "";
 		}
 
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_DEVICEDATA ] ) {
-			$dataLayer["deviceType"]         = $detected->device->type;
-			$dataLayer["deviceManufacturer"] = $detected->device->manufacturer;
-			$dataLayer["deviceModel"]        = $detected->device->model;
+			$dataLayer["deviceType"]         = isset( $detected->device->type ) ? $detected->device->type : "";
+			$dataLayer["deviceManufacturer"] = isset( $detected->device->manufacturer ) ? $detected->device->manufacturer : "";
+			$dataLayer["deviceModel"]        = isset( $detected->device->model ) ? $detected->device->model : "";
 		}
 	}
 
@@ -461,7 +461,7 @@ function gtm4wp_wp_header_begin() {
 <!-- Google Tag Manager for WordPress by DuracellTomi - http://duracelltomi.com -->
 <script type="text/javascript">
 	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
-	' . $gtm4wp_datalayer_name . ' = ' . $gtm4wp_datalayer_name . ' || []';
+	var ' . $gtm4wp_datalayer_name . ' = ' . $gtm4wp_datalayer_name . ' || []';
 	
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
 		$_gtm_header_content .= '
