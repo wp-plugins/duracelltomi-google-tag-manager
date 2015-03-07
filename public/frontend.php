@@ -45,7 +45,10 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_USERID ] ) {
-		$dataLayer["visitorId"] = get_current_user_id();
+		$_gtm4wp_userid = get_current_user_id();
+		if ( $_gtm4wp_userid > 0 ) {
+      $dataLayer["visitorId"] = $_gtm4wp_userid;
+    }
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTITLE ] ) {
