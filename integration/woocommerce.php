@@ -320,7 +320,7 @@ function gtm4wp_woocommerce_wp_footer() {
 	if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
 		gtm4wp_woocommerce_addjs("
 		$('.add_to_cart_button:not(.product_type_variable, .product_type_grouped)').click(function() {
-			var productdata = $( this ).parent().find( 'a .gtm4wp_productdata' );
+			var productdata = $( this ).closest( 'li' ).find( 'a .gtm4wp_productdata' );
 
 			". $gtm4wp_datalayer_name .".push({
 				'event': 'gtm4wp.addProductToCart',
