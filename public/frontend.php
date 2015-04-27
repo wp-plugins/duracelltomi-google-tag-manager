@@ -41,7 +41,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_USERROLE ] ) {
 		get_currentuserinfo();
-		$dataLayer["visitorType"] = ( $current_user->roles[0] == NULL ? "visitor-logged-out" : $current_user->roles[0] );
+		$dataLayer["visitorType"] = ( empty( $current_user->roles[0] ) ? "visitor-logged-out" : $current_user->roles[0] );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_USERID ] ) {
