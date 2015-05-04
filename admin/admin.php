@@ -814,7 +814,7 @@ function gtm4wp_admin_init() {
 		array(
 			"label_for" => GTM4WP_ADMIN_GROUP_INFO,
 			"description" => '<strong>Thomas Geiger</strong><br />
-			                  Website: <a href="http://www.duracelltomi.com/" target="_blank">duracelltomi.com</a><br />
+			                  Website: <a href="https://duracelltomi.com/" target="_blank">duracelltomi.com</a><br />
 			                  <a href="https://www.linkedin.com/in/duracelltomi" target="_blank">Me on LinkedIn</a><br />
 			                  <a href="http://www.linkedin.com/company/jabjab-online-marketing-ltd-" target="_blank">JabJab Online Marketing on LinkedIn</a>'
 		)
