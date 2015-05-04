@@ -1,10 +1,10 @@
 === DuracellTomi's Google Tag Manager for WordPress ===
 Contributors: duracelltomi
-Donate link: http://duracelltomi.com/
+Donate link: https://duracelltomi.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
 Requires at least: 3.0.1
-Tested up to: 4.1
-Stable tag: 0.9.1
+Tested up to: 4.2.1
+Stable tag: 1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -42,6 +42,8 @@ This can be useful to catch empty (product) categories.
 
 = Browser / OS / Device data =
 
+(beta)
+ 
 * browser data (name, version, engine)
 * OS data (name, version)
 * device data (type, manufacturer, model)
@@ -50,6 +52,8 @@ Data is provided using the WhichBrowser library: http://whichbrowser.net/
 
 = Weather data =
 
+(beta)
+ 
 Add the current weather conditions into the dataLayer so that you can use this information to generate special
 remarketing lists and additional segmentation in your web analytics solution:
 
@@ -72,13 +76,11 @@ http://www.geoplugin.com/premium
 
 This plugin can fire several Tag Manager event so that you can include special tags when
 
-* the visitor clicks on an outbound link
-* the visitor clicks on a download link
-* the visitor clicks on an email link
 * the visitor moves between elements of a form (comment, contact, etc.)
 * the visitor clicks on a Facebook like/share (limited feature) or Twitter button
-
-Link URLs are included in the Tag Manager event so that you can use them for example in a Google Analytics event tag.
+* the visitor clicks on an outbound link (depecrated)
+* the visitor clicks on a download link (depecrated)
+* the visitor clicks on an email link (depecrated)
 
 = Scroll tracking =
 
@@ -125,11 +127,25 @@ Google Tag Manager for WordPress can integrate with several popular plugins.
 		* fire event when visitors ads a product to your cart
 		* include transaction data to be sent to Google/Universal Analytics
 		* include necessary remarketing tags for Google AdWords Dynamic Remarketing
-	* Enhanced e-commerce (experimental!):
+	* Enhanced e-commerce (beta):
 		*	implementation of [Enhanced E-commerce](https://developers.google.com/tag-manager/enhanced-ecommerce)
 		* Does not include tracking of promotions since WooCommerce does not have such a feature (yet)
 
 More integration to come!
+
+= Planned features =
+
+Note: list of planned features can change as development goes on!
+
+* 1.3
+  * dataLayer elements to include when JavaScript is turned of in a browser (request by Simo Ahava)
+* 1.2
+  * MailChimp for WordPress support (request by I-Visio)
+  * Custom dataLayer elements: place your own items site-wide or per page/post
+* 1.1
+  * YouTube video tracking using GTM events
+  * Vimeo video tracking using GTM events
+  * New code insertion option that does not require theme tweaking (request by Phil Pearce)
 
 == Installation ==
 
@@ -233,7 +249,7 @@ If it shows an error, go and edit your theme manually.
 = Facebook like/share/send button events do not fire for me, why? =
 
 It is a limitation of Facebook. Click event tracking is only available for html5/xfbml buttons.
-If you or your social plugin inserts the Facebook buttons using IFRAME-s (like Sociable), it is not possible to track likes.
+If you or your social plugin inserts the Facebook buttons using IFRAMEs (like Sociable), it is not possible to track likes.
 
 == Screenshots ==
 
@@ -245,6 +261,25 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 6. Scroll tracking
 
 == Changelog ==
+
+= 1.0 =
+
+The plugin itself is now declared as stable. This means that it should work with most WordPress instances.
+From now on each version will include features labeled as:
+
+* Beta: the feature has been proven to work for several users but it can still have some bugs
+* Experimental: new feature that needs proper testing with more users
+* Depecrated: this feature will be removed in a future version
+
+If you see any issue with beta or experimental functions just disable the checkbox. Using this error messages should disappear.
+Please report all bugs found in my plugin using the [contact form on my website](https://duracelltomi.com/contact).
+
+* Fixed: wrong GTM container code when renaming default dataLayer variable name (thx Vassilis Papavassiliou)
+* Fixed: Enhanced Ecommerce product click data was "undefined" in some cases (thx Sergio Alen)
+* Fixed: wrong user role detection while addint visitorType to the dataLayer (thx Philippe Vachon-Rivard)
+* Changed: only add visitorId to the dataLayer if there is a logged in user
+* Added: feature labels so that you can see beta, experimental and depecrated features
+* Depecrated: outbound click, email click and download click events. You should use GTM trigger events instead
 
 = 0.9.1 =
 
@@ -335,6 +370,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAME-s (like S
 * First beta release
 
 == Upgrade Notice ==
+
+= 1.0 =
+
+First stable release, please read changelog for details!
 
 = 0.9.1 =
 
