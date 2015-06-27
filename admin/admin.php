@@ -129,6 +129,21 @@ $GLOBALS["gtm4wp_eventfieldtexts"] = array(
 		"description" => __( "Check this option to include a Tag Manager event when a visitor uses a social button to share/like content on a social network.", GTM4WP_TEXTDOMAIN ),
 		"phase"       => GTM4WP_PHASE_STABLE
 	),
+	GTM4WP_OPTION_EVENTS_YOUTUBE => array(
+		"label"       => __( "YouTube video events", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a Tag Manager event when a visitor interacts with a YouTube video embeded on your site.", GTM4WP_TEXTDOMAIN ),
+		"phase"       => GTM4WP_PHASE_EXPERIMENTAL
+	),
+	GTM4WP_OPTION_EVENTS_VIMEO => array(
+		"label"       => __( "Vimeo video events", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a Tag Manager event when a visitor interacts with a Vimeo video embeded on your site.", GTM4WP_TEXTDOMAIN ),
+		"phase"       => GTM4WP_PHASE_EXPERIMENTAL
+	),
+	GTM4WP_OPTION_EVENTS_SOUNDCLOUD => array(
+		"label"       => __( "Soundcloud events", GTM4WP_TEXTDOMAIN ),
+		"description" => __( "Check this option to include a Tag Manager event when a visitor interacts with a Soundcloud media embeded on your site.", GTM4WP_TEXTDOMAIN ),
+		"phase"       => GTM4WP_PHASE_EXPERIMENTAL
+	),
 	GTM4WP_OPTION_EVENTS_OUTBOUND    => array(
 		"label"       => __( "Outbound link click events (gtm4wp.outboundClick)", GTM4WP_TEXTDOMAIN ),
 		"description" => __( "Check this option to include a Tag Manager event when a visitor clicks on a link directing the visitor out of your website.", GTM4WP_TEXTDOMAIN ),
@@ -542,6 +557,8 @@ function gtm4wp_admin_output_field( $args ) {
 }
 
 function gtm4wp_sanitize_options($options) {
+	global $wpdb;
+	
 	$output = gtm4wp_reload_options();
 
 	foreach($output as $optionname => $optionvalue) {
@@ -562,6 +579,17 @@ function gtm4wp_sanitize_options($options) {
 		// dataLayer events
 		} else if ( substr($optionname, 0, 6) == "event-" ) {
 			$output[$optionname] = (boolean) $newoptionvalue;
+
+			// clear oembed transients when feature is enabled because we need to hook into the oembed process to enable some 3rd party APIs
+			if ( $output[$optionname] && !$optionvalue ) {
+				if ( GTM4WP_OPTION_EVENTS_YOUTUBE == $optionname ) {
+					$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_value LIKE '%youtube.com%' AND meta_key LIKE '_oembed_%'" );
+				}
+
+				if ( GTM4WP_OPTION_EVENTS_VIMEO == $optionname ) {
+					$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_value LIKE '%vimeo.com%' AND meta_key LIKE '_oembed_%'" );
+				}
+			}
 
 		// integrations
 		} else if ( substr($optionname, 0, 10) == "integrate-" ) {
@@ -820,6 +848,11 @@ function gtm4wp_admin_init() {
 		)
 	);
 
+	// apply oembed code changes on the admin as well since the oembed call on the admin is cached by WordPress into a transient
+	// that is applied on the frontend later
+	require_once( dirname( __FILE__ ) . "/../integration/youtube.php" );
+	require_once( dirname( __FILE__ ) . "/../integration/vimeo.php" );
+	require_once( dirname( __FILE__ ) . "/../integration/soundcloud.php" );
 }
 
 function gtm4wp_show_admin_page() {
@@ -864,7 +897,10 @@ function gtm4wp_add_admin_js($hook) {
 			"blockmacrostabtitle" => __( "Blacklist macros" , GTM4WP_TEXTDOMAIN ),
 			"wpcf7tabtitle" => __( "Contact Form 7" , GTM4WP_TEXTDOMAIN ),
 			"wctabtitle" => __( "WooCommerce" , GTM4WP_TEXTDOMAIN ),
-			"weathertabtitle" => __( "Weather data" , GTM4WP_TEXTDOMAIN )
+			"weathertabtitle" => __( "Weather data" , GTM4WP_TEXTDOMAIN ),
+			"generaleventstabtitle" => __( "General events" , GTM4WP_TEXTDOMAIN ),
+			"mediaeventstabtitle" => __( "Media events" , GTM4WP_TEXTDOMAIN ),
+			"depecratedeventstabtitle" => __( "Depecrated" , GTM4WP_TEXTDOMAIN )
 		);
 		wp_localize_script( "admin-subtabs", 'gtm4wp', $subtabtexts );
 		wp_enqueue_script( "admin-subtabs" );

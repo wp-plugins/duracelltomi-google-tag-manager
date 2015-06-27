@@ -28,6 +28,9 @@ define( 'GTM4WP_OPTION_EVENTS_DWLEXT',         'event-download-extensions' );
 define( 'GTM4WP_OPTION_EVENTS_EMAILCLICKS',    'event-email-clicks' );
 define( 'GTM4WP_OPTION_EVENTS_FORMMOVE',       'event-form-move' );
 define( 'GTM4WP_OPTION_EVENTS_SOCIAL',         'event-social' );
+define( 'GTM4WP_OPTION_EVENTS_YOUTUBE',        'event-youtube' );
+define( 'GTM4WP_OPTION_EVENTS_VIMEO',          'event-vimeo' );
+define( 'GTM4WP_OPTION_EVENTS_SOUNDCLOUD',     'event-soundcloud' );
 
 define( 'GTM4WP_OPTION_SCROLLER_ENABLED',      'scroller-enabled' );
 define( 'GTM4WP_OPTION_SCROLLER_DEBUGMODE',    'scroller-debug-mode' );
@@ -112,6 +115,9 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_EVENTS_EMAILCLICKS => false,
 	GTM4WP_OPTION_EVENTS_FORMMOVE    => true,
 	GTM4WP_OPTION_EVENTS_SOCIAL      => false,
+	GTM4WP_OPTION_EVENTS_YOUTUBE     => false,
+	GTM4WP_OPTION_EVENTS_VIMEO       => false,
+	GTM4WP_OPTION_EVENTS_SOUNDCLOUD  => false,
 	
 	GTM4WP_OPTION_SCROLLER_ENABLED      => false,
 	GTM4WP_OPTION_SCROLLER_DEBUGMODE    => false,

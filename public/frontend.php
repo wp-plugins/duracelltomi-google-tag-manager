@@ -436,6 +436,18 @@ function gtm4wp_enqueue_scripts() {
 		require_once( dirname( __FILE__ ) . "/../integration/woocommerce.php" );
 	}
 
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_YOUTUBE ] ) {
+		require_once( dirname( __FILE__ ) . "/../integration/youtube.php" );
+	}
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_VIMEO ] ) {
+		require_once( dirname( __FILE__ ) . "/../integration/vimeo.php" );
+	}
+
+	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_SOUNDCLOUD ] ) {
+		require_once( dirname( __FILE__ ) . "/../integration/soundcloud.php" );
+	}
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
 		wp_enqueue_script( "gtm4wp-scroll-tracking", $gtp4wp_plugin_url . "js/analytics-talk-content-tracking.js", array( "jquery" ), "1.0", false );
 	}
