@@ -11,13 +11,17 @@ function gtm4wp_woocommerce_addjs( $js ) {
 	}
 }
 
+function gtm4wp_woocommerce_html_entity_decode( $val ) {
+	return html_entity_decode( $val, ENT_QUOTES, "utf-8" );
+}
+
 function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 	global $woocommerce, $gtm4wp_options, $wp_query, $gtm4wp_datalayer_name, $gtm4wp_product_counter;
 
 	if ( is_product_category() || is_product_tag() || is_front_page() || is_shop() ) {
 		if ( ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) || ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) ) {
 			if ( count( $woocommerce->query->filtered_product_ids ) > 0 ) {
-				// The following 5 lines are being borrowed from WC source
+				// The following 5 lines was being borrowed from WC source
 				$paged    = max( 1, $wp_query->get( 'paged' ) );
 				$per_page = $wp_query->get( 'posts_per_page' );
 				$total    = $wp_query->found_posts;
@@ -47,9 +51,15 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 						$product_cat = "";
 					}
 					$sumprice += $product_price;
-					$product_ids[] = "'" . $oneproductid . "'";
+					$product_ids[] = $oneproductid;
 
-					$product_impressions[] = "{'name': '" . str_replace( "'", "\\'", $product->get_title() ) . "', 'id': '" . $oneproductid . "', 'price': '" . $product_price . "', 'category': '" . str_replace( "'", "\\'", $product_cat ) . "', 'position': " . ($i+1) . " }";
+					$product_impressions[] = array(
+						'name'     => $product->get_title(),
+						'id'       => $oneproductid,
+						'price'    => $product_price,
+						'category' => $product_cat,
+						'position' => ($i+1)
+					);
 
 					$i++;
 					if ( $i>$last ) {
@@ -58,13 +68,13 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 				}
 
 				if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
-					$dataLayer["ecomm_prodid"] = '-~-[' . implode( ", ", $product_ids ) . ']-~-';
+					$dataLayer["ecomm_prodid"] = $product_ids;
 					$dataLayer["ecomm_pagetype"] = ( is_front_page() ? "home" : "category" );
 					$dataLayer["ecomm_totalvalue"] = (float)$sumprice;
 				}
 
 				if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-					$dataLayer["ecommerce"] = "-~-{'impressions': [".implode(", ", $product_impressions)."]}-~-";
+					$dataLayer["ecommerce"] = array("impressions" => $product_impressions);
 				}
 			}
 		}
@@ -73,7 +83,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			$prodid        = get_the_ID();
 			$product       = get_product( $prodid );
 			$product_price = $product->get_price();
-			$_product_cats = get_the_terms($product->id, 'product_cat');
+			$_product_cats = get_the_terms( $product->id, 'product_cat' );
 			if ( ( is_array($_product_cats) ) && ( count( $_product_cats ) > 0 ) ) {
 				$product_cat = array_pop( $_product_cats );
 				$product_cat = $product_cat->name;
@@ -88,7 +98,16 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			}
 			
 			if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-				$dataLayer["ecommerce"] = "-~-{'detail': {'products': [{'name': '" . str_replace( "'", "", get_the_title() ) . "', 'id': '" . $prodid . "', 'price': '" . $product_price . "', 'category': '" . str_replace( "'", "", $product_cat ) . "'}]}}-~-";
+				$dataLayer["ecommerce"] = array(
+					"detail" => array(
+						"products" => array(array(
+							"name"     => gtm4wp_woocommerce_html_entity_decode( get_the_title() ),
+							"id"       => $prodid,
+							"price"    => $product_price,
+							"category" => $product_cat,
+						))
+					)
+				);
 			}
 		}
 	} else if ( is_cart() ) {
@@ -121,10 +140,10 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			$products = $woocommerce->cart->get_cart();
 			$product_ids = array();
 			foreach( $products as $oneproduct ) {
-				$product_ids[] = "'" . str_replace( "'", "\\'", $oneproduct['product_id'] ) . "'";
+				$product_ids[] = $oneproduct['product_id'];
 			}
 
-			$dataLayer["ecomm_prodid"] = '-~-[' . implode( ", ", $product_ids ) . ']-~-';
+			$dataLayer["ecomm_prodid"] = $product_ids;
 			$dataLayer["ecomm_pagetype"] = "cart";
 			$dataLayer["ecomm_totalvalue"] = (float)$woocommerce->cart->cart_contents_total;
 		}
@@ -147,7 +166,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 				$dataLayer["transactionId"]             = $order->get_order_number();
 				$dataLayer["transactionDate"]           = date("c");
 				$dataLayer["transactionType"]           = "sale";
-				$dataLayer["transactionAffiliation"]    = get_bloginfo( 'name' );
+				$dataLayer["transactionAffiliation"]    = gtm4wp_woocommerce_html_entity_decode( get_bloginfo( 'name' ) );
 				$dataLayer["transactionTotal"]          = $order->get_total();
 				$dataLayer["transactionShipping"]       = $order->get_total_shipping();
 				$dataLayer["transactionTax"]            = $order->get_total_tax();
@@ -158,7 +177,18 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			}
 
 			if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-				$dataLayer["ecommerce"] = "-~-{'purchase': {'actionField': {'id': '" . $order->get_order_number() . "', 'affiliation': '" . get_bloginfo( 'name' ) . "', 'revenue': '" . $order->get_total() . "', 'tax': '" . $order->get_total_tax() . "', 'shipping': '" . $order->get_total_shipping() . "'}, ";
+				$dataLayer["ecommerce"] = array(
+					"purchase" => array(
+						"actionField" => array(
+							"id"          => $order->get_order_number(),
+							"affiliation" => gtm4wp_woocommerce_html_entity_decode( get_bloginfo( 'name' ) ),
+							"revenue"     => $order->get_total(),
+							"tax"         => $order->get_total_tax(),
+							"shipping"    => $order->get_total_shipping(),
+							"coupon"      => implode( ", ", $order->get_used_coupons() )
+						)
+					)
+				);
 			}
 
 			$_products = array();
@@ -212,22 +242,20 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 			}
 
 			if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-				$dataLayer["ecommerce"] .= "'products': ".str_replace('"', "'", json_encode($_products))." }}-~-";
+				$dataLayer["ecommerce"]["purchase"]["products"] = $_products;
 				$dataLayer["event"] = "gtm4wp.orderCompleted";
 			}
 
 			if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
-				$dataLayer["ecomm_prodid"] = '-~-[' . implode(", ", $_product_ids) . ']-~-';
+				$dataLayer["ecomm_prodid"] = $_product_ids;
 				$dataLayer["ecomm_pagetype"] = "purchase";
 				$dataLayer["ecomm_totalvalue"] = (float)$_sumprice;
 			}
 
-//			update_post_meta( $order_id, '_ga_tracked', 1 );
+			update_post_meta( $order_id, '_ga_tracked', 1 );
 		}
 	} else if ( is_checkout() ) {
 		if ( true === $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCTRACKENHANCEDEC ] ) {
-			$gtm4wp_checkout_products = array();
-			
 			foreach( $woocommerce->cart->get_cart() as $cart_item_id => $cart_item_data) {
 				$product = $cart_item_data["data"];
 				$_product_cats = get_the_terms($product->id, 'product_cat');
@@ -238,10 +266,23 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 					$product_cat = "";
 				}
 
-				$gtm4wp_checkout_products[] = "{'name': '" . str_replace("'", "\\'", $product->post->post_title) . "', 'id': '" . $product->id . "', 'price': '" . $product->get_price() . "', 'category': '" . $product_cat . "', 'quantity': '" . $cart_item_data["quantity"] . "'}";
+				$gtm4wp_checkout_products[] = array(
+					"id"       => $product->id,
+					"name"     => $product->post->post_title,
+					"price"    => $product->get_price(),
+					"category" => $product_cat,
+					"quantity" => $cart_item_data["quantity"]
+				);
 			}
 
-			$dataLayer["ecommerce"] = "-~-{'checkout': {'actionField': {'step': 1}, 'products':[" . implode(", ", $gtm4wp_checkout_products) . "]}}-~-";
+			$dataLayer["ecommerce"] = array(
+				"checkout" => array(
+					"actionField" => array(
+						"step" => 1
+					),
+					"products" => $gtm4wp_checkout_products
+				)
+			);
 		}
 	} else {
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WCREMARKETING ] ) {
