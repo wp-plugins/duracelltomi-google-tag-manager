@@ -389,8 +389,13 @@ $GLOBALS["gtm4wp_integratefieldtexts"] = array(
 	GTM4WP_OPTION_INTEGRATE_WCREMARKETING  => array(
 		"label"         => __( "AdWords Remarketing", GTM4WP_TEXTDOMAIN ),
 		"description"   => __( "Enable this to add Google AdWords dynamic remarketing variables to the dataLayer", GTM4WP_TEXTDOMAIN ),
-		"phase"       => GTM4WP_PHASE_STABLE,
+		"phase"         => GTM4WP_PHASE_STABLE,
 		"plugintocheck" => "woocommerce/woocommerce.php"
+	),
+	GTM4WP_OPTION_INTEGRATE_WCREMARKETINGSKU => array(
+		"label"         => __( "Use SKU instead of ID", GTM4WP_TEXTDOMAIN ),
+		"description"   => __( "Check this to use product SKU in the dynamic remarketing variables instead of the ID of the products. Will fallback to ID if no SKU is set.", GTM4WP_TEXTDOMAIN ),
+		"phase"         => GTM4WP_PHASE_EXPERIMENTAL
 	)
 );
 
