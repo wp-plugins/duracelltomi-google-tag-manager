@@ -1,7 +1,9 @@
 <?php
-define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtm4wp_compile_datalayer' );
+define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER',  'gtm4wp_compile_datalayer' );
 define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtm4wp_compile_remarkering' );
-define( 'GTM4WP_WPFILTER_GETTHEGTMTAG', 'gtm4wp_get_the_gtm_tag' );
+define( 'GTM4WP_WPFILTER_GETTHEGTMTAG',       'gtm4wp_get_the_gtm_tag' );
+
+$GLOBALS[ "gtm4wp_container_code_written" ] = false;
 
 if ( $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
 	$GLOBALS[ "gtm4wp_datalayer_name" ] = "dataLayer";
@@ -382,11 +384,11 @@ function gtm4wp_wp_loaded() {
 }
 
 function gtm4wp_get_the_gtm_tag() {
-	global $gtm4wp_options, $gtm4wp_datalayer_name;
+	global $gtm4wp_options, $gtm4wp_datalayer_name, $gtm4wp_container_code_written;
 	
 	$_gtm_tag = '';
 	
-	if ( $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] != "" ) {
+	if ( ( $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] != "" ) && ( ! $gtm4wp_container_code_written ) ) {
 		$_gtm_tag .= '
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=' . $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] . '"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -396,9 +398,12 @@ j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
 \'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,\'script\',\'' . $gtm4wp_datalayer_name . '\',\'' . $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] . '\');</script>
 <!-- End Google Tag Manager -->';
+
+    $_gtm_tag = apply_filters( GTM4WP_WPFILTER_GETTHEGTMTAG, $_gtm_tag );
+    $gtm4wp_container_code_written = true;
 	}
 
-	return apply_filters( GTM4WP_WPFILTER_GETTHEGTMTAG, $_gtm_tag );
+	return $_gtm_tag;
 }
 
 function gtm4wp_the_gtm_tag() {
@@ -549,3 +554,6 @@ add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_add_basic_datalayer_data"
 
 // to be able to easily migrate from other Google Tag Manager plugins
 add_action( "body_open", "gtm4wp_wp_body_open" );
+
+// compatibility with existing themes that natively support code injection after opening body tag
+add_action( "genesis_before", "gtm4wp_wp_body_open" );
