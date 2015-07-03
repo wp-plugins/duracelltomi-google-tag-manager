@@ -1,7 +1,7 @@
 <?php
-define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER',  'gtm4wp_compile_datalayer' );
+define( 'GTM4WP_WPFILTER_COMPILE_DATALAYER', 'gtm4wp_compile_datalayer' );
 define( 'GTM4WP_WPFILTER_COMPILE_REMARKTING', 'gtm4wp_compile_remarkering' );
-define( 'GTM4WP_WPFILTER_GETTHEGTMTAG',       'gtm4wp_get_the_gtm_tag' );
+define( 'GTM4WP_WPFILTER_GETTHEGTMTAG', 'gtm4wp_get_the_gtm_tag' );
 
 $GLOBALS[ "gtm4wp_container_code_written" ] = false;
 
@@ -469,7 +469,7 @@ function gtm4wp_wp_footer() {
 function gtm4wp_wp_body_open() {
 	global $gtm4wp_options;
 
-	if ( GTM4WP_PLACEMENT_BODYOPEN == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
+	if ( ( GTM4WP_PLACEMENT_BODYOPEN == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) || ( GTM4WP_PLACEMENT_BODYOPEN_AUTO == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) ) {
 		gtm4wp_the_gtm_tag();
 	}
 }
@@ -530,7 +530,7 @@ function gtm4wp_wp_header_end() {
 		gtm4wp_track_downloads( "' . str_replace( '"', '', $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DWLEXT ] ) . '" );
 	});';
 		}
-		
+//var_dump($gtm4wp_datalayer_data);		
 		$_gtm_tag .= '
 	' . $gtm4wp_datalayer_name . '.push(' . str_replace(
 			array( '"-~-', '-~-"' ),
@@ -545,11 +545,22 @@ function gtm4wp_wp_header_end() {
 	echo $_gtm_tag;	
 }
 
+function gtm4wp_body_class( $classes ) {
+  // solution is based on the code of Yaniv Friedensohn
+  // http://www.affectivia.com/blog/placing-the-google-tag-manager-in-wordpress-after-the-body-tag/
+  if ( GTM4WP_PLACEMENT_BODYOPEN_AUTO == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
+		$classes[] = '">' . gtm4wp_get_the_gtm_tag() . '<br style="display:none;';
+	}
+
+	return $classes;
+}
+
 add_action( "wp_enqueue_scripts", "gtm4wp_enqueue_scripts" );
 add_action( "wp_head", "gtm4wp_wp_header_begin", 1 );
 add_action( "wp_head", "gtm4wp_wp_header_end", 100 );
 add_action( "wp_footer", "gtm4wp_wp_footer" );
 add_action( "wp_loaded", "gtm4wp_wp_loaded" );
+add_filter( "body_class", "gtm4wp_body_class", 10000 );
 add_filter( GTM4WP_WPFILTER_COMPILE_DATALAYER, "gtm4wp_add_basic_datalayer_data" );
 
 // to be able to easily migrate from other Google Tag Manager plugins

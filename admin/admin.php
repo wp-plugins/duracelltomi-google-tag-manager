@@ -480,8 +480,9 @@ function gtm4wp_admin_output_field( $args ) {
 		}
 
 		case GTM4WP_ADMIN_GROUP_PLACEMENT: {
-			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_0" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="0" ' . ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == 0 ? 'checked="checked"' : '' ) . '/> ' . __( "Footer of the page (not recommended by Google, no tweak in your template required)", GTM4WP_TEXTDOMAIN ) . '<br />';
-			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_1" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="1" ' . ( $gtm4wp_options[GTM4WP_OPTION_GTM_PLACEMENT] == 1 ? 'checked="checked"' : '' ) . '/> ' . __( "Custom (needs tweak in your template)", GTM4WP_TEXTDOMAIN ) . '<br />' . $args["description"];
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_' . GTM4WP_PLACEMENT_FOOTER . '" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="' . GTM4WP_PLACEMENT_FOOTER . '" ' . ( $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] == GTM4WP_PLACEMENT_FOOTER ? 'checked="checked"' : '' ) . '/> ' . __( "Footer of the page (not recommended by Google, no tweak in your template required)", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_' . GTM4WP_PLACEMENT_BODYOPEN . '" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="' . GTM4WP_PLACEMENT_BODYOPEN . '" ' . ( $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] == GTM4WP_PLACEMENT_BODYOPEN ? 'checked="checked"' : '' ) . '/> ' . __( "Custom (needs tweak in your template)", GTM4WP_TEXTDOMAIN ) . '<br />';
+			echo '<input type="radio" id="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']_' . GTM4WP_PLACEMENT_BODYOPEN_AUTO . '" name="' . GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_GTM_PLACEMENT . ']" value="' . GTM4WP_PLACEMENT_BODYOPEN_AUTO . '" ' . ( $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] == GTM4WP_PLACEMENT_BODYOPEN_AUTO ? 'checked="checked"' : '' ) . '/> ' . __( "Codeless injection (no tweak, right placement but experimental, could break your frontend)", GTM4WP_TEXTDOMAIN ) . '<br /><br />' . $args["description"];
 			
 			break;
 		}
@@ -617,7 +618,7 @@ function gtm4wp_sanitize_options($options) {
 		// GTM container code placement
 		} else if ( $optionname == GTM4WP_OPTION_GTM_PLACEMENT ) {
 			$output[$optionname] = (int) $newoptionvalue;
-			if ( ( $output[$optionname] < 0) || ( $output[$optionname] > 1 ) ) {
+			if ( ( $output[$optionname] < 0) || ( $output[$optionname] > 2 ) ) {
 				$output[$optionname] = 0;
 			}
 

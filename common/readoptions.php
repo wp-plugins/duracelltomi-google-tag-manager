@@ -82,8 +82,9 @@ define( 'GTM4WP_OPTION_INTEGRATE_WCREMARKETINGSKU',  'integrate-woocommerce-rema
 
 define( 'GTM4WP_OPTION_INTEGRATE_WPECOMMERCE',   'integrate-wp-e-commerce' );
 
-define( 'GTM4WP_PLACEMENT_FOOTER',             0 );
-define( 'GTM4WP_PLACEMENT_BODYOPEN',           1 );
+define( 'GTM4WP_PLACEMENT_FOOTER',        0 );
+define( 'GTM4WP_PLACEMENT_BODYOPEN',      1 );
+define( 'GTM4WP_PLACEMENT_BODYOPEN_AUTO', 2 );
 
 $gtm4wp_options = array();
 
