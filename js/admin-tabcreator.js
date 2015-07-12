@@ -64,11 +64,11 @@
 			jQuery( '#wpbody form .tabinfo:eq(' + tabindex + '),#wpbody form .form-table:eq(' + tabindex + ')' )
 				.show();
 
-			jQuery( '#wpbody-content #adminsubtabs' + tabindex + ':not(.subtab-activated)' )
+			jQuery( '#adminsubtabs' + tabindex + ':not(.subtab-activated)' )
 				.find( 'a:first' )
 				.trigger( 'click' );
 
-			jQuery( '#wpbody-content #adminsubtabs' + tabindex )
+			jQuery( '#adminsubtabs' + tabindex )
 				.addClass( 'subtab-activated' )
 				.show();
 				

@@ -51,10 +51,10 @@ function gtm4wp_onYouTubePlayerReady( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
-  	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration()
+  	'mediaCurrentTime': event.target.getCurrentTime()
   });
 }
 
@@ -90,12 +90,12 @@ function gtm4wp_onYouTubePlayerStateChange( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
   	'mediaPlayerState': playerState,
-  	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration()
-  });
+  	'mediaCurrentTime': event.target.getCurrentTime()
+	});
 }
 
 function gtm4wp_onYouTubePlaybackQualityChange( event ) {
@@ -108,10 +108,10 @@ function gtm4wp_onYouTubePlaybackQualityChange( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
   	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration(),
   	'mediaPlayerEvent': 'quality-change',
   	'mediaPlayerEventParam': event.data
   });
@@ -127,10 +127,10 @@ function gtm4wp_onYouTubePlaybackRateChange( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
   	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration(),
   	'mediaPlayerEvent': 'playback-rate-change',
   	'mediaPlayerEventParam': event.data
   });
@@ -146,10 +146,10 @@ function gtm4wp_onYouTubeError( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
   	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration(),
   	'mediaPlayerEvent': 'error',
   	'mediaPlayerEventParam': event.data
   });
@@ -165,10 +165,10 @@ function gtm4wp_onYouTubeApiChange( event ) {
   		'id': videodata.video_id,
   		'author': videodata.author,
   		'title': videodata.title,
-  		'url': event.target.getVideoUrl()
+  		'url': event.target.getVideoUrl(),
+  		'duration': event.target.getDuration()
   	},
   	'mediaCurrentTime': event.target.getCurrentTime(),
-  	'mediaDuration': event.target.getDuration(),
   	'mediaPlayerEvent': 'api-change',
   	'mediaPlayerEventParam': event.data
   });
@@ -197,10 +197,10 @@ function gtm4wp_onYouTubePercentageChange( event ) {
 		  		'id': videodata.video_id,
 		  		'author': videodata.author,
 		  		'title': videodata.title,
-		  		'url': event.target.getVideoUrl()
+		  		'url': event.target.getVideoUrl(),
+		  		'duration': event.target.getDuration()
 		  	},
       	'mediaCurrentTime': event.target.getCurrentTime(),
-      	'mediaDuration': event.target.getDuration(),
       	'mediaPercentage': i
       });
     }

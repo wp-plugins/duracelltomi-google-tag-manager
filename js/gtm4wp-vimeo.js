@@ -26,10 +26,10 @@ var gtm4wp_vimeo_percentage_tracking_marks = {};
 			  		'id': videoid,
 			  		'author': '',
 			  		'title': jqframe.attr( "title" ),
-				  	'url': videourl
+				  	'url': videourl,
+			  		'duration': value
 		  		},
-			  	'mediaCurrentTime': 0,
-			  	'mediaDuration': value
+			  	'mediaCurrentTime': 0
 			  });
 			}); // end of api call getDuration
 
@@ -62,11 +62,11 @@ var gtm4wp_vimeo_percentage_tracking_marks = {};
 				 		  'id': videoid,
 				  		'author': '',
 				  		'title': jqframe.attr( "title" ),
-					  	'url': jqframe.attr( "data-player_url" )
+					  	'url': jqframe.attr( "data-player_url" ),
+				  		'duration': parseInt( jqframe.attr( "data-player_duration" ) )
 				 		},
 				  	'mediaPlayerState': player_state,
-				  	'mediaCurrentTime': value,
-				  	'mediaDuration': parseInt( jqframe.attr( "data-player_duration" ) )
+				  	'mediaCurrentTime': value
 				  });
 			  });
 			}
@@ -90,10 +90,10 @@ var gtm4wp_vimeo_percentage_tracking_marks = {};
 				  			'id': videoid,
 					  		'author': '',
 				  			'title': jqframe.attr( "title" ),
-				      	'url': jqframe.attr( "data-player_url" )
+				      	'url': jqframe.attr( "data-player_url" ),
+					  		'duration': videoDuration
 					 		},
 			      	'mediaCurrentTime': data.seconds,
-			      	'mediaDuration': videoDuration,
 			      	'mediaPercentage': i
 			      });
 			    }

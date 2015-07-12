@@ -28,9 +28,9 @@ jQuery(function() {
 			  		'author': soundData.user.username,
 		  			'title':  soundData.title,
 				  	'url':    soundData.permalink_url,
+			  		'duration': soundData.duration
 		  		},
-			  	'mediaCurrentTime': 0,
-		  		'mediaDuration': soundData.duration
+			  	'mediaCurrentTime': 0
 				});
 			}); // end of api call getDuration
 
@@ -80,9 +80,9 @@ jQuery(function() {
 		  		'author': sound.user.username,
 	  			'title':  sound.title,
 			  	'url':    sound.permalink_url,
+		  		'duration': sound.duration
 	  		},
 		  	'mediaCurrentTime': eventData.currentPosition,
-	  		'mediaDuration': sound.duration,
 		  	'mediaPlayerState': playerState
 		  });
 		}
@@ -106,9 +106,9 @@ jQuery(function() {
 				  		'author': sound.user.username,
 			  			'title':  sound.title,
 					  	'url':    sound.permalink_url,
+				  		'duration': sound.duration
 			  		},
 				  	'mediaCurrentTime': eventData.currentPosition,
-			  		'mediaDuration': sound.duration,
 			     	'mediaPercentage': i
 		      });
 		    }
@@ -125,9 +125,9 @@ jQuery(function() {
 		  			'author': sound.user.username,
 		  			'title':  sound.title,
 				  	'url':    sound.permalink_url,
+			  		'duration': soundData.duration
 	  			},
 		  		'mediaCurrentTime': currentPosition,
-	  			'mediaDuration': sound.duration,
 			  	'mediaPlayerEvent': eventName
 			  });
 			});
