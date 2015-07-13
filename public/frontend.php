@@ -546,6 +546,8 @@ function gtm4wp_wp_header_end() {
 }
 
 function gtm4wp_body_class( $classes ) {
+  global $gtm4wp_options;
+  
   // solution is based on the code of Yaniv Friedensohn
   // http://www.affectivia.com/blog/placing-the-google-tag-manager-in-wordpress-after-the-body-tag/
   if ( GTM4WP_PLACEMENT_BODYOPEN_AUTO == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
