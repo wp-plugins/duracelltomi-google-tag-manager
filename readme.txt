@@ -286,6 +286,10 @@ If you or your social plugin inserts the Facebook buttons using IFRAMEs (like So
 
 == Changelog ==
 
+= 1.1.1 =
+
+* Fixed: PHP errors in frontend.php and admin.php
+
 = 1.1 =
 
 * Added: track embedded YouTube/Vimeo/Soundcloud videos (experimental)
@@ -402,6 +406,14 @@ Please report all bugs found in my plugin using the [contact form on my website]
 * First beta release
 
 == Upgrade Notice ==
+
+= 1.1.1 =
+
+This is a bugfix release to address some issues with v1.1
+
+= 1.1 =
+
+New! Track popular media players embedded into your website!
 
 = 1.0 =
 
