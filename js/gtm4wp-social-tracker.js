@@ -60,36 +60,38 @@ jQuery( function() {
 		} (document, "script", "twitter-wjs"));
 	} // end of loading Twitter JS
 
-	window.twttr.ready(function ( twttr ) {
-		twttr.events.bind( 'tweet', function ( intent_event ) {
-			if ( intent_event ) {
-				var label = intent_event.data.tweet_id;
-				if ( typeof label == "label" ) {
-					label = window.location.href;
+	jQuery(document).ready(function($) {
+		window.twttr.ready(function ( twttr ) {
+			twttr.events.bind( 'tweet', function ( intent_event ) {
+				if ( intent_event ) {
+					var label = intent_event.data.tweet_id;
+					if ( typeof label == "label" ) {
+						label = window.location.href;
+					}
+	
+					window[ gtm4wp_datalayer_name ].push({
+						'event': 'gtm4wp.socialAction',
+						'network': 'twitter',
+						'socialAction': 'tweet',
+						'opt_target': label,
+						'opt_pagePath': window.location.href
+					});
 				}
-
-				window[ gtm4wp_datalayer_name ].push({
-					'event': 'gtm4wp.socialAction',
-					'network': 'twitter',
-					'socialAction': 'tweet',
-					'opt_target': label,
-					'opt_pagePath': window.location.href
-				});
-			}
-		});
-
-		window.twttr.events.bind( 'follow', function ( intent_event ) {
-			if ( intent_event ) {
-				var label = intent_event.data.user_id + " (" + intent_event.data.screen_name + ")";
-
-				window[ gtm4wp_datalayer_name ].push({
-					'event': 'gtm4wp.socialAction',
-					'network': 'twitter',
-					'socialAction': 'follow',
-					'opt_target': label,
-					'opt_pagePath': window.location.href
-				});
-			}
+			});
+	
+			window.twttr.events.bind( 'follow', function ( intent_event ) {
+				if ( intent_event ) {
+					var label = intent_event.data.user_id + " (" + intent_event.data.screen_name + ")";
+	
+					window[ gtm4wp_datalayer_name ].push({
+						'event': 'gtm4wp.socialAction',
+						'network': 'twitter',
+						'socialAction': 'follow',
+						'opt_target': label,
+						'opt_pagePath': window.location.href
+					});
+				}
+			});
 		});
 	});
 });
