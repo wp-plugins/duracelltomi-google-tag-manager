@@ -51,7 +51,7 @@ jQuery( function() {
 		});
 	} // end of Facebook social events
 
-	if ( typeof twttr == "undefined" ) {
+	if ( typeof window.twttr == "undefined" ) {
 		window.twttr = (function ( d, s, id ) {
 			var t, js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;

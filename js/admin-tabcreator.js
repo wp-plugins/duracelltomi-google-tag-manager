@@ -3,7 +3,7 @@
 	var adminsubtabsdata = window[ 'adminsubtabs' ] || {};
 	var adminsubtabs = [];
   
-	jQuery( '#wpbody form h3' ).each(function( i ) {
+	jQuery( '#wpbody form h2' ).each(function( i ) {
 		admintabs.push( '<a class="nav-tab" href="#">' + jQuery(this).text() + '</a>' );
 
 		jQuery(this)
@@ -24,7 +24,7 @@
 		}
 	});
   
-	jQuery( '#wpbody form' )
+	jQuery("#wpbody form[action='options.php']")
 		.prepend( adminsubtabs.join('') )
 		.prepend( '<h2 class="nav-tab-wrapper">' + admintabs.join('') + '</h2>' );
 
@@ -64,11 +64,11 @@
 			jQuery( '#wpbody form .tabinfo:eq(' + tabindex + '),#wpbody form .form-table:eq(' + tabindex + ')' )
 				.show();
 
-			jQuery( '#adminsubtabs' + tabindex + ':not(.subtab-activated)' )
+			jQuery( '#wpbody #adminsubtabs' + tabindex + ':not(.subtab-activated)' )
 				.find( 'a:first' )
 				.trigger( 'click' );
 
-			jQuery( '#adminsubtabs' + tabindex )
+			jQuery( '#wpbody #adminsubtabs' + tabindex )
 				.addClass( 'subtab-activated' )
 				.show();
 				
