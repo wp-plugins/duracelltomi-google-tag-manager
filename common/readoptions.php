@@ -15,6 +15,7 @@ define( 'GTM4WP_OPTION_INCLUDE_AUTHOR',        'include-author' );
 define( 'GTM4WP_OPTION_INCLUDE_POSTDATE',      'include-postdate' );
 define( 'GTM4WP_OPTION_INCLUDE_POSTTITLE',     'include-posttitle' );
 define( 'GTM4WP_OPTION_INCLUDE_POSTCOUNT',     'include-postcount' );
+define( 'GTM4WP_OPTION_INCLUDE_POSTID',        'include-postid' );
 define( 'GTM4WP_OPTION_INCLUDE_SEARCHDATA',    'include-searchdata' );
 define( 'GTM4WP_OPTION_INCLUDE_BROWSERDATA',   'include-browserdata' );
 define( 'GTM4WP_OPTION_INCLUDE_OSDATA',        'include-osdata' );
@@ -104,13 +105,14 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_INCLUDE_POSTDATE     => false,
 	GTM4WP_OPTION_INCLUDE_POSTTITLE    => false,
 	GTM4WP_OPTION_INCLUDE_POSTCOUNT    => false,
+	GTM4WP_OPTION_INCLUDE_POSTID    => false,
 	GTM4WP_OPTION_INCLUDE_SEARCHDATA   => false,
 	GTM4WP_OPTION_INCLUDE_BROWSERDATA  => false,
 	GTM4WP_OPTION_INCLUDE_OSDATA       => false,
 	GTM4WP_OPTION_INCLUDE_DEVICEDATA   => false,
 	GTM4WP_OPTION_INCLUDE_WEATHER      => false,
 	GTM4WP_OPTION_INCLUDE_WEATHERUNITS => 0,
-	
+
 	GTM4WP_OPTION_EVENTS_OUTBOUND    => false,
 	GTM4WP_OPTION_EVENTS_DOWNLOADS   => false,
 	GTM4WP_OPTION_EVENTS_DWLEXT      => "pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,gz,tar",
@@ -120,7 +122,7 @@ $gtm4wp_defaultoptions = array(
 	GTM4WP_OPTION_EVENTS_YOUTUBE     => false,
 	GTM4WP_OPTION_EVENTS_VIMEO       => false,
 	GTM4WP_OPTION_EVENTS_SOUNDCLOUD  => false,
-	
+
 	GTM4WP_OPTION_SCROLLER_ENABLED      => false,
 	GTM4WP_OPTION_SCROLLER_DEBUGMODE    => false,
 	GTM4WP_OPTION_SCROLLER_CALLBACKTIME => 100,
@@ -174,7 +176,7 @@ $gtm4wp_defaultoptions = array(
 
 function gtm4wp_reload_options() {
 	global $gtm4wp_defaultoptions;
-	
+
 	$storedoptions = (array) get_option( GTM4WP_OPTIONS );
 	if ( ! is_array( $gtm4wp_defaultoptions ) ) {
 		$gtm4wp_defaultoptions = array();
@@ -188,7 +190,7 @@ function gtm4wp_reload_options() {
 
 		unset( $storedoptions[ GTM4WP_OPTION_INTEGRATE_WOOCOMMERCE ] );
 	}
-	
+
 	return array_merge( $gtm4wp_defaultoptions, $storedoptions );
 }
 

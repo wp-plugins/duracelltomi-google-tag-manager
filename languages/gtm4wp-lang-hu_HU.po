@@ -8,7 +8,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.3\n"
+"X-Generator: Poedit 1.8.6\n"
 "Language: hu_HU\n"
 
 #: ../admin/admin.php:18
@@ -253,7 +253,7 @@ msgstr "Néhány információ ezen bővítmény szerzőjéről"
 #: ../admin/admin.php:171
 msgid ""
 "This plugin is <strong class=\"gtm4wp-plugin-active\">active</strong>, it is "
-"strongly recomment to enable this integration!"
+"strongly recommended to enable this integration!"
 msgstr ""
 "Ez a bővítmény <strong class=\"gtm4wp-plugin-active\">aktív</strong>, "
 "ajánlott bekapcsolni ezt az integrációt!"

@@ -254,7 +254,7 @@ function gtm4wp_woocommerce_datalayer_filter_items( $dataLayer ) {
 					$_products[] = array(
 					  "id"       => $_product->id,
 					  "name"     => $item['name'],
-					  "sku"      => $product_sku ? __( 'SKU:', GTM4WP_TEXTDOMAIN ) . ' ' . $product_sku : $_product->id,
+					  "sku"      => $product_sku ? __( 'SKU:', 'duracelltomi-google-tag-manager' ) . ' ' . $product_sku : $_product->id,
 					  "category" => $_category,
 					  "price"    => $_prodprice,
 					  "currency" => get_woocommerce_currency(),

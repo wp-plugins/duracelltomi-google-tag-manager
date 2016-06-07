@@ -2,9 +2,9 @@
 Contributors: duracelltomi
 Donate link: https://duracelltomi.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, adwords remarketing, remarketing, google analytics, analytics
-Requires at least: 3.0.1
-Tested up to: 4.2.1
-Stable tag: 1.1.1
+Requires at least: 3.4.0
+Tested up to: 4.4
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -16,6 +16,7 @@ Google Tag Manager (GTM) is Google's free tool to everyone to be able to manage 
 using an intuitive web UI.
 
 This plugin can place the necessary container code snippet into your website so that you do not need to edit your theme files.
+Multiple containers are supported!
 
 = Basic data included =
 
@@ -48,6 +49,9 @@ for almost every theme without modifying the theme files:
 http://www.affectivia.com/blog/placing-the-google-tag-manager-in-wordpress-after-the-body-tag/
 
 I added this solution to the plugin, currently as an experimental option.
+
+Users of the Genisis Framework should use the "Custom" option but without altering the theme.
+The Google Tag Manager container code will be added automatically.
 
 = Browser / OS / Device data =
 
@@ -157,16 +161,6 @@ Google Tag Manager for WordPress can integrate with several popular plugins.
 		* Does not include tracking of promotions since WooCommerce does not have such a feature (yet)
 
 More integration to come!
-
-= Planned features =
-
-Note: list of planned features can change as development goes on!
-
-* 1.3
-  * dataLayer elements to include when JavaScript is turned of in a browser (request by Simo Ahava)
-* 1.2
-  * MailChimp for WordPress support (request by I-Visio)
-  * Custom dataLayer elements: place your own items site-wide or per page/post
 
 == Installation ==
 
@@ -285,6 +279,18 @@ If you or your social plugin inserts the Facebook buttons using IFRAMEs (like So
 6. Scroll tracking
 
 == Changelog ==
+
+= 1.2 =
+
+* Fixed: subtabs on admin page now showing in certain cases
+* Fixed: error message when running the site using WP CLI (thanks Patrick Holberg Hesselberg)
+* Fixed: some typos on admin page
+* Fixed: dismissable notices did not disappear in some cases
+* Fixed: tracking of Twitter event cased sometimes JS errors
+* Fixed: site search tracking caused sometimes PHP errors when HTTP_REFERER was not set
+* Updated: preparation for translate.wordpress.org
+* Added: support for multiple container IDs
+* Added: added form ID when sending a Contact Form 7 form. Variable name: gtm4wp.cf7formid
 
 = 1.1.1 =
 
@@ -406,6 +412,10 @@ Please report all bugs found in my plugin using the [contact form on my website]
 * First beta release
 
 == Upgrade Notice ==
+
+= 1.2 =
+
+New release with lots of fixes from the past months and new features like multiple container support!
 
 = 1.1.1 =
 

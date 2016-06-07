@@ -209,7 +209,7 @@ msgstr ""
 #: ../admin/admin.php:171
 msgid ""
 "This plugin is <strong class=\"gtm4wp-plugin-active\">active</strong>, it is "
-"strongly recomment to enable this integration!"
+"strongly recommended to enable this integration!"
 msgstr ""
 
 #: ../admin/admin.php:173

@@ -5,7 +5,9 @@ define( 'GTM4WP_WPFILTER_GETTHEGTMTAG', 'gtm4wp_get_the_gtm_tag' );
 
 $GLOBALS[ "gtm4wp_container_code_written" ] = false;
 
-if ( $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "" ) {
+// check for empty is needed to prevent error in WP CLI
+// bugfix by Patrick Holberg Hesselberg
+if ( empty($GLOBALS[ "gtm4wp_options" ] ) || ($GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ] == "") ) {
 	$GLOBALS[ "gtm4wp_datalayer_name" ] = "dataLayer";
 } else {
 	$GLOBALS[ "gtm4wp_datalayer_name" ] = $GLOBALS[ "gtm4wp_options" ][ GTM4WP_OPTION_DATALAYER_NAME ];
@@ -17,22 +19,22 @@ function gtm4wp_is_assoc($arr) {
 	return array_keys($arr) !== range(0, count($arr) - 1);
 }
 
-if ( !function_exists( "getallheaders") ) { 
-	function getallheaders() { 
-		$headers = ""; 
-		foreach ( $_SERVER as $name => $value ) { 
-			if ( substr($name, 0, 5) == "HTTP_" ) { 
-				$headers[ str_replace(' ', '-', ucwords( strtolower( str_replace( '_', ' ', substr( $name, 5 ) ) ) ) ) ] = $value; 
-			} 
-		} 
-		
-		return $headers; 
-	} 
+if ( !function_exists( "getallheaders") ) {
+	function getallheaders() {
+		$headers = "";
+		foreach ( $_SERVER as $name => $value ) {
+			if ( substr($name, 0, 5) == "HTTP_" ) {
+				$headers[ str_replace(' ', '-', ucwords( strtolower( str_replace( '_', ' ', substr( $name, 5 ) ) ) ) ) ] = $value;
+			}
+		}
+
+		return $headers;
+	}
 }
 
 function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	global $current_user, $wp_query, $gtm4wp_options;
-	
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_LOGGEDIN ] ) {
 		if ( is_user_logged_in() ) {
 			$dataLayer["visitorLoginState"] = "logged-in";
@@ -40,7 +42,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 			$dataLayer["visitorLoginState"] = "logged-out";
 		}
 	}
-	
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_USERROLE ] ) {
 		get_currentuserinfo();
 		$dataLayer["visitorType"] = ( empty( $current_user->roles[0] ) ? "visitor-logged-out" : $current_user->roles[0] );
@@ -158,21 +160,21 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 			$dataLayer["pagePostAuthor"] = get_the_author();
 		}
 	}
-	
+
 	if ( is_search() ) {
 		$dataLayer["siteSearchTerm"] = get_search_query();
-		$dataLayer["siteSearchFrom"] = $_SERVER["HTTP_REFERER"];
+		$dataLayer["siteSearchFrom"] = ( isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : "" );
 		$dataLayer["siteSearchResults"] = $wp_query->post_count;
 	}
-	
+
 	if ( is_front_page() && $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTYPE ] ) {
 		$dataLayer["pagePostType"] = "frontpage";
 	}
-	
+
 	if ( !is_front_page() && is_home() && $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTTYPE ] ) {
 		$dataLayer["pagePostType"] = "bloghome";
 	}
-	
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_BROWSERDATA ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_OSDATA ] || $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_DEVICEDATA ] ) {
 		require_once( dirname( __FILE__ ) . "/../js/whichbrowser/libraries/whichbrowser.php" );
 
@@ -203,9 +205,13 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		$dataLayer["postCountTotal"]  = (int) $wp_query->found_posts;
 	}
 
+	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_POSTID ] ) {
+		$dataLayer["postID"]  = (int) get_the_ID();
+	}
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_ENABLE ] > 0 ) {
 		$_gtmrestrictlistitems = array();
-		
+
 		// IDs from https://developers.google.com/tag-manager/devguide#security
 		if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_ADADVISOR ] ) {
 			$_gtmrestrictlistitems[] = "ta";
@@ -264,7 +270,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_UA ] ) {
 			$_gtmrestrictlistitems[] = "ua";
 		}
-		
+
 		$_gtmwhitelist = array();
 		$_gtmblacklist = array();
 		if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_ENABLE ] == 1 ) {
@@ -272,7 +278,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 		} else {
 			$_gtmwhitelist = array_merge($_gtmwhitelist, $_gtmrestrictlistitems);
 		}
-		
+
 		if ( $gtm4wp_options[ GTM4WP_OPTION_BLACKLIST_MACRO_DOMELEMENT ] ) {
 			$_gtmwhitelist[] = "d";
 		}
@@ -322,8 +328,8 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_WEATHER ] ) {
-		$dataLayer[ "weatherCategory" ] = __( "(no weather data available)", GTM4WP_TEXTDOMAIN );
-		$dataLayer[ "weatherDescription" ] = __( "(no weather data available)", GTM4WP_TEXTDOMAIN );
+		$dataLayer[ "weatherCategory" ] = __( "(no weather data available)", 'duracelltomi-google-tag-manager' );
+		$dataLayer[ "weatherDescription" ] = __( "(no weather data available)", 'duracelltomi-google-tag-manager' );
 		$dataLayer[ "weatherTemp" ] = 0;
 		$dataLayer[ "weatherPressure" ] = 0;
 		$dataLayer[ "weatherWindSpeed" ] = 0;
@@ -346,7 +352,7 @@ function gtm4wp_add_basic_datalayer_data( $dataLayer ) {
 			}
 		}
 	}
-	
+
 	return $dataLayer;
 }
 
@@ -385,18 +391,24 @@ function gtm4wp_wp_loaded() {
 
 function gtm4wp_get_the_gtm_tag() {
 	global $gtm4wp_options, $gtm4wp_datalayer_name, $gtm4wp_container_code_written;
-	
+
 	$_gtm_tag = '';
-	
+
 	if ( ( $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] != "" ) && ( ! $gtm4wp_container_code_written ) ) {
-		$_gtm_tag .= '
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=' . $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] . '"
+		$_gtm_codes = explode( ",", str_replace( array(";"," "), array(",",""), $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] ) );
+
+		foreach( $_gtm_codes as $one_gtm_code ) {
+			$_gtm_tag .= '
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=' . $one_gtm_code . '"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({\'gtm.start\':
 new Date().getTime(),event:\'gtm.js\'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
 \'//www.googletagmanager.com/gtm.js?id=\'+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,\'script\',\'' . $gtm4wp_datalayer_name . '\',\'' . $gtm4wp_options[ GTM4WP_OPTION_GTM_CODE ] . '\');</script>
+})(window,document,\'script\',\'' . $gtm4wp_datalayer_name . '\',\'' . $one_gtm_code . '\');</script>';
+		}
+
+		$_gtm_tag .= '
 <!-- End Google Tag Manager -->';
 
     $_gtm_tag = apply_filters( GTM4WP_WPFILTER_GETTHEGTMTAG, $_gtm_tag );
@@ -412,29 +424,29 @@ function gtm4wp_the_gtm_tag() {
 
 function gtm4wp_enqueue_scripts() {
 	global $gtm4wp_options, $gtp4wp_plugin_url;
-		
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_OUTBOUND ] ) {
-		wp_enqueue_script( "gtm4wp-outbound-click-tracker", $gtp4wp_plugin_url . "js/gtm4wp-outbound-click-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-outbound-click-tracker", $gtp4wp_plugin_url . "js/gtm4wp-outbound-click-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DOWNLOADS ] ) {
-		wp_enqueue_script( "gtm4wp-download-tracker", $gtp4wp_plugin_url . "js/gtm4wp-download-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-download-tracker", $gtp4wp_plugin_url . "js/gtm4wp-download-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_EMAILCLICKS ] ) {
-		wp_enqueue_script( "gtm4wp-email-link-tracker", $gtp4wp_plugin_url . "js/gtm4wp-email-link-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-email-link-tracker", $gtp4wp_plugin_url . "js/gtm4wp-email-link-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_INTEGRATE_WPCF7 ] ) {
-		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "js/gtm4wp-contact-form-7-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-contact-form-7-tracker", $gtp4wp_plugin_url . "js/gtm4wp-contact-form-7-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_FORMMOVE ] ) {
-		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "js/gtm4wp-form-move-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-form-move-tracker", $gtp4wp_plugin_url . "js/gtm4wp-form-move-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_EVENTS_SOCIAL ] ) {
-		wp_enqueue_script( "gtm4wp-social-actions", $gtp4wp_plugin_url . "js/gtm4wp-social-tracker.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-social-actions", $gtp4wp_plugin_url . "js/gtm4wp-social-tracker.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 
 	if ( isset ( $GLOBALS["woocommerce"] ) ) {
@@ -454,7 +466,7 @@ function gtm4wp_enqueue_scripts() {
 	}
 
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
-		wp_enqueue_script( "gtm4wp-scroll-tracking", $gtp4wp_plugin_url . "js/analytics-talk-content-tracking.js", array( "jquery" ), "1.0", false );
+		wp_enqueue_script( "gtm4wp-scroll-tracking", $gtp4wp_plugin_url . "js/analytics-talk-content-tracking.js", array( "jquery" ), GTM4WP_VERSION, false );
 	}
 }
 
@@ -482,7 +494,7 @@ function gtm4wp_wp_header_begin() {
 <script type="text/javascript">
 	var gtm4wp_datalayer_name = "' . $gtm4wp_datalayer_name . '";
 	var ' . $gtm4wp_datalayer_name . ' = ' . $gtm4wp_datalayer_name . ' || []';
-	
+
 	if ( $gtm4wp_options[ GTM4WP_OPTION_SCROLLER_ENABLED ] ) {
 		$_gtm_header_content .= '
 
@@ -512,7 +524,7 @@ function gtm4wp_wp_header_end() {
 
 		$gtm4wp_datalayer_data = array();
 		$gtm4wp_datalayer_data = (array) apply_filters( GTM4WP_WPFILTER_COMPILE_DATALAYER, $gtm4wp_datalayer_data );
-		
+
 		if ( $gtm4wp_options[ GTM4WP_OPTION_INCLUDE_REMARKETING ] ) {
 			// add adwords remarketing tags as suggested here:
 			// https://support.google.com/tagmanager/answer/3002580?hl=en
@@ -530,7 +542,7 @@ function gtm4wp_wp_header_end() {
 		gtm4wp_track_downloads( "' . str_replace( '"', '', $gtm4wp_options[ GTM4WP_OPTION_EVENTS_DWLEXT ] ) . '" );
 	});';
 		}
-//var_dump($gtm4wp_datalayer_data);		
+//var_dump($gtm4wp_datalayer_data);
 		$_gtm_tag .= '
 	' . $gtm4wp_datalayer_name . '.push(' . str_replace(
 			array( '"-~-', '-~-"' ),
@@ -542,12 +554,12 @@ function gtm4wp_wp_header_end() {
 </script>';
 	}
 
-	echo $_gtm_tag;	
+	echo $_gtm_tag;
 }
 
 function gtm4wp_body_class( $classes ) {
   global $gtm4wp_options;
-  
+
   // solution is based on the code of Yaniv Friedensohn
   // http://www.affectivia.com/blog/placing-the-google-tag-manager-in-wordpress-after-the-body-tag/
   if ( GTM4WP_PLACEMENT_BODYOPEN_AUTO == $gtm4wp_options[ GTM4WP_OPTION_GTM_PLACEMENT ] ) {
